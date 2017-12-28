@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.*;
 @Controller
 public class MemberModel {
-	String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\project\\member\\profile";
+	String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\test1223\\member\\profile";
 	// 회원가입페이지이동
 	@RequestMapping("joinpage.do")
 	public String joinpage(HttpServletRequest req, HttpServletResponse res) {		
