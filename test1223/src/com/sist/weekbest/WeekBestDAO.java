@@ -9,12 +9,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class WeekBestDAO {
 	private static SqlSessionFactory ssf;
-	// xml íŒŒì‹±ë‚´ìš©ì„ ì „ì†¡
+	// xml ÆÄ½Ì³»¿ëÀ» Àü¼Û
 	static {
 		try {
-			// xml ì½ê¸°
+			// xml ÀĞ±â
 			Reader reader = Resources.getResourceAsReader("Config.xml");
-			// xml íŒŒì‹±
+			// xml ÆÄ½Ì
 			ssf = new SqlSessionFactoryBuilder().build(reader);
 
 		} catch (Exception e) {

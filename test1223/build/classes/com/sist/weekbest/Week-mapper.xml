@@ -7,18 +7,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="jumpocheck" resultType="WeekBestVO" parameterType="String">
-		SELECT cb1.cb_name, s.avghit, s.roundrating, 
-			(SELECT COUNT(*) as jjim
-			FROM cart ct WHERE ct.cb_no = s.cb_no) as jjim
-			FROM clubBar cb1, (SELECT cb.cb_no, AVG(cb.cb_hit) as avghit,
-			ROUND(AVG(cbc.cbc_rating), 1) as roundrating FROM clubbar cb, clubBar_comment cbc
-			WHERE cb.cb_no = cbc.cb_no
-			AND cb.cb_weekhit = (SELECT MAX(cb_weekHit)
-			FROM clubBar
+		SELECT cb1.cb_name, s.avghit, s.roundrating,
+		(SELECT COUNT(*) as jjim
+		FROM cart ct WHERE ct.cb_no = s.cb_no) as jjim
+		FROM clubBar cb1, (SELECT cb.cb_no, AVG(cb.cb_hit) as avghit,
+		ROUND(AVG(cbc.cbc_rating), 1) as roundrating FROM clubbar cb,
+		clubBar_comment cbc
+		WHERE cb.cb_no = cbc.cb_no
+		AND cb.cb_weekhit = (SELECT MAX(cb_weekHit)
+		FROM clubBar
 		WHERE a_addr1 LIKE '%'||#{name}||'%')
 		GROUP BY cb.cb_no) s
 		WHERE cb1.cb_no = s.cb_no
 	</select>
 
 </mapper>
+
+
+
+
+
 

@@ -26,12 +26,12 @@ public class MainModel {
 		req.setCharacterEncoding("EUC-KR");
 		String search_name = req.getParameter("search_name");
 		String addr_name = "";
-		if (search_name.equals("í™ëŒ€")) {
-			addr_name = "ë§ˆí¬";
-		} else if (search_name.equals("ê°•ë‚¨")) {
-			addr_name = "ê°•ë‚¨";
-		} else if (search_name.equals("ì´íƒœì›")) {
-			addr_name = "ìš©ì‚°";
+		if (search_name.equals("È«´ë")) {
+			addr_name = "¸¶Æ÷";
+		} else if (search_name.equals("°­³²")) {
+			addr_name = "°­³²";
+		} else if (search_name.equals("ÀÌÅÂ¿ø")) {
+			addr_name = "¿ë»ê";
 		}
 		Map map = new HashMap();
 		map.put("search_name", search_name);
@@ -41,7 +41,7 @@ public class MainModel {
 		if(list.size()==0) {
 			System.out.println("0");
 		}
-		// DAOë§¤ê°œë³€ìˆ˜ ë„£ì–´ì£¼ê³ 
+		// DAO¸Å°³º¯¼ö ³Ö¾îÁÖ°í
 		System.out.println(search_name+" "+ addr_name);
 
 		req.setAttribute("search_name", search_name);
@@ -56,7 +56,7 @@ public class MainModel {
 		req.setCharacterEncoding("EUC-KR");
 		String search_name = req.getParameter("search_name");
 		int count = SearchDao.namecheck(search_name);
-		// DAOë§¤ê°œë³€ìˆ˜ ë„£ì–´ì£¼ê³ 
+		// DAO¸Å°³º¯¼ö ³Ö¾îÁÖ°í
 		if (count != 0) {
 			req.setAttribute("search_count", 1);
 		}
@@ -70,9 +70,9 @@ public class MainModel {
 	@RequestMapping("mian2.do")
 	public String movie_detail(HttpServletRequest req, HttpServletResponse res) {
 
-		WeekBestVO vo = WeekBestDAO.namecheck("ê°•ë‚¨êµ¬");
-		WeekBestVO vo1 = WeekBestDAO.namecheck("ìš©ì‚°êµ¬");
-		WeekBestVO vo2 = WeekBestDAO.namecheck("ë§ˆí¬êµ¬");
+		WeekBestVO vo = WeekBestDAO.namecheck("°­³²±¸");
+		WeekBestVO vo1 = WeekBestDAO.namecheck("¿ë»ê±¸");
+		WeekBestVO vo2 = WeekBestDAO.namecheck("¸¶Æ÷±¸");
 
 		req.setAttribute("vo", vo);
 		req.setAttribute("vo1", vo1);

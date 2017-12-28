@@ -1,10 +1,10 @@
 package com.sist.weekbest;
 
 public class WeekBestVO {
-	private String cb_name; // clubBar - í´ëŸ½ì´ë¦„
-	private int avghit; // clubBar - cb_hit ì¡°íšŒìˆ˜
-	private float roundrating;// clubBar - cb_weekHit ì£¼ê°„ ì¡°íšŒìˆ˜
-	private int jjim;// ì°œ ê°¯ìˆ˜
+	private String cb_name; // clubBar - Å¬·´ÀÌ¸§
+	private int avghit; // clubBar - cb_hit Á¶È¸¼ö
+	private float roundrating;// clubBar - cb_weekHit ÁÖ°£ Á¶È¸¼ö
+	private int jjim;// Âò °¹¼ö
 
 	public String getCb_name() {
 		return cb_name;
@@ -49,3 +49,4 @@ public class WeekBestVO {
 	private String photo;
 
 }
+
