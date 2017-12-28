@@ -11,7 +11,6 @@ public class FileConfig {
 			path=path+pack.replace(".", "\\");
 			File dir = new File(path);
 			File[] files = dir.listFiles();
-			//com.sist.model.Class명
 			for (File f : files) {
 				String name = f.getName();
 				String ext = name.substring(name.lastIndexOf(".")+1);
