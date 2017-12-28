@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.weekbest.Week-mapper">
+	<!-- XML:namespace = 자바에서는 패키지랑 같은거임 -->
+
+
+	<select id="jumpocheck" resultType="WeekBestVO" parameterType="String">
+		SELECT cb1.cb_name, s.avghit, s.roundrating, 
+			(SELECT COUNT(*) as jjim
+			FROM cart ct WHERE ct.cb_no = s.cb_no) as jjim
+			FROM clubBar cb1, (SELECT cb.cb_no, AVG(cb.cb_hit) as avghit,
+			ROUND(AVG(cbc.cbc_rating), 1) as roundrating FROM clubbar cb, clubBar_comment cbc
+			WHERE cb.cb_no = cbc.cb_no
+			AND cb.cb_weekhit = (SELECT MAX(cb_weekHit)
+			FROM clubBar
+		WHERE a_addr1 LIKE '%'||#{name}||'%')
+		GROUP BY cb.cb_no) s
+		WHERE cb1.cb_no = s.cb_no
+	</select>
+
+</mapper>
+
