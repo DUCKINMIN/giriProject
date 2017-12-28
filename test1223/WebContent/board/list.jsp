@@ -2,6 +2,7 @@
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -18,10 +19,6 @@
 	padding: 0px;
 }
 
-#board_ssulBtn {
-	background-color: rgb(162, 0, 0);
-	color: white;
-}
 
 #board_search {
 	height: 40px;
@@ -105,22 +102,7 @@
 	}
 }
 </style>
-<script type="text/javascript">
-	$(document).ready(
-			function() {
-				$(".board_modeBtn").on(
-						"click",
-						function() {
-							var id = $(this).attr("id");
-							$(this).css("background", "rgb(162,0,0)");
-							$(this).css("color", "rgb(255, 255, 255)");
-							$('.board_modeBtn').not("#" + id).css("background",
-									"rgb(255, 255, 255)");
-							$('.board_modeBtn').not("#" + id).css("color",
-									"rgb(1, 1, 1)");
-						});
-			});
-</script>
+
 <body>
 	<div>
 		<!-- 게시판 검색 -->
@@ -135,6 +117,7 @@
 	<div class="row">
 		<div style="height: 40px"></div>
 		<!-- 게시판 리스트 -->
+		<div style="height:440px">
 		<table class="table">
 			<tr>
 				<th width=10% class="text-center board-th board_Tno">번호</th>
@@ -143,35 +126,40 @@
 				<th width=20% class="text-center board-th">작성일</th>
 				<th width=15% class="text-center board-th">조회수</th>
 			</tr>
-			<c:forEach var="i" begin="1" end="10" step="1">
+			<c:set var="cnt" value="${cnt=cnt-(curpage*10-10)}"></c:set>
+			<c:forEach var="vo" items="${list }">
 				<tr id="board_tr">
-					<td width=10% class="text-center board-td board_Tno">${i}</td>
+					<td width=10% class="text-center board-td board_Tno">${cnt}</td>
 					<td width=45% class="text-left board-td board_Tsub"><a
-						href="#">어제 무슨 일이 있었냐면요!</a></td>
-					<td width=15% class="text-center board-td">민덕인</td>
-					<td width=20% class="text-center board-td">2017-12-12</td>
-					<td width=10% class="text-center board-td">30</td>
+						href="board_content.do?no=${vo.b_no }&page=${curpage}&grade=${vo.b_grade}">${vo.b_subject }</a></td>
+					<td width=15% class="text-center board-td">${vo.m_nick }</td>
+					<td width=20% class="text-center board-td"><fmt:formatDate
+							value="${vo.b_regdate }" pattern="yyyy-MM-dd" /></td>
+					<td width=10% class="text-center board-td">${vo.b_hit }</td>
+					<c:set var="cnt" value="${cnt=cnt-1}"></c:set>
 				</tr>
 			</c:forEach>
 		</table>
-		
+		</div>
+		</div>
 		<!-- 버튼, 페이지 -->
-		<div>
+		<div style="margin-top:10px">
 			<div>
-				<input type="button" class="btn boardBtn" value="글쓰기"
-					id="board_insertBtn">
+				<a href="board_insert.do?grade=${grade}"><input type="button" class="btn boardBtn" value="글쓰기"
+					id="board_insertBtn"></a>
 			</div>
 			<div style="height: 40px"></div>
 			<div id="board_page">
 				<center>
-					<a href="#"><</a>&nbsp;&nbsp;&nbsp;
-					<c:forEach var="i" begin="1" end="10">
-						<a href="#">${i }</a>&nbsp;
+					<a href="board_list.do?page=${curpage>1?curpage-1:curpage }&grade=${grade}"><</a>&nbsp;&nbsp;&nbsp;
+					<c:forEach var="i" begin="1" end="${totalpage }">
+						<a href="board_list.do?page=${i}&grade=${grade}">${i }</a>&nbsp;
 							</c:forEach>
-					&nbsp;&nbsp;&nbsp;<a href="#">></a>
+					&nbsp;&nbsp;&nbsp;<a
+						href="board_list.do?page=${curpage<totalpage?curpage+1:curpage }&grade=${grade}">></a>
 				</center>
 			</div>
 		</div>
-	</div>
+	
 </body>
 </html>

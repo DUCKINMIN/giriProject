@@ -23,6 +23,7 @@
 		<!-- PreparedStatement, ResultSet -->
 		<!-- resource : 각종 파일들 -->
 		<mapper resource="com/sist/dao/Search-mapper.xml"/>
+		<mapper resource="com/sist/board/dao/board-mapper.xml"/>
 		<mapper resource="com/sist/weekbest/Week-mapper.xml"/>
 	</mappers>
 </configuration>

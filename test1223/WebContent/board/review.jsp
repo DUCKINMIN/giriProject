@@ -21,7 +21,7 @@
 	height:150px;
 }
 .board_pro{
-    background-image: url('../image/pro.png');
+    background-image: url('image/pro.png');
     background-size: 100%;
     border-radius: 50%;
     width: 70px;
@@ -29,7 +29,7 @@
     margin:10px auto;
 }
 #board_replypro{
-	background-image: url('../image/kang.PNG');
+	background-image: url('image/kang.PNG');
 }
 .pro_name {
     margin-top: 13px;
@@ -116,7 +116,7 @@
 }
 
 #reply_pro {
-	background-image: url('../cb_Detail/image/pro.png');
+	background-image: url('image/pro.png');
 	background-size: 100%;
 	border-radius: 50%;
 	width: 40px;
@@ -231,7 +231,7 @@
 						<div class="board_pro"></div>
 						<div class="pro_name">
 							<!-- 사용자 닉네임 -->
-							USER
+							${sessionScope.m_nick }
 						</div>
 					</td>
 					<td width="90%"><textarea class="form-control" rows="5"

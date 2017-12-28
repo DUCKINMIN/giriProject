@@ -147,8 +147,8 @@ html, body {
 					class="dropdown-toggle" data-toggle="dropdown"><strong>커뮤니티<b
 							class="caret"></b></strong> </a>
 					<ul class="dropdown-menu">
-						<li><a id="dropdown_sub" href="../music/main.jsp?mode=6"><h5>썰전</h5></a></li>
-						<li><a id="dropdown_sub" href="../music/main.jsp?mode=12"><h5>고민상담</h5></a></li>
+						<li><a id="dropdown_sub" href="board_list.do"><h5>썰전</h5></a></li>
+						<li><a id="dropdown_sub" href="board_list.do?grade=1"><h5>고민상담</h5></a></li>
 					</ul></li>
 			</ul>
 			<!--< ul class="nav navbar-nav navbar-right">
