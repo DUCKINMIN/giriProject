@@ -19,13 +19,8 @@
 				$('#weekbest').html(res);
 			}
 		});
-		
-		
-		
-	
-});
 
-	
+	});
 </script>
 <style type="text/css">
 .row {
@@ -102,7 +97,7 @@
 }
 
 .like, .rating, .hit {
-	  padding: 20px;
+	padding: 20px;
 	height: 135px;
 	margin-top: 30px;
 	border-left: 6px solid rgb(255, 255, 255);
@@ -233,7 +228,7 @@
 		text-align: center;
 	}
 	.black_box {
-		width: 88%;
+		width: 100%;
 	}
 	.like img, .hit img {
 		width: 15px;
@@ -293,7 +288,9 @@
 </script>
 </head>
 <body>
+
 	<div class="main_north">
+
 		<div class="north_name">
 			<p style="color: white; font-size: 25pt;">ø¿¥√ º÷∑ŒµÈ¿∫</p>
 			<p style="color: white; font-size: 35pt;">ππ«œ∞Ì ≥Ó¡ˆ?</p>
@@ -312,6 +309,7 @@
 					</button>
 				</span>
 		</form>
+
 	</div>
 	</div>
 
