@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <script type="text/javascript">
-
 	(function($) {
 		var $fileBox = null;
 		$(function() {
@@ -40,7 +39,7 @@
 </head>
 <style>
 #board_pro {
-	background-image: url('../image/pro.png');
+	background-image: url('image/pro.png');
 	background-size: 100%;
 	border-radius: 50%;
 	width: 80px;
@@ -69,9 +68,11 @@
 	height: 50px;
 	border-bottom: 4px solid rgb(162, 0, 0);
 }
+
 #board_subTxt {
-	text-align: center;	
+	text-align: center;
 }
+
 #board_subTxt span {
 	/* line-height: 40px; */
 	font-size: 17px;
@@ -87,9 +88,11 @@
 #board_content {
 	width: 100%;
 }
-.form-control{
+
+.form-control {
 	resize: none;
 }
+
 #board_content p {
 	font-size: 17px;
 }
@@ -162,50 +165,92 @@
 	}
 }
 </style>
+<script type="text/javascript">
+	$(function() {
+		$('#upload01').on('change', function() {
+			readURL(this);
+		});
+		$("#board_insertBtn").click(function() {
+
+			//DB에서 NOT NULL이기 때문에
+			var subject = $('#board_subInput').val();
+			if (subject.trim() == "") {
+				$('#board_subInput').focus();
+				return;
+			}
+			var content = $('#b_content').val();
+			if (content.trim() == "") {
+				$('#b_content').focus();
+				return;
+			}
+
+			$('#frm').submit(); //데이터 전송
+
+		});
+	});
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#myimg').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+</script>
 <body>
 	<div>
 		<div style="height: 20px"></div>
 		<!-- 게시판 프로필 -->
-		<div id="board_pro"></div>
-		<div id="board_user">
-			<p id="board_name">배주현</p>
-		</div>
-		<div style="height: 30px"></div>
-		<!-- 게시판 insert -->
-		<table id="board_content">
-			<tr id="board_subject">
-				<td id="board_subTxt" width="7%">
-					<span>글제목</span>
-				</td>
-				<td width="93%"><input id="board_subInput"/></td>
-			</tr>
-			<tr>
-				<td height=20px></td>
-			</tr>
-			<tr>
-				<td width=100% colspan="2"><textarea class="form-control" rows="15" cols="100%"></textarea></td>
-			</tr>
-			<!-- 첨부파일 -->
-			<tr>
-				<td class="input-file" width=100% colspan="2" height=50px>
-					<!-- <input type="file" class="upload"> -->
-					<input type="text" readonly="readonly" class="file-name" /> 
-					<label for="upload01" class="file-label board_btn">사진 업로드</label> 
-					<input type="file" name="" id="upload01" class="file-upload" />
-				</td>
+		<form action="board_insert_ok.do" method="POST" id=frm enctype="multipart/form-data">
+			<div id="board_pro"></div>
+			<div id="board_user">
+				<p id="board_name">${sessionScope.m_nick }</p>
+				<input type="hidden" name="m_email" value="${sessionScope.m_email }">
+				<input type="hidden" name="grade" value="${grade }">
+			</div>
+			<div style="height: 30px"></div>
+			<!-- 게시판 insert -->
+			<table id="board_content">
+				<tr id="board_subject">
+					<td id="board_subTxt" width="7%"><span>글제목</span></td>
+					<td width="93%"><input id="board_subInput" name="b_subject" /></td>
+				</tr>
+				<tr>
+					<td height=20px></td>
+				</tr>
+				<tr>
+					<td width=100% colspan="2">
+					<textarea class="form-control" rows="15" cols="100%" id="b_content" name="b_content"></textarea>
+					</td>
+				</tr>
 
-			</tr>
-			<!-- 게시판 insert등록버튼 -->
-			<tr>
-				<td colspan="2" class="text-right" height=30px>
-					<input id="board_insertBtn" class="btn board_btn" type="button" value="등록">
-				</td>
-			</tr>
-		</table>
-			
-	</div>
-	<div>
-		
+				<!-- 첨부파일 -->
+				<tr>
+					<td class="input-file" width=100% colspan="2" height=50px>
+						<!-- <input type="file" class="upload"> --> <input type="text"
+						readonly="readonly" class="file-name" name="title" /> <label
+						for="upload01" class="file-label board_btn">사진 업로드</label> <input
+						type="file" name="uploadFile" id="upload01" class="file-upload"
+						onchange="javascript:$('#change').value=this.value" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div style="width: 100px; height: 100px">
+							<img id="myimg" src="" style="width: 100px; height: 100px">
+						</div>
+					</td>
+				</tr>
+				<!-- 게시판 insert등록버튼 -->
+				<tr>
+					<td colspan="2" class="text-right" height=30px><input
+						id="board_insertBtn" class="btn board_btn" type="button"
+						value="등록"></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>
