@@ -7,7 +7,7 @@ public class FileConfig {
 	public List<String> componentScan(String pack) {
 		List<String> list = new ArrayList<String>();
 		try {
-			String path = "C:\\Users\\sistMin\\git1\\test1222\\src\\";
+			String path = "C:\\git\\giriProject\\test1223\\src\\";
 			path=path+pack.replace(".", "\\");
 			File dir = new File(path);
 			File[] files = dir.listFiles();
