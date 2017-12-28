@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 
-<!-- css, js 연결 -->
+<!-- css, js 연결하기 -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
