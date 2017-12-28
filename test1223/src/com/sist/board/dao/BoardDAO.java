@@ -29,13 +29,14 @@ public class BoardDAO {
 		SqlSession session = ssf.openSession();
 		try {
 			list = session.selectList("boardList",map);
+			System.out.println("dao"+list.get(0));
 		}catch(Exception e) {
 			System.out.println("boardList : "+e.getMessage());
 		}finally {
 			if(session!=null)
 				session.close();
 		}
-		System.out.println("dao"+list.get(0));
+		
 		return list;
 	}
 	//grade별 게시물 수

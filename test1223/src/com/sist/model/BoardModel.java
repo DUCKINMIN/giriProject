@@ -36,6 +36,7 @@ public class BoardModel {
 		map.put("grade", igrade);
 		int totalpage = BoardDAO.boardTotalPage(igrade);
 		int boardCount = BoardDAO.boardListCount(igrade);
+		System.out.println("vo boardCount : "+boardCount);
 		List<BoardVO> list = BoardDAO.boardList(map);
 		
 		//list.jsp 로 값 전송(req.setAttribute())
