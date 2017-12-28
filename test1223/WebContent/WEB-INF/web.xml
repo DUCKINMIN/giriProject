@@ -6,7 +6,7 @@
   	<servlet-class>com.sist.controller.DispatcherServlet</servlet-class>
   	<init-param>
   		<param-name>contextConfigLocation</param-name>
-  		<param-value>C:\git\test1223\WebContent\WEB-INF\application-context.xml</param-value>
+  		<param-value>C:\git\giriProject\test1223\WebContent\WEB-INF\application-context.xml</param-value>
   	</init-param>
   </servlet>
   <servlet-mapping>
