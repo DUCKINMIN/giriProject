@@ -38,10 +38,54 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	$(".closebtn").click(function(){
-		$('#joinModal').modal('hide');
-		$('#idFindModal').modal('hide');
+	$(".closeemail").click(function(){
+		$("#emailfindcon").html("");
+		$("#name").val("");
+		$("#tel").val("");
+		$('#emailFindModal').modal('hide');
+	});
+	$(".closepwd").click(function(){
+		$("#pwdfindcon").html("");
+		$("#email").val("");
+		$("#tel").val("");
 		$('#pwdFindModal').modal('hide');
+	});
+	
+});
+$(function(){
+	$('#loginBtn').click(function(){
+		var email = $('#email').val();
+		var pwd = $('#pwd').val();
+		if (email.trim()=="") {
+			$('#logincon').html("<font color=red>아이디를 입력해주세요</font>");
+			$('#email').focus();
+			return;
+		} else if(pwd.trim()==""){
+			$('#logincon').html("<font color=red>비밀번호를 입력해주세요</font>");
+			$('#pwd').focus();
+			return;
+		}
+		
+		$.ajax({
+			type:"post",
+			url:"loginok.do",
+			data:{"email":email,"pwd":pwd},
+			success:function(data){
+				var count = data.trim();
+				if(count==0){
+					$('#logincon').html("<font color=red>아이디기 존재하지 않습니다</font>");
+					$('#email').val("");
+					$('#pwd').val("");
+					$('#email').focus();
+				} else if(count==2){
+					$('#logincon').html("<font color=red>비밀번호가 일치하지 않습니다</font>");
+					$('#pwd').val("");
+					$('#pwd').focus();
+				} else {
+					location.href="main.do";
+				}
+			}
+		});
 	});
 });
 </script>
@@ -50,30 +94,30 @@ $(function(){
 	<div>
 		<div class="row loginrow">
 			<div style="height: 20px"></div>
-			<form action="login_ok.do" method="post">
+			<form action="loginok.do" method="post">
     			<div class="login_div">
       				<input id="email" type="email" class="form-control login_input" name="email" placeholder="Email" required>
     			</div>
     			<div class="login_div">
-      				<input id="password" type="password" class="form-control login_input" name="password" placeholder="Password" required>
+      				<input id="pwd" type="text" class="form-control login_input" name="pwd" placeholder="Password" required>
    				</div>
+   				<div id="logincon" class="text-left"></div>
     			<br>
     			<div class="text-right login_text">
-    				<a href="join.do">회원가입</a><br>
-    				<a href="#idFindModal" data-toggle="modal">아이디 찾기</a> / 
+    				<a href="joinpage.do">회원가입</a><br>
+    				<a href="#emailFindModal" data-toggle="modal">아이디 찾기</a> / 
     				<a href="#pwdFindModal" data-toggle="modal">비밀번호 찾기</a>
     			</div>
     			<div class="text-center"><br>
-    				<button type="submit" class="btn login_btn">로그인</button>
+    				<button type="button" class="btn login_btn" id="loginBtn">로그인</button>
     			</div>
   			</form>
 		</div>
 	</div>
-	
 	<!-- 아이디찾기 -->
-    <div class="modal fade" id="idFindModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
+    <div class="modal fade" id="emailFindModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
     data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-sm">
         	<div class="modal-content">
             	<div class="modal-header">
                 	<button type="button" class="close closebtn" onclick="javascript:close()">
@@ -82,7 +126,7 @@ $(function(){
                     <h3 class="modal-title" id="myModalLabel">아이디 찾기</h3>
                 </div>
             	<div class="modal-body">
-            		<jsp:include page="idFind.jsp"/>
+            		<jsp:include page="emailFind.jsp"/>
             	</div>
         	</div>
     	</div>
@@ -90,7 +134,7 @@ $(function(){
 	<!-- 비밀번호찾기 -->
 	<div class="modal fade" id="pwdFindModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
 	data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-sm">
         	<div class="modal-content">
             	<div class="modal-header">
                 	<button type="button" class="close closebtn">

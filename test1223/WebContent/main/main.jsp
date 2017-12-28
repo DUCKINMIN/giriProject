@@ -21,7 +21,12 @@
 	-moz-box-sizing: border-box;
 	text-decoration: none;
 }
-
+a:link{
+	text-decoration:none;
+}
+a{
+	color:black;
+}
 .header {
 	background: #262626;
 	/* height: 80px; */
@@ -110,7 +115,16 @@ html, body {
 	display:inline;
 	margin: 0px auto;
 }
-
+@media screen and (min-width: 769px) {
+	#user_img {
+		width:80px; height:80px;
+	}
+}
+@media screen and (max-width: 770px) {
+	#user_img {
+		width:50px; height:50px;
+	}	
+}
 @media (max-width: 460px) {
   #footer {
   	height:160px;
@@ -158,12 +172,27 @@ html, body {
 				<!-- 로그인X -->
 				<!-- 입장하기로 보내기 -->
 			</c:if>
-			<c:if test="${sessionScope.id==null }">
-				<!-- 유저 -->
+			<!-- 09 -->
+			<c:if test="${sessionScope.m_email==null }">
+				<!-- 미로그인시 -->
 				<div class="navbar-right" id="navbar-main">
-					<div class="">
-						<img src="image/man.png" id="user_img" /> <font color="white">USER</font>
-					</div>
+						<a href="mypage.do">
+							<div>
+								<img src="image/men.png" id="user_img"/>
+							 	<font color="white">USER</font>
+							</div>
+						</a>
+				</div>
+			</c:if>
+			<c:if test="${sessionScope.m_email!=null }">
+				<!-- 로그인시 -->
+				<div class="navbar-right" id="navbar-main">
+						<a href="mypage.do">
+							<div>
+								<img src="/project/member/profile/${sessionScope.m_profile }" id="user_img"/>
+							 	<font color="white">${sessionScope.m_nick }</font>
+							</div>
+						</a>
 				</div>
 			</c:if>
 		</div>

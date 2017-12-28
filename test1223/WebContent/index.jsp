@@ -11,8 +11,6 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<!-- <link rel="stylesheet" type="text/css" href="shadow/css/shadowbox.css" /> -->
-<!-- <script type="text/javascript" src="shadow/js/shadowbox.js"></script> -->
 </head>
 <style>
 .bg {
@@ -137,9 +135,10 @@
 				<div id="enterBtn" data-toggle="modal" data-target="#loginModal">
 					<p>입장하기</p>
 				</div>
-				<!-- 로그인 모달 -->
+				<div id="login" data-toggle="modal" data-target="#loginModal"> <img id="btn_enter" /></div>
+				<!-- 09-->
             	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            	data-backdrop="static" data-keyboard="false">
+            	data-backdrop="static" data-keyboard="fals`e">
                		<div class="modal-dialog">
                   		<div class="modal-content">
                      		<div class="modal-header">
@@ -154,9 +153,6 @@
                  		</div>
                		</div>
             	</div>
-				<div id="intro">
-					<span>끼리끼리 소개</span>
-				</div>
 				<!-- 모달 팝업 -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
