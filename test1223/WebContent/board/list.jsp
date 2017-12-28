@@ -126,7 +126,7 @@
 				<th width=20% class="text-center board-th">작성일</th>
 				<th width=15% class="text-center board-th">조회수</th>
 			</tr>
-			<c:set var="cnt" value="${cnt=cnt-(curpage*10-10)}"></c:set>
+			<c:set var="cnt" value="${cnt-(curpage*10-10)}"></c:set>
 			<c:forEach var="vo" items="${list }">
 				<tr id="board_tr">
 					<td width=10% class="text-center board-td board_Tno">${cnt}</td>
@@ -136,7 +136,7 @@
 					<td width=20% class="text-center board-td"><fmt:formatDate
 							value="${vo.b_regdate }" pattern="yyyy-MM-dd" /></td>
 					<td width=10% class="text-center board-td">${vo.b_hit }</td>
-					<c:set var="cnt" value="${cnt=cnt-1}"></c:set>
+					<c:set var="cnt" value="${cnt-1}"></c:set>
 				</tr>
 			</c:forEach>
 		</table>
@@ -152,7 +152,7 @@
 			<div id="board_page">
 				<center>
 					<a href="board_list.do?page=${curpage>1?curpage-1:curpage }&grade=${grade}"><</a>&nbsp;&nbsp;&nbsp;
-					<c:forEach var="i" begin="1" end="${totalpage }">
+					<c:forEach var="i" begin="1" end="${totalpage<1?1:totalpage }">
 						<a href="board_list.do?page=${i}&grade=${grade}">${i }</a>&nbsp;
 							</c:forEach>
 					&nbsp;&nbsp;&nbsp;<a
