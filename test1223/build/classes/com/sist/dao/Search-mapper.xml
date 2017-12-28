@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.Search-mapper">
+	<!-- XML:namespace = 자바에서는 패키지랑 같은거임 -->
+
+	<!-- 상세보기 시작 -->
+	<select id="jumpoCheck" resultType="SearchVo" parameterType="java.util.Map">
+		SELECT cb_name, a_addr1, cb_grade, cb_hit
+		FROM clubBar
+		WHERE a_addr1 LIKE '%'||#{search_name}||'%' OR cb_name LIKE '%'||#{addr_name}||'%'
+	</select>
+
+
+</mapper>
+
