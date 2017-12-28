@@ -48,7 +48,7 @@
 			SELECT NVL(MAX(b_no)+1,1) as b_no FROM board
 		</selectKey>
 		INSERT INTO board VALUES(
-			#{b_no}, #{b_subject}, #{m_email}, SYSDATE, #{b_content}, #{b_grade}, 0
+			#{b_no}, #{b_subject}, #{m_email}, SYSDATE, #{b_content}, #{b_grade}, 0 , #{b_img_cnt}
 		)
 	</insert>
 </mapper>

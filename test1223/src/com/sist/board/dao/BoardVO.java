@@ -23,6 +23,12 @@ public class BoardVO {
 	private String m_nick; //m_emailÀÌ¶û JOIN
 	private int b_img_cnt;
 	
+	public int getB_img_cnt() {
+		return b_img_cnt;
+	}
+	public void setB_img_cnt(int b_img_cnt) {
+		this.b_img_cnt = b_img_cnt;
+	}
 	public String getM_nick() {
 		return m_nick;
 	}

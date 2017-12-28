@@ -96,7 +96,7 @@ public class BoardModel {
 		//파일업로드 라이브러리
 		MultipartRequest mr = new MultipartRequest(req, path, size, enctype);
 		String filename = mr.getOriginalFileName("uploadFile");
-		
+		int b_img_cnt = 0;
 		String m_email = mr.getParameter("m_email");
 		String b_subject = mr.getParameter("b_subject");
 		String b_content = mr.getParameter("b_content");
@@ -108,17 +108,21 @@ public class BoardModel {
 		vo.setB_subject(b_subject);
 		vo.setB_content(b_content);
 		vo.setB_grade(Integer.parseInt(b_grade));
-		BoardDAO.boardInsertData(vo); //입력
+		
 		int b_no = BoardDAO.boardInsertCount()+2;
 		
 		if (filename != null) {
 			System.out.println("b_no"+b_no);
+			b_img_cnt = b_img_cnt + 1;
             File f = new File(path+"\\"+filename);
             File f2 = new File(path+"\\board_"+b_no+".jpg");
             if (!f.renameTo(f2)) {
                System.err.println("이름 변경 에러 : " + f);
             }   
          }
+		vo.setB_img_cnt(b_img_cnt);
+		System.out.println("b_img_cnt : " +b_img_cnt);
+		BoardDAO.boardInsertData(vo); //입력
 		req.setAttribute("grade", b_grade);
 		return "board_list.do?grade="+b_grade; //_ok일때 .do~
 	}

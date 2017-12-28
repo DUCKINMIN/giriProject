@@ -84,10 +84,11 @@
 		<!-- 게시판 상세보기 내용 -->
 		<div id="board_content">
 			<p>${vo.b_content }</p>
-
+			<%-- <c:if test="${vo.b_img_cnt>0 }"> --%>
 				<p>
 					<img width="100%" src="boardImg/board_${vo.b_no }.jpg"/>
 				</p>
+			<%-- </c:if> --%>
 		</div>
 		<!-- 게시판 상세보기 버튼 -->
 		<div id="board_cotentBtn">
