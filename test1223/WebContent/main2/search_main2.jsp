@@ -7,9 +7,9 @@
 <head>
 <meta charset="EUC-KR" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script> -->
 <style type="text/css">
 .row {
 	margin: 0px auto;

@@ -3,6 +3,7 @@
 
 <configuration>
 	<typeAliases>
+		<typeAlias type="com.sist.board.dao.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/>
 		<typeAlias type="com.sist.weekbest.WeekBestVO" alias="WeekBestVO"/>
 		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/>
