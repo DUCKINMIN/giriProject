@@ -153,6 +153,10 @@
                  		</div>
                		</div>
             	</div>
+            	
+            	<div id="intro">
+					<span>³¢¸®³¢¸® ¼Ò°³</span>
+				</div>
 				<!-- ¸ð´Þ ÆË¾÷ -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">

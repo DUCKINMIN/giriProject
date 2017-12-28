@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.*;
 @Controller
 public class MemberModel {
-	String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\test1223\\member\\profile";
+	String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\test1223\\member\\profile";
 	// 회원가입페이지이동
 	@RequestMapping("joinpage.do")
 	public String joinpage(HttpServletRequest req, HttpServletResponse res) {		
@@ -77,7 +77,9 @@ public class MemberModel {
 			vo.setM_birth(mr.getParameter("birth"));
 			vo.setM_tel(mr.getParameter("tel"));
 			vo.setM_grade(Integer.parseInt(mr.getParameter("grade")));
-			if (mr.getParameter("companyno")=="") {
+			String companyno = mr.getParameter("companyno");
+			System.out.println(companyno);
+			if (companyno.equals("")) {
 				vo.setM_companyno("없음");
 			} else {
 				vo.setM_companyno(mr.getParameter("companyno"));

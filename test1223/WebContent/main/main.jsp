@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -165,20 +165,13 @@ html, body {
 						<li><a id="dropdown_sub" href="board_list.do?grade=1"><h5>고민상담</h5></a></li>
 					</ul></li>
 			</ul>
-			<!--< ul class="nav navbar-nav navbar-right">
-				<li><a href="#">로그인</a></li>
-			</ul> -->
-			<c:if test="${sessionScope.id==null }">
-				<!-- 로그인X -->
-				<!-- 입장하기로 보내기 -->
-			</c:if>
 			<!-- 09 -->
 			<c:if test="${sessionScope.m_email==null }">
 				<!-- 미로그인시 -->
 				<div class="navbar-right" id="navbar-main">
 						<a href="mypage.do">
 							<div>
-								<img src="image/men.png" id="user_img"/>
+								<img src="image/man.png" id="user_img"/>
 							 	<font color="white">USER</font>
 							</div>
 						</a>
@@ -189,7 +182,7 @@ html, body {
 				<div class="navbar-right" id="navbar-main">
 						<a href="mypage.do">
 							<div>
-								<img src="/project/member/profile/${sessionScope.m_profile }" id="user_img"/>
+								<img src="member/profile/${sessionScope.m_profile }" id="user_img"/>
 							 	<font color="white">${sessionScope.m_nick }</font>
 							</div>
 						</a>

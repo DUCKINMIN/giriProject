@@ -153,7 +153,7 @@ function readURL(input) {
 		</div>
 		<div style="width: 200px; margin: 0px auto;">
 				<div style="border: 1px none; width: 200px; height: 200px;" >
-					<img id="myimg" alt="${vo.m_profile }" src="/test1223/member/profile/${vo.m_profile }" style="width: 200px; height: 200px; border-radius: 50%"/>
+					<img id="myimg" alt="${vo.m_profile }" src="member/profile/${vo.m_profile }" style="width: 200px; height: 200px; border-radius: 50%"/>
 				</div>
 				<div class="text-right" style="height: 50px">
 					<input type="hidden" readonly="readonly" id="change">
