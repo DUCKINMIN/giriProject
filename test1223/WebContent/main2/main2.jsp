@@ -326,7 +326,7 @@
 				<h4>실시간 핫3</h4>
 				<div class="input-group">
 					<span class="input-group-btn">
-						<h1>사진</h1>
+						<h1>photo</h1>
 					</span>
 				</div>
 			</div>
