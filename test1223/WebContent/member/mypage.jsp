@@ -125,7 +125,7 @@ $(function(){
 				<tr>
 					<td width="30%" class="text-center" rowspan="3" valign="middle">
 						<span id="userimage">
-							<img id="myprofile" alt="${sessionScope.m_profile }" src="/project/member/profile/${sessionScope.m_profile }">
+							<img id="myprofile" alt="${sessionScope.m_profile }" src="/test1223/member/profile/${sessionScope.m_profile }">
 						</span>
 					</td>
 				</tr>
