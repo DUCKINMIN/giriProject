@@ -18,6 +18,7 @@ import com.sist.weekbest.WeekBestVO;
 public class MainModel {
 	@RequestMapping("main.do")
 	public String main_page(HttpServletRequest req, HttpServletResponse res) {
+		req.setAttribute("main_jsp", "../main2/main2.jsp");
 		return "main/main.jsp";
 	}
 
