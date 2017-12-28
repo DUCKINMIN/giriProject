@@ -107,7 +107,7 @@ $(function(){
 		});
 	});
 	
-	//모달
+	//모달.
 	$(".closepwd").click(function(){
 		//$("#pwdupdatecon").html("");
 		$("#cur_pwd").val("");
