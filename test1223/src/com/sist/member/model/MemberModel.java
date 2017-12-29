@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -59,16 +60,14 @@ public class MemberModel {
 			MultipartRequest mr = new MultipartRequest(req, path, size, enctype, new DefaultFileRenamePolicy());	
 			String m_profile = mr.getOriginalFileName("profile");
 			vo.setM_email(mr.getParameter("email"));
-			if (m_profile == null) {
-				vo.setM_profile(" ");
-			} else {
+			
+			if (m_profile != null) {
 				File f = new File(path+"\\"+m_profile);
 				File f2 = new File(path+"\\"+vo.getM_email()+".jpg");
 				if (!f.renameTo(f2)) {
 					System.err.println("이름 변경 에러 : " + f);
 				}
 				vo.setM_profile(f2.getName());
-				
 			}
 			vo.setM_pwd(mr.getParameter("pwd"));
 			vo.setM_name(mr.getParameter("name"));
@@ -77,13 +76,7 @@ public class MemberModel {
 			vo.setM_birth(mr.getParameter("birth"));
 			vo.setM_tel(mr.getParameter("tel"));
 			vo.setM_grade(Integer.parseInt(mr.getParameter("grade")));
-			String companyno = mr.getParameter("companyno");
-			System.out.println(companyno);
-			if (companyno.equals("")) {
-				vo.setM_companyno("없음");
-			} else {
-				vo.setM_companyno(mr.getParameter("companyno"));
-			}
+			vo.setM_companyno(mr.getParameter("companyno"));
 			MemberDao.memberJoin(vo);
 			req.setAttribute("main_jsp", "../member/join_ok.jsp");
 		} catch (Exception e) {
@@ -99,12 +92,12 @@ public class MemberModel {
 		MemberVo vo = MemberDao.emailCheck(m_email);
 		if (vo.getCount()==0) {
 			req.setAttribute("vo", vo);
-			return "member/login_ok.jsp;";
+			return "member/login_ok.jsp";
 		} else {
 			vo = MemberDao.isLogin(m_email, m_pwd);
 			if (vo.getCount()==2) {
 				req.setAttribute("vo", vo);
-				return "member/login_ok.jsp;";
+				return "member/login_ok.jsp";
 			} else {
 				req.setAttribute("vo", vo);
 				HttpSession session = req.getSession();
@@ -118,7 +111,7 @@ public class MemberModel {
 				} else {
 					session.setAttribute("m_sex", "여");
 				}
-				return "member/login_ok.jsp;";
+				return "member/login_ok.jsp";
 			}
 		}
 	}
@@ -207,6 +200,7 @@ public class MemberModel {
 	@RequestMapping("myinfo_update.do")
 	public String myinfo_update(HttpServletRequest req, HttpServletResponse res){
 		try {
+			HttpSession session = req.getSession();
 			req.setCharacterEncoding("EUC-KR");		
 			MemberVo vo = new MemberVo();
 			int size = 1024*1024*100;
@@ -214,15 +208,13 @@ public class MemberModel {
 			MultipartRequest mr = new MultipartRequest(req, path, size, enctype);	
 			String m_profile = mr.getOriginalFileName("profile");
 			String m_nick = mr.getParameter("nick");
-			String mynick = mr.getParameter("mynick");
 			String m_email = mr.getParameter("email");
-			String m_grade = mr.getParameter("grade");
+			
 			vo.setM_nick(m_nick);
 			vo.setM_email(m_email);
-			vo.setM_grade(Integer.parseInt(m_grade));
-			if (m_profile == null) {
-				vo.setM_profile(" ");
-			} else {
+			vo.setM_companyno(mr.getParameter("companyno"));
+			vo.setM_grade(Integer.parseInt(mr.getParameter("grade")));
+			if (m_profile != null) {
 				File f3 = new File(path+"\\"+m_email+".jpg");
 				f3.delete();
 				File f = new File(path+"\\"+m_profile);
@@ -231,20 +223,26 @@ public class MemberModel {
 					System.err.println("이름 변경 에러 : " + f);
 				} else {
 					vo.setM_profile(f2.getName());
-				}
-			}
-			if (m_grade.equals("2")) {
-				if (mr.getParameter("companyno")=="") {
-					vo.setM_companyno("없음");
-				} else {
-					vo.setM_companyno(mr.getParameter("companyno"));
+					session.setAttribute("m_profile", vo.getM_profile());
 				}
 			}
 			MemberDao.myinfo_update(vo);
-			req.setAttribute("main_jsp", "../member/myinfo_update_ok.jsp");
+			session.setAttribute("m_nick", vo.getM_nick());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return "member/myinfo_update_ok.jsp";
+		return "member/myinfo_update.jsp";
+	}
+	
+	public static String pwd_update(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		String m_email = (String) session.getAttribute("m_email");
+		String pwd = req.getParameter("changepwd");
+		Map map = new HashMap();
+		map.put("m_email", m_email);
+		map.put("pwd", pwd);
+		MemberDao.pwd_update(map);
+		session.setAttribute("m_pwd", pwd);
+		return "member/myinfo_update.jsp";
 	}
 }

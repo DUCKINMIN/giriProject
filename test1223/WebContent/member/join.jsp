@@ -71,6 +71,7 @@ $(function(){
 		$('#nickcon').html("");
 		$('#birthcon').html("");
 		$('#gradecon').html("");
+		$('#telcon').html("");
 		var email = $("#email").val();
 		var nick = $("#nick").val();
 		var pwd = $("#pwd").val();
@@ -81,11 +82,11 @@ $(function(){
 		var ceo = $("#ceo").prop("checked");
 		// 핸드폰인증
 		if (userno.trim()=="") {
-			$('#telcheckcon').html("<font color=red>핸드폰 인증이 필요합니다</font>");
+			$('#telcon').html("<font color=red>핸드폰 인증이 필요합니다</font>");
 			$("#tel").focus();
 			return;
 		} else if(checkno!=userno){
-			$('#telcheckcon').html("<font color=red>인증번호가 일치하지않습니다</font>");
+			$('#telcon').html("<font color=red>인증번호가 일치하지않습니다</font>");
 			$("#telcheck").focus();
 			return;
 		} 
@@ -161,7 +162,7 @@ $(function(){
 	
 	// 핸드폰번호 체크
 	$("#tel_btn").click(function(){
-		$('#telcheckcon').html("");
+		$('#telcon').html("");
 		var number = $("#tel").val();
 		if (number.trim()=="") {
 			$('#telcon').html("<font color=red>핸드폰번호를 입력해주세요</font>");
@@ -170,14 +171,15 @@ $(function(){
 			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");
 			$(".telcheck").hide(500);			
 		} else if(number.trim().length == 11){
-			$('#telcon').html("");
 			$(".telcheck").show(500);
+			$('#telcon').html("<font color=blue>인증번호를 전송했습니다 인증번호를 입력해주세요</font>");
 			
 			$.ajax({
 				type:"post",
 				url:"telCheck.do",
 				success:function(data){
 					checkno = data.trim();
+					alert(checkno);
 				}
 			});
 		}
@@ -187,9 +189,9 @@ $(function(){
 	$("#telcheck_btn").click(function(){
 		var userno = $("#telcheck").val();
 		if(userno!=checkno){
-			$('#telcheckcon').html("<font color=red>인증번호가 일치하지않습니다</font>");
+			$('#telcon').html("<font color=red>인증번호가 일치하지않습니다</font>");
 		} else {
-			$('#telcheckcon').html("<font color=blue>인증번호 일치</font>");
+			$('#telcon').html("<font color=blue>인증번호 일치</font>");
 		}
 	});
 	
@@ -281,8 +283,8 @@ function readURL(input) {
 			</div>
 			<form action="join.do" method="post" enctype="multipart/form-data">
 				<div style="width: 200px; margin: 0px auto;">
-				<div style="border: 1px none; width: 200px; height: 170px;" >
-					<img id="myimg" src="member/image/my.png" style="width: 200px; height: 170px;"/>
+				<div style="width: 200px; height: 200px;" >
+					<img id="myimg" src="member/image/my.png" style="width: 200px; height: 200px; border-radius: 50%"/>
 				</div>
 				<div class="text-right" style="height: 50px">
 					<input type="hidden" readonly="readonly" id="change">
@@ -324,7 +326,6 @@ function readURL(input) {
 					<input type="button" id="telcheck_btn" value="확인" class="btn col-xs-4">
 				</div>	
 				<div id="telcon" class="text-left"></div>
-				<div id="telcheckcon" class="text-left"></div>
 				<div class="text-center">
 					<label>생년월일</label>
 				</div>

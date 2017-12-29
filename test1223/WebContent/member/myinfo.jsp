@@ -53,12 +53,22 @@ $(function(){
 	var nickcount = 1;
 	$("#updateBtn").click(function(){
 		$('#nickcon').html("");
+		$('#gradecon').html("");
 		var nick = $("#nick").val();
 		var mynick = $("#mynick").val();
+		var grade = $("#grade").val();
 		if(nick.trim()==""){
 			$('#nickcon').html("<font color=red>닉네임을 입력해주세요</font>");
 			$("#nick").focus();
 			return;
+		}
+		if(grade==2){
+			var companyno = $("#companyno").val();
+			if (companyno.trim()=="") {
+				$('#gradecon').html("<font color=red>사업자 등록번호를 입력해주세요</font>");
+				$("#companyno").focus();
+				return;
+			}
 		}
 		if (mynick==nick||nickcount==0) {
 			$.ajax({
@@ -107,12 +117,13 @@ $(function(){
 		});
 	});
 	
-	//모달.
+	//모달
 	$(".closepwd").click(function(){
 		//$("#pwdupdatecon").html("");
-		$("#cur_pwd").val("");
-		$("#change_pwd").val("");
-		$("#check_pwd").val("");
+		$("#curpwd").val("");
+		$("#changepwd").val("");
+		$("#checkpwd").val("");
+		$("#pwdcon").html("");
 		$('#pwdUpdateModal').modal('hide');
 	});
 	$(".closetel").click(function(){
@@ -121,6 +132,8 @@ $(function(){
 		$("#tel").val("");
 		$('#telUpdateModal').modal('hide');
 	});
+	
+	
 });
 $(function() {
     $("#profile").on('change', function(){
@@ -165,7 +178,7 @@ function readURL(input) {
 		<div class="result_div">
 			<input type="text" class="result_input form-control" value="${vo.m_email }" readonly/>
 			<input type="hidden" value="${vo.m_email }" name="email">
-			<input type="hidden" value="${vo.m_grade }" name="grade">
+			<input type="hidden" value="${vo.m_grade }" name="grade" id="grade">
 		</div>
 		<div class="text-center">
 			<label>이메일</label>
@@ -182,7 +195,7 @@ function readURL(input) {
 		<div class="text-center">
 			<label>닉네임</label>
 		</div>
-		<div class="result_div" >
+		<div class="result_div">
 			<input type="text" id="nick" name="nick" class="result_input col-xs-8" value="${vo.m_nick }" />
 			<input type="button" id="nick_check" class="btn col-xs-4" value="중복체크">
 			<input type="hidden" id="mynick" name="mynick" value="${sessionScope.m_nick}">
@@ -199,7 +212,7 @@ function readURL(input) {
 		</div>
 		<c:if test="${vo.m_grade=='1' }">
 		<div class="result_div">
-			<input type="text" class="result_input form-control" value="없음" readonly/>
+			<input type="text" class="result_input form-control" value="-" readonly/>
 		</div>
 		</c:if>
 		<c:if test="${vo.m_grade=='2' }">
@@ -207,6 +220,7 @@ function readURL(input) {
 			<input type="text" id="companyno" name="companyno" class="result_input form-control" value=${vo.m_companyno } maxlength="10"/>
 		</div>
 		</c:if>
+		<div id="gradecon" class="text-left"></div>
 		<div class="text-center">
 			<label>가입날짜</label>
 		</div>
@@ -234,20 +248,24 @@ function readURL(input) {
                     <h3 class="modal-title" id="myModalLabel">비밀번호 수정</h3>
                 </div>
             	<div class="modal-body">
+            		<form method="post" action="pwd_update.do" id="pwdfrm">
             		<div class="info_input">
-            			현재 비밀번호 <input type="text" id="cur_pwd" class="form-control">
+            			현재 비밀번호 <input type="text" id="curpwd" class="form-control">
+            			<input type="hidden" value="${sessionScope.m_pwd }" id="mypwd">
+            		</div>
+					<div class="info_input">
+            			변경할 비밀번호 <input type="text" id="changepwd" name="changepwd" class="form-control">
             		</div>
             		<div class="info_input">
-            			변경할 비밀번호 <input type="text" id="change_pwd" name="change_pwd"class="form-control">
+            			비밀번호 확인 <input type="text" id="checkpwd" class="form-control">
             		</div>
-            		<div class="info_input">
-            			비밀번호 확인 <input type="text" id="check_pwd" class="form-control">
-            		</div>
-            		
+            		<div id="pwdcon" class="text-left" style="margin-left: 20px;"></div>
+            		<br>
             		<div class="info_input text-center">
             			<input type="button" value="수정" class="btn info_btn" id="pwdChangeBtn">
             			<input type="button" value="취소" class="btn info_btn closepwd">
             		</div>
+            		</form>
             	</div>
         	</div>
     	</div>

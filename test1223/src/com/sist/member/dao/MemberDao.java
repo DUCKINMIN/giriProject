@@ -71,7 +71,7 @@ public class MemberDao {
 			} else {
 				vo.setCount(1);
 			}
-			if (vo.getM_profile().equals(" ")) {
+			if (vo.getM_profile().equals("-")) {
 				vo.setM_profile("defaultprofile.png");
 			} 
 		} catch (Exception e) {
@@ -129,46 +129,51 @@ public class MemberDao {
 		SqlSession session = ssf.openSession();
 		try {
 			vo = session.selectOne("memberInfo",m_email);
-			if (vo.getM_profile().equals(" ")) {
+			if (vo.getM_profile().equals("-")) {
 				vo.setM_profile("defaultprofile.png");
-			}
+			} 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("memberInfo : "+e.getMessage());
 		} finally {
 			if(session!=null) session.close();
 		}
 		return vo;
 	}
+	// mynick 중복체크
+		public static MemberVo myNickCheck(Map map) {
+			MemberVo vo = new MemberVo();
+			SqlSession session = ssf.openSession();
+			try {
+				vo.setCount(session.selectOne("myNickCheck",map));
+			} catch (Exception e) {
+				System.out.println("myNickCheck : "+e.getMessage());
+			} finally {
+				if(session!=null) session.close();
+			}
+			return vo;
+		}
 	// 회원정보 수정
 	public static void myinfo_update(MemberVo vo) {
 		SqlSession session = ssf.openSession(true);
 		try {
-			if (vo.getM_grade()==2) { //점주회원
-				session.update("myinfo_update", vo);
-			} else {	// 일반회원
-				session.update("myinfo_update2", vo);
-			}
+			session.update("myinfo_update", vo);
 		} catch (Exception e) {
 			System.out.println("myinfo_update : "+e.getMessage());
 		} finally {
 			if(session!=null) session.close();
 		}
 	}
-	// mynick 중복체크
-	public static MemberVo myNickCheck(Map map) {
-		MemberVo vo = new MemberVo();
-		SqlSession session = ssf.openSession();
+	// 비밀번호 수정
+	public static void pwd_update(Map map) {
+		SqlSession session = ssf.openSession(true);
 		try {
-			System.out.println(map.get("mynick")+"   "+map.get("m_nick"));
-			vo.setCount(session.selectOne("myNickCheck",map));
+			session.update("pwd_update", map);
 		} catch (Exception e) {
-			System.out.println("myNickCheck : "+e.getMessage());
+			System.out.println("pwd_update : "+e.getMessage());
 		} finally {
 			if(session!=null) session.close();
 		}
-		return vo;
 	}
-	
 	
 	
 	
