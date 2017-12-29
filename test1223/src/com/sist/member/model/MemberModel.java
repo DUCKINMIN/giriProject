@@ -18,7 +18,7 @@ import java.util.*;
 @Controller
 public class MemberModel {
 	String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\test1223\\member\\profile";
-	// 회원가입페이지이동
+	// 회원가입페이지이동{
 	@RequestMapping("joinpage.do")
 	public String joinpage(HttpServletRequest req, HttpServletResponse res) {		
 		req.setAttribute("main_jsp", "../member/join.jsp");
@@ -233,8 +233,9 @@ public class MemberModel {
 		}
 		return "member/myinfo_update.jsp";
 	}
-	
-	public static String pwd_update(HttpServletRequest req, HttpServletResponse res) {
+	// 비밀번호 수정
+	@RequestMapping("pwd_update.do")
+	public String pwd_update(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		String m_email = (String) session.getAttribute("m_email");
 		String pwd = req.getParameter("changepwd");
@@ -245,4 +246,26 @@ public class MemberModel {
 		session.setAttribute("m_pwd", pwd);
 		return "member/myinfo_update.jsp";
 	}
+	// 핸드폰번호 수정
+	@RequestMapping("tel_update.do")
+	public String tel_update(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		String m_email = (String) session.getAttribute("m_email");
+		String tel = req.getParameter("tel");
+		Map map = new HashMap();
+		map.put("m_email", m_email);
+		map.put("tel", tel);
+		MemberDao.tel_update(map);
+		return "member/myinfo_update.jsp";
+	}
+	// 회원탈퇴
+		@RequestMapping("member_delete.do")
+		public String member_delete(HttpServletRequest req, HttpServletResponse res) throws Exception{
+			HttpSession session = req.getSession();
+			String m_email = (String) session.getAttribute("m_email");
+			File file = new File(path+"\\"+m_email+".jpg");
+			file.delete();
+			MemberDao.member_delete(m_email);
+			return "index.jsp";
+		}
 }

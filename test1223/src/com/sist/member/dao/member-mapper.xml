@@ -91,5 +91,17 @@
 		SET m_pwd = #{pwd}
 		WHERE m_email = #{m_email}
 	</update>
+	<!-- 핸드폰번호 수정 -->
+	<update id="tel_update" parameterType="java.util.Map">
+		UPDATE member
+		SET m_tel = #{tel}
+		WHERE m_email = #{m_email}
+	</update>
+	<!-- 회원탈퇴 -->
+	<delete id="member_delete" parameterType="String">
+		DELETE FROM member WHERE m_email=#{m_email}
+	</delete>
+	
 </mapper>
+
 

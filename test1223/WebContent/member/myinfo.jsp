@@ -81,7 +81,13 @@ $(function(){
 						$('#nickcon').html("<font color=red>닉네임 중복확인을 해주세요</font>");
 						$('#nick').focus();
 					} else {
-						$("form").submit();
+						var answer = confirm ("회원정보를 수정하시겠습니까?");
+						if (answer) {
+							$("#infofrm").submit();
+							alert("수정되었습니다");
+						} else {
+							return;
+						}
 					}
 				}
 			});
@@ -116,10 +122,131 @@ $(function(){
 			}
 		});
 	});
+
+	// pwd수정
+	$("#pwdChangeBtn").click(function(){
+		$("#pwdcon").html("");
+		var mypwd = ${sessionScope.m_pwd };
+		var curpwd = $("#curpwd").val();
+		var changepwd = $("#changepwd").val();
+		var checkpwd = $("#checkpwd").val();
+		
+		if (curpwd.trim()=="") {
+			$("#pwdcon").html("<font color=red>현재 비밀번호를 입력해주세요</font>");	
+			$("#curpwd").focus();
+			return;
+		}
+		if (changepwd.trim()=="") {
+			$("#pwdcon").html("<font color=red>변경할 비밀번호를 입력해주세요</font>");	
+			$("#changepwd").focus();
+			return;
+		}
+		if (checkpwd.trim()=="") {
+			$("#pwdcon").html("<font color=red>변경할 비밀번호를 한번더 입력해주세요</font>");	
+			$("#checkpwd").focus();
+			return;
+		}
+		if (mypwd!=curpwd) {
+			$("#pwdcon").html("<font color=red>현재 비밀번호가 일치하지 않습니다</font>");
+			return;
+		}
+		if(changepwd.trim()!=checkpwd.trim()){
+			$("#pwdcon").html("<font color=red>변경할 비밀번호가 일치하지 않습니다</font>");
+			return;
+		}
+		var answer = confirm ("비밀번호를 수정하시겠습니까?");
+		if (answer) {
+			$("#pwdfrm").submit();
+			alert("수정되었습니다");
+		} else {
+			return;
+		}
+	});
 	
-	//모달
+	// 핸드폰번호 체크
+	var checkno;
+	$("#telBtn").click(function(){
+		$('#telcon').html("");
+		var number = $("#tel").val();
+		if (number.trim()=="") {
+			$('#telcon').html("<font color=red>핸드폰번호를 입력해주세요</font>");
+			$(".telcheck").hide(500);
+			$("#tel").focus();
+		} else if(number.trim().length < 11){
+			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");
+			$(".telcheck").hide(500);			
+			$("#tel").focus();
+		} else if(number.trim().length == 11){
+			$(".telcheck").show(500);
+			$('#telcon').html("<font color=blue>인증번호를 전송했습니다 인증번호를 입력해주세요</font>");
+			$("#telcheck").focus();
+			$.ajax({
+				type:"post",
+				url:"telCheck.do",
+				success:function(data){
+					checkno = data.trim();
+					alert(checkno);
+				}
+			});
+		}
+	});
+	// 인증번호 일치여부
+	$("#telcheckBtn").click(function(){
+		var userno = $("#userno").val();
+		if(userno!=checkno){
+			$('#telcon').html("<font color=red>인증번호가 일치하지않습니다</font>");
+			$("#userno").focus();
+		} else {
+			$('#telcon').html("<font color=blue>인증번호 일치</font>");
+		}
+	});
+	
+	$("#telChangeBtn").click(function(){
+		var userno = $("#userno").val();
+		if (userno.trim()=="") {
+			$('#telcon').html("<font color=red>핸드폰 인증이 필요합니다</font>");
+			$("#tel").focus();
+			return;
+		} else if(checkno!=userno){
+			$('#telcon').html("<font color=red>인증번호가 일치하지않습니다</font>");
+			$("#userno").focus();
+			return;
+		}
+		var answer = confirm ("핸드폰번호를 수정하시겠습니까?");
+		if (answer) {
+			$("#telfrm").submit();
+			alert("수정되었습니다");
+		} else {
+			return;
+		}
+	});
+	
+	$("#deleteBtn").click(function(){
+		$("#deletecon").html("");
+		var pwd = $("#deletepwd").val();
+		var mypwd = ${sessionScope.m_pwd};
+		alert(mypwd+","+pwd)
+		if (pwd.trim()=="") {
+			$('#deletecon').html("<font color=red>비밀번호를 입력해주세요</font>");
+			$("#deletepwd").focus();
+			return;
+		} else if(pwd!=mypwd){
+			$('#deletecon').html("<font color=red>비밀번호가 일치하지않습니다</font>");
+			$("#deletepwd").focus();
+			return;
+		}
+		var answer = confirm ("정말 탈퇴하시겠습니까? 탈퇴 후 모든정보는 되돌릴수 없습니다");
+		if (answer) {
+			$("#deletefrm").submit();
+			alert("탈퇴되었습니다");
+		} else {
+			return;
+		}
+	});
+	
+	
+	// 모달
 	$(".closepwd").click(function(){
-		//$("#pwdupdatecon").html("");
 		$("#curpwd").val("");
 		$("#changepwd").val("");
 		$("#checkpwd").val("");
@@ -127,14 +254,20 @@ $(function(){
 		$('#pwdUpdateModal').modal('hide');
 	});
 	$(".closetel").click(function(){
-		//$("#telupdatecon").html("");
-		$("#name").val("");
-		$("#tel").val("");
+		$("#tel").val("${vo.m_tel }");
+		$("#telcheck").val("");
+		$('#telcon').html("");
+		$(".telcheck").hide();
 		$('#telUpdateModal').modal('hide');
 	});
-	
+	$(".closedelete").click(function(){
+		$("#deletepwd").val("");
+		$('#deletecon').html("");
+		$('#memberDeleteModal').modal('hide');
+	});
 	
 });
+
 $(function() {
     $("#profile").on('change', function(){
         readURL(this);
@@ -158,9 +291,9 @@ function readURL(input) {
 		<h4><img alt="like" src="member/image/user.png" width="25px">&nbsp; 개인정보</h4>
 	</div>
 	<div class="text-right">
-		<a href="#"><font color="red">※회원탈퇴※</font></a>
+		<a href="#memberDeleteModal" data-toggle="modal"><font color="red">※회원탈퇴※</font></a>
 	</div>			
-	<form method="post" action="myinfo_update.do" enctype="multipart/form-data">
+	<form method="post" action="myinfo_update.do" enctype="multipart/form-data" id="infofrm">
 		<div class="text-center"> 
 			<label>프로필 사진</label>
 		</div>
@@ -248,14 +381,14 @@ function readURL(input) {
                     <h3 class="modal-title" id="myModalLabel">비밀번호 수정</h3>
                 </div>
             	<div class="modal-body">
-            		<form method="post" action="pwd_update.do" id="pwdfrm">
             		<div class="info_input">
             			현재 비밀번호 <input type="text" id="curpwd" class="form-control">
-            			<input type="hidden" value="${sessionScope.m_pwd }" id="mypwd">
             		</div>
+            		<form method="post" action="pwd_update.do" id="pwdfrm">
 					<div class="info_input">
             			변경할 비밀번호 <input type="text" id="changepwd" name="changepwd" class="form-control">
             		</div>
+            		</form>
             		<div class="info_input">
             			비밀번호 확인 <input type="text" id="checkpwd" class="form-control">
             		</div>
@@ -265,7 +398,7 @@ function readURL(input) {
             			<input type="button" value="수정" class="btn info_btn" id="pwdChangeBtn">
             			<input type="button" value="취소" class="btn info_btn closepwd">
             		</div>
-            		</form>
+            		
             	</div>
         	</div>
     	</div>
@@ -282,15 +415,21 @@ function readURL(input) {
                     <h3 class="modal-title" id="myModalLabel">핸드폰번호 수정</h3>
                 </div>
             	<div class="modal-body">
+            		<form method="post" action="tel_update.do" id="telfrm">
             		<div class="info_input" >
-            			핸드폰번호 <input type="text" class="form-control" value="${vo.m_tel }">
+            			핸드폰번호 <input type="text" class="form-control" value="${vo.m_tel }" id="tel" name="tel" maxlength="11">
             		</div>
+            		</form>
        				<div class="text-right" style="height: 50px; margin-right: 20px;">
-       					<input type="button" value="인증번호 전송" width="150px" class="btn info_btn" style="width: 100px">
+       					<input type="button" value="인증번호 전송" class="btn info_btn" id="telBtn" style="width: 110px">
        				</div>
-            		<div class="info_input">
-            			인증번호 입력<input type="text" class="form-control">
+            		<div class="info_input telcheck" style="display: none;">
+            			인증번호 입력<input type="text" class="form-control" id="userno" maxlength="5">
             		</div>
+            		<div class="text-right telcheck" style="height: 50px; margin-right: 20px; display: none;">
+       					<input type="button" value="확인" class="btn info_btn" id="telcheckBtn" style="width: 110px">
+       				</div>
+            		<div id="telcon" class="text-left" style="margin-left: 20px;"></div>
             		<div class="info_input text-center">
             			<input type="button" value="수정" class="btn info_btn" id="telChangeBtn">
             			<input type="button" value="취소" class="btn info_btn closetel">
@@ -299,5 +438,36 @@ function readURL(input) {
         	</div>
     	</div>
 	</div>
+	<!-- 회원탈퇴 -->
+	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
+    data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog modal-sm">
+        	<div class="modal-content">
+            	<div class="modal-header">
+                	<button type="button" class="close closebtn" onclick="javascript:close()">
+                    	<span aria-hidden="true" style="color:white">X</span><span class="sr-only">Close</span>
+                    </button>
+                    <h3 class="modal-title" id="myModalLabel">회원 탈퇴</h3>
+                </div>
+            	<div class="modal-body">
+            		<div class="info_input">
+            			탈퇴를 하시려면 비밀번호를 입력해주세요
+            		</div>
+            		<form method="post" action="member_delete.do" id="deletefrm">
+					<div class="info_input">
+            			비밀번호 <input type="text" id="deletepwd" class="form-control">
+            		</div>
+            		</form>
+            		<div id="deletecon" class="text-left" style="margin-left: 20px;"></div>
+            		<br>
+            		<div class="info_input text-center">
+            			<input type="button" value="탈퇴" class="btn info_btn" id="deleteBtn">
+            			<input type="button" value="취소" class="btn info_btn closedelete">
+            		</div>
+            		
+            	</div>
+        	</div>
+    	</div>
+	</div>	
 </body>
 </html>

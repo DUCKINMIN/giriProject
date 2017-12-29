@@ -319,7 +319,7 @@ function readURL(input) {
 				</div>
 				<div class="result_div">
 					<input type="text" id="tel" name="tel" placeholder="'―' 없이 입력해주세요." class="result_input col-xs-8" maxlength="11"/>		
-					<input type="button" id="tel_btn" value="인증번호 보내기" class="btn col-xs-4">
+					<input type="button" id="tel_btn" value="인증번호 전송" class="btn col-xs-4">
 				</div>
 				<div class="result_div telcheck" style="display: none;">
 					<input type="text" id="telcheck" name="telcheck" size="50px" class="result_input col-xs-8" placeholder="전송된 인증번호 5자리를 입력해주세요." maxlength="5"/>

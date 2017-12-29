@@ -174,7 +174,28 @@ public class MemberDao {
 			if(session!=null) session.close();
 		}
 	}
-	
+	// 핸드폰번호 수정
+	public static void tel_update(Map map) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("tel_update", map);
+		} catch (Exception e) {
+			System.out.println("tel_update : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+	}
+	// 회원탈퇴
+	public static void member_delete(String m_email) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.delete("member_delete", m_email);
+		} catch (Exception e) {
+			System.out.println("member_delete : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+	}
 	
 	
 	
