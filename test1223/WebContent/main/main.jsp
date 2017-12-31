@@ -156,7 +156,7 @@ html, body {
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav" id="nav">
 				<li class="nav_main"><a href="main.jsp?mode=1"><strong>HOT3</strong></a></li>
-				<li class="nav_main"><a href="main.jsp?mode=2"><strong>이벤트</strong></a></li>
+				<li class="nav_main"><a href="event.do"><strong>이벤트</strong></a></li>
 				<li class="dropdown nav_main"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"><strong>커뮤니티<b
 							class="caret"></b></strong> </a>

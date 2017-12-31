@@ -9,6 +9,9 @@
 		<typeAlias type="com.sist.weekbest.WeekBestVO" alias="WeekBestVO"/>
 		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/>
 		<typeAlias type="com.sist.member.dao.MemberVo" alias="MemberVo"/><!-- 09 -->
+		<typeAlias type="com.sist.event.dao.EventVO" alias="EventVO"/>
+		
+		
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -27,5 +30,6 @@
 		<mapper resource="com/sist/board/dao/board-mapper.xml"/>
 		<mapper resource="com/sist/weekbest/Week-mapper.xml"/>
 		<mapper resource="com/sist/member/dao/member-mapper.xml"/><!-- 09 -->
+		<mapper resource="com/sist/event/dao/event-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.sist.event.dao.event-mapper">
   	<select id="eventListData" resultType="EventVO" parameterType="java.util.Map">
-  		SELECT e_no,e_name,TO_CHAR(e_startdate,'YYYY-MM-DD') e_startdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,e_picture,num 
-  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,e_picture,rownum as num 
-  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,e_picture 
+  		SELECT e_no,e_name,TO_CHAR(e_startdate,'YYYY-MM-DD') e_startdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
+  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content 
   		FROM event ORDER BY e_enddate ASC ))
   		WHERE num BETWEEN #{start} AND #{end}
   	</select>
@@ -23,9 +23,9 @@
   	</select>
   	<!-- 진행중 검색  -->
   	<select id="eventOngoingData" parameterType="java.util.Map" resultType="EventVO">
-  		SELECT e_no,e_name,TO_CHAR(e_startdate,'YYYY-MM-DD') e_startdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,e_picture,num 
-  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,e_picture,rownum as num 
-  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,e_picture 
+  		SELECT e_no,e_name,TO_CHAR(e_startdate,'YYYY-MM-DD') e_startdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
+  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content 
   		FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC ))
   		WHERE num BETWEEN #{start} AND #{end}
   	</select>
@@ -34,9 +34,9 @@
   	</select>
   	<!-- 종료 검색 -->
   	<select id="eventEndData" parameterType="java.util.Map" resultType="EventVO">
-  		SELECT e_no,e_name,TO_CHAR(e_startdate,'YYYY-MM-DD') e_startdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,e_picture,num 
-  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,e_picture,rownum as num 
-  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,e_picture 
+  		SELECT e_no,e_name,TO_CHAR(e_startdate,'YYYY-MM-DD') e_startdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
+  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT e_no,e_name,e_startdate,e_enddate,e_content 
   		FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC ))
   		WHERE num BETWEEN #{start} AND #{end}
   	</select>

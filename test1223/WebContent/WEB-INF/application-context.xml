@@ -4,4 +4,5 @@
 	<context:component-scan base-package="com.sist.member.model"/> 
 	<context:component-scan base-package="com.sist.dao"/>
 	<context:component-scan base-package="com.sist.weekbest"/> 
+	<context:component-scan base-package="com.sist.event.model"/> 
 </beans>
