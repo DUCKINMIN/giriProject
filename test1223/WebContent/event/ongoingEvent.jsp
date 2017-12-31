@@ -136,7 +136,7 @@
 		      				<tr>
 		      					<th class="text-center" width="20%">일시</th>
 		      					<td width="80%">
-		      					${vo.e_startdate }~${vo.e_enddate }	</td>
+		      					${vo.e_regdate }~${vo.e_enddate }	</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" id="modal_content" width="20%">내용</th>
