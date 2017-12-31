@@ -13,9 +13,10 @@
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
-   (function($) {
+  (function($) {
       var $fileBox = null;
       $(function() {
+    	  
          init();
       })
       function init() {
@@ -41,9 +42,12 @@
             })
          })
       }
-   })(jQuery);
+   })(jQuery); 
 </script>
 <style type="text/css">
+	.container{
+		height:820px;
+	}
 	.resultrow{
 		margin: 0px auto;
 		width: 65%;
@@ -163,8 +167,8 @@
 <script type="text/javascript">
 	$(function(){
 		$('#gender').click(function(){
-			
 		});
+		
 	});
 </script>
 </head>
@@ -175,7 +179,7 @@
 			<div style="height: 90px">
 				<h1>이벤트 등록</h1>
 			</div>
-			<form>
+			<form  action="eventInsert.do" method="post" enctype="multipart/form-data">
 				<div class="result_div">
 					<input type="name" id="name" name="name" placeholder="이벤트 이름을 입력해주세요." size="50px" class="result_input form-control" required/>
 				</div>
@@ -189,22 +193,19 @@
 					<label id="label">이벤트 종료일</label>
 				</div>
 				<div class="result_div">
-					<input type="date" id="closeDate" name="closeDate" size="60px" class="result_input form-control" required />
+					<input type="date" id="closeDate" name="endDate" size="60px" class="result_input form-control" required />
 				</div>
 				<div class="text-left labelDiv" >
 					<label id="label">이벤트 포스터를 올려주세요</label>
 				</div>
-				<div id="uploadDiv">		
-				   
-            <div class="input-file" width=100% colspan="2" height=50px>
-               <!-- <input type="file" class="upload"> -->
-               <label for="upload01" class="file-label board_btn">사진 업로드</label> 
-               <input type="text" readonly="readonly" class="file-name" /> 
-               <input type="file" name="" id="upload01" class="file-upload" />
-            </div>
-
-         
 				
+				<div id="uploadDiv">		   
+		            <div class="input-file" width=100% colspan="2" height=50px>
+		               <!-- <input type="file" class="upload"> -->
+		               <label for="upload" class="file-label board_btn">사진 업로드</label> 
+		               <input type="text" readonly="readonly" class="file-name" /> 
+		               <input type="file" name="upload" id="upload" class="file-upload" />
+		            </div>				
 					<!-- <input type="file" name="upload" id="upload" value="포스터 올리기" sytle="color:white; width:100px; height:auto; 
 							background-color:#AF4848"> -->
 				</div>

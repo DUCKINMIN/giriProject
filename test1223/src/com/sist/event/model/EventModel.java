@@ -119,7 +119,7 @@ public class EventModel {
 		//ÇÊ¼ö
 		vo.setE_no(eno);
 		vo.setE_name(name);
-		vo.setE_startdate(startdate);
+		vo.setE_regdate(startdate);
 		vo.setE_enddate(enddate);
 		vo.setE_content(content);
 

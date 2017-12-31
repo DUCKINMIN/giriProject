@@ -4,7 +4,7 @@ public class EventVO {
 	private int e_no;
 	private int cb_no;
 	private String e_name;
-	private String e_startdate;
+	private String e_regdate;
 	private String e_enddate;
 	private String e_content;
 	private String e_picture;
@@ -66,10 +66,11 @@ public class EventVO {
 	public void setE_interest(int e_interest) {
 		this.e_interest = e_interest;
 	}
-	public String getE_startdate() {
-		return e_startdate;
+	public String getE_regdate() {
+		return e_regdate;
 	}
-	public void setE_startdate(String e_startdate) {
-		this.e_startdate = e_startdate;
+	public void setE_regdate(String e_regdate) {
+		this.e_regdate = e_regdate;
 	}
+	
 	}
