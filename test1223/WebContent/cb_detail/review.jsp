@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
-
+<script src="path/to/js/star-rating.min.js" type="text/javascript"></script>
 <style>
 .reply_btn, .reply_insert_btn, .re_reply_btn {
 	color: #262626;
@@ -37,7 +39,7 @@
 }
 
 #reply_pro {
-	background-image: url('../cb_Detail/image/pro.png');
+	
 	background-size: 100%;
 	border-radius: 50%;
 	width: 40px;
@@ -134,6 +136,10 @@
 					 "@"+ $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
 			$("#re_content_" + re_btn_id[2]).focus();
 		});
+		
+		
+		
+		
 	});
 </script>
 
@@ -142,59 +148,80 @@
 	<div class="review">
 		<h2>Review</h2>
 		<div class="review_insert">
-			<table>
-				<!-- 사용자 정보 & 리뷰 내용 -->
-				<tr>
-					<td width="10%" class="text-center">
-						<div id="board_pro"></div>
-						<div class="pro_name">
-							<!-- 사용자 닉네임 -->
-							USER
+			<form action="cbc_new_insert.do" method="post">
+				<table>
+					<!-- 사용자 정보 & 리뷰 내용 -->
+					<tr>
+						<td width="10%" class="text-center">
+							<div id="board_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
+							<div class="pro_name">
+								<!-- 사용자 닉네임 -->
+								<input type="hidden" name="m_email" value="ys@naver.com">
+								<input type="hidden" name="cb_no" value="${vo.cb_no }">
+								<input type="hidden" name="review" value="1">
+								
+								USER
+							</div>
+						</td>
+						<td width="90%">
+							<textarea class="form-control" rows="5" cols="100%" name="cbc_content"></textarea>
+						</td>
+						
+						<!-- 별점 & 버튼 -->
+					</tr>
+					<td>
+						<div class="list_star">
+							<!-- 별점주기 -->
+							<span class="cbc_rating" id="cbc_rating_insert">
+								  <span class="input">
+								    <c:forEach var="i" begin="1" end="10">
+										  		<input type="radio" name="cbc_rating" id="r${i }" value="${i/2}">
+										  		<label for="r${i }" style="width: ${i*10}px; z-index:${11-i}">${i/2}</label>
+								 	</c:forEach>
+								 </span>
+								 <div class="text-center">
+								 	<output for="cbc_rating"><strong>0</strong></output>
+								 </div>
+					 		</span>
 						</div>
 					</td>
-					<td width="90%"><textarea class="form-control" rows="5"
-							cols="100%"></textarea></td>
-					<!-- 별점 & 버튼 -->
-				</tr>
-				<td>
-					<div class="list_star">
-						<!-- 별점주기 -->
-						<img src="../cb_Detail/image/rating.png">
-					</div>
-				</td>
-				<td class="text-right">
-					<div class="star_insert">
-						<input type="button" class="btn review_btn"
-							value="등&nbsp;&nbsp;&nbsp;&nbsp;록" />
-					</div>
-
-				</td>
-				<tr>
-
-				</tr>
-			</table>
+					<td class="text-right">
+						<div class="star_insert">
+							<input type="submit" class="btn review_btn"
+								value="등&nbsp;&nbsp;&nbsp;&nbsp;록" />
+						</div>
+	
+					</td>
+					<tr>
+	
+					</tr>
+				</table>
+			</form>
 
 		</div>
 
 		<!-- 리뷰 리스트 -->
 		<div class="review_reply">
-			<c:forEach var="i" begin="1" end="5">
+			<c:forEach var="cbc_vo" items="${cbc_list }" varStatus="i">
 				<table class="reviewlist">
 					<!-- 사용자 정보 & 내용 -->
 					<tr>
 						<td width="10%" class="text-center user_info">
-							<div id="board_pro"></div>
+							<div id="board_pro"  style="background-image: url('cb_detail/image/pro.png')"></div>
 							<div class="pro_name">
 								<!-- 사용자 닉네임 -->
-								리뷰닉네임
+								<!-- 임시로 이메일 -->
+								${cbc_vo.m_nick }
+								<!-- 리뷰닉네임 -->
 							</div>
 						</td>
 						<td width="90%" class="text-left">
 							<div class="review_content">
 								<p>
-									저 어제 여기 다녀왔는데요....<br> 사장님은 너무 친절하셨는데 알바생인지 매니저였는지 모르겠지만..<br>
+									<!-- 저 어제 여기 다녀왔는데요....<br> 사장님은 너무 친절하셨는데 알바생인지 매니저였는지 모르겠지만..<br>
 									너무 불친절했어요...기분 좋게 놀러갔다가 기분 나쁜채로 나왔네요..<br> 알바생만 아니면 너무
-									놀기좋은 곳입니다!!! 어제 썸남생겼네요!!! ㅎㅎ헤개꿀
+									놀기좋은 곳입니다!!! 어제 썸남생겼네요!!! ㅎㅎ헤개꿀  -->
+									${cbc_vo.cbc_content }
 								</p>
 							</div>
 						</td>
@@ -204,17 +231,26 @@
 					<tr>
 						<td width="10%" class="text-center">
 							<div class="star list_star">
-								<img src="../cb_Detail/image/rating.png">
-								<h4>5.0</h4>
+								<span class="star-input">
+								  <span class="input">
+								    <c:forEach var="j" begin="1" end="10">
+								    	<input type="radio" name="cbc_rating_${i.index }" id="r${j }" value="${j/2}" 
+								    	<c:if test="${(cbc_vo.cbc_rating*2) == j}">checked="checked"</c:if>
+								    	<c:if test="${(cbc_vo.cbc_rating*2) != j}">disabled="disabled"</c:if> >
+										 <label for="r${j }" style="width: ${j*10}px; z-index:${11-j}">${j/2}</label>
+								 	</c:forEach>
+								 </span>
+					 		</span>
+								<h4>${cbc_vo.cbc_rating}<!-- 4.5 --></h4>
 							</div>
 						</td>
 						<td width="90%" class="text-right"><span>
-								<!-- 리뷰등록날짜 -->2017-12-15&nbsp;&nbsp;&nbsp;
-						</span> <button class="btn reply_btn" id="reply_btn_${i }">댓&nbsp;&nbsp;&nbsp;글</button></td>
+								<!-- 리뷰등록날짜 --> ${cbc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp;
+						</span> <button class="btn reply_btn" id="reply_btn_${i.index }">댓&nbsp;&nbsp;&nbsp;글</button></td>
 					</tr>
 				</table>
 				<!-- 대댓글 리스트 & 대댓글 등록 -->
-				<div class="reply_wrap" id="reply_${i }">
+				<div class="reply_wrap" id="reply_${i.index }">
 					<c:forEach var="j" begin="1" end="3">
 						<!-- 대댓글 리스트 -->
 						<table class="reply_list">
@@ -223,8 +259,8 @@
 								<td widht="3%" class="reply_tab"></td>
 								<td rowspan="2" width="100px"
 									class="text-center user_info reply_user">
-									<div id="reply_pro"></div>
-									<div class="reply_name" id="re_name_${i }_${j }">리뷰닉네임</div>
+									<div id="reply_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
+									<div class="reply_name" id="re_name_${i.index }_${j }">리뷰닉네임</div>
 								</td>
 								<td width="87%" class="text-left reply_content_td">
 									<div class="reply_content">
@@ -236,9 +272,16 @@
 							<!-- 별점 & 댓글 버튼 -->
 							<tr>
 								<td colspan="2"></td>
-								<td width="87%" class="text-right"><span>
+								<td width="87%" class="text-right">
+									<span>
 										<!-- 리뷰등록날짜 -->2017-12-15&nbsp;&nbsp;&nbsp;
-								</span> <button class="btn re_reply_btn"  id="re_btn_${i }_${j }">댓&nbsp;&nbsp;&nbsp;글</button></td>
+									</span> 
+									<c:if test="">
+										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
+										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
+									</c:if>
+									<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
+								</td>
 							</tr>
 						</table>
 				
@@ -260,12 +303,12 @@
 							<td widht="3%" class="reply_tab"></td>
 							<td rowspan="2" width="100px"
 								class="text-center user_info reply_user">
-								<div id="reply_pro"></div>
+								<div id="reply_pro"  style="background-image: url('cb_detail/image/pro.png')"></div>
 								<div class="reply_name"><!-- 사용자 닉네임 -->리뷰닉네임</div>
 							</td>
 							<td width="87%" class="text-left reply_content_td">
 								<div class="re_content_insert">
-									<textarea class="form-control" rows="2" id="re_content_${i }">dd</textarea>
+									<textarea class="form-control" rows="2" id="re_content_${i.index }"></textarea>
 								</div>
 							</td>
 						</tr>

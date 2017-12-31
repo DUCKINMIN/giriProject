@@ -10,6 +10,9 @@
 		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/>
 		<typeAlias type="com.sist.member.dao.MemberVo" alias="MemberVo"/><!-- 09 -->
 		<typeAlias type="com.sist.event.dao.EventVO" alias="EventVO"/>
+		<typeAlias type="com.sist.clubbar.dao.ClubBarVO" alias="ClubBarVO"/><!-- yeseul -->
+		<typeAlias type="com.sist.clubbar.dao.MotelVO" alias="MotelVO"/><!-- yeseul -->
+		<typeAlias type="com.sist.clubbar.dao.ClubBarCommentVO" alias="ClubBarCommentVO"/><!-- yeseul -->
 		
 		
 	</typeAliases>
@@ -31,5 +34,6 @@
 		<mapper resource="com/sist/weekbest/Week-mapper.xml"/>
 		<mapper resource="com/sist/member/dao/member-mapper.xml"/><!-- 09 -->
 		<mapper resource="com/sist/event/dao/event-mapper.xml"/>
+		<mapper resource="com/sist/clubbar/dao/clubbar-mapper.xml"/><!-- yeseul -->
 	</mappers>
 </configuration>
