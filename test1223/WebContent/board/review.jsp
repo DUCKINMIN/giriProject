@@ -73,6 +73,9 @@
 .review {
    margin-bottom: 50px;
 }
+.mypro{
+	background-image: url('member/profile/${sessionScope.m_profile}');
+}
 #board_page a {
    color : #262626;
 }
@@ -148,16 +151,16 @@
    <div class="review">
       <h2>Review</h2>
       <div class="review_insert">
-         <form action="cbc_new_insert.do" method="post">
+         <form action="reply_new_insert.do" method="post">
             <table>
                <!-- 사용자 정보 & 리뷰 내용 -->
                <tr>
                   <td width="10%" class="text-center">
-                     <div id="board_pro" style="background-image: url('member/profile/${sessionScope.m_profile }')"></div>
+                     <div class="mypro board_pro"></div>
                      <div class="pro_name">
                         <!-- 사용자 닉네임 -->
                         <input type="hidden" name="m_email" value="${sessionScope.m_email }">
-                      <%--   <input type="hidden" name="cb_no" value="${vo.cb_no }"> --%>
+                        <input type="hidden" name="b_no" value="${vo.b_no }">
                         <input type="hidden" name="review" value="1">
                          ${sessionScope.m_nick }
                      </div>
@@ -191,7 +194,7 @@
                <!-- 사용자 정보 & 내용 -->
                <tr>
                   <td width="10%" class="text-center user_info">
-                     <div id="board_pro"  style="background-image: url('member/profile/${sessionScope.m_profile}.jpg')"></div>
+                     <div class="board_pro"></div>
                      <div class="pro_name">
                         <!-- 사용자 닉네임 -->
                         <!-- 임시로 이메일 -->
@@ -274,7 +277,7 @@
                      <td widht="3%" class="reply_tab"></td>
                      <td rowspan="2" width="100px"
                         class="text-center user_info reply_user">
-                        <div id="reply_pro"  style="background-image: url('member/profile/${sessionScope.m_profile}.jpg')"></div>
+                        <div id="reply_pro" class="mypro"></div>
                         <div class="reply_name"><!-- 사용자 닉네임 -->리뷰닉네임</div>
                      </td>
                      <td width="87%" class="text-left reply_content_td">

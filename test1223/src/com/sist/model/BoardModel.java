@@ -62,7 +62,7 @@ public class BoardModel {
 		map.put("b_no", b_no);
 		map.put("grade", igrade);
 		BoardDAO.boardHitIncrement(map);//조회수 증가
-		BoardVO vo = BoardDAO.boardContentData(map); //상세보기
+		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
 		System.out.println("vo.getbno : " + vo.getB_no());
 		//System.out.println("vo.getbno : " + vo.getB_img_cnt());
 		req.setAttribute("vo", vo);
@@ -145,4 +145,24 @@ public class BoardModel {
 		req.setAttribute("grade", b_grade);*/
 		return "board_list.do?page="+page+"&grade="+b_grade;
 	}
+	//글 수정
+	@RequestMapping("board_update.do")
+	public String board_update(HttpServletRequest req, HttpServletResponse res) {
+		String b_no = req.getParameter("no");
+		// DB
+		BoardVO vo = BoardDAO.boardUpdateData(Integer.parseInt(b_no));
+
+		req.setAttribute("vo", vo);
+		req.setAttribute("grade", vo.getB_grade());
+		req.setAttribute("main_jsp", "../board/board_main.jsp");
+		req.setAttribute("sub_jsp", "../board/update.jsp");
+		return "main/main.jsp";
+	}
+	@RequestMapping("board_update_ok.do")
+	public String board_update_ok(HttpServletRequest req, HttpServletResponse res) {
+		
+		return "board_content.do";
+	}
+	
+	
 }

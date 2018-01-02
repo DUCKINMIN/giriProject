@@ -10,7 +10,9 @@
 </head>
 <style>
 #board_contentPro {
-	background-image: url("member/profile/${vo.m_email}.jpg");
+	background-image: url('member/profile/${vo.m_profile}');
+}
+.board_pro{
 	background-size: 100%;
 	border-radius: 50%;
 	width: 80px;
@@ -67,7 +69,7 @@
 	<!-- 게시판 상세보기 -->
 	<div class="content_wrap">
 		<div style="height: 20px"></div>
-		<div id="board_contentPro"></div>
+		<div id="board_contentPro" class="board_pro"></div>
 		<div id="board_user">
 			<p id="board_name">${vo.m_nick }</p>
 			<p id="board_regdate">
@@ -92,11 +94,13 @@
 		</div>
 		<!-- 게시판 상세보기 버튼 -->
 		<div id="board_contentBtn">
-			<input id="board_updateBtn" class="btn board_btn board_contentBtn"
-				type="button" value="수정"> 
+			<c:if test="${vo.m_email==sessionScope.m_email }">
+			<a href="board_update.do?no=${vo.b_no }">
+				<input id="board_updateBtn" class="btn board_btn board_contentBtn"
+					type="button" value="수정"></a>
 			<input class="btn board_btn board_contentBtn" type="button" value="삭제"
-					 id="deleteBtn" data-toggle="modal" data-target="#deleteModal"
-			>
+					 id="deleteBtn" data-toggle="modal" data-target="#deleteModal">
+			</c:if>
 		<!-- 	<div id="delete" data-toggle="modal" data-target="#deleteModal">
 				<img id="btn_delete" />
 			</div> -->

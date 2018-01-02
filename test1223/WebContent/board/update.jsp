@@ -97,7 +97,7 @@
 	font-size: 17px;
 }
 
-#board_insertBtn {
+#board_updateBtn {
 	background-color: rgb(162, 0, 0);
 	color: white;
 }
@@ -170,7 +170,7 @@
 		$('#upload01').on('change', function() {
 			readURL(this);
 		});
-		$("#board_insertBtn").click(function() {
+		$("#board_updateBtn").click(function() {
 
 			//DB에서 NOT NULL이기 때문에
 			var subject = $('#board_subInput').val();
@@ -203,26 +203,26 @@
 	<div>
 		<div style="height: 20px"></div>
 		<!-- 게시판 프로필 -->
-		<form action="board_insert_ok.do" method="POST" id=frm enctype="multipart/form-data">
+		<form action="board_update_ok.do" method="POST" id=frm enctype="multipart/form-data">
 			<div id="board_pro"></div>
 			<div id="board_user">
 				<p id="board_name">${sessionScope.m_nick }</p>
 				<input type="hidden" name="m_email" value="${sessionScope.m_email }">
-				<input type="hidden" name="grade" value="${grade }">
+				<input type="hidden" name="grade" value="${vo.b_grade }">
 			</div>
 			<div style="height: 30px"></div>
 			<!-- 게시판 insert -->
 			<table id="board_content">
 				<tr id="board_subject">
 					<td id="board_subTxt" width="7%"><span>글제목</span></td>
-					<td width="93%"><input id="board_subInput" name="b_subject" /></td>
+					<td width="93%"><input id="board_subInput" name="b_subject" value="${vo.b_subject }"/></td>
 				</tr>
 				<tr>
 					<td height=20px></td>
 				</tr>
 				<tr>
 					<td width=100% colspan="2">
-					<textarea class="form-control" rows="15" cols="100%" id="b_content" name="b_content"></textarea>
+					<textarea class="form-control" rows="15" cols="100%" id="b_content" name="b_content">${vo.b_content }</textarea>
 					</td>
 				</tr>
 
@@ -238,16 +238,16 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<div style="width: 100px; height: 100px">
-							<img id="myimg" src="" style="width: 100px; height: 100px">
+						<div style="width: 200px; height: 200px">
+							<img id="myimg" src="board/boardImg/board_${vo.b_no }.jpg">
 						</div>
 					</td>
 				</tr>
 				<!-- 게시판 insert등록버튼 -->
 				<tr>
 					<td colspan="2" class="text-right" height=30px><input
-						id="board_insertBtn" class="btn board_btn" type="button"
-						value="등록"></td>
+						id="board_updateBtn" class="btn board_btn" type="button"
+						value="수정"></td>
 				</tr>
 			</table>
 		</form>

@@ -7,7 +7,7 @@
 		SELECT b_no, b_subject, m_nick, b_regdate, b_grade, b_hit, num
 		FROM (SELECT b_no, b_subject, m_nick,b_regdate, b_grade, b_hit, rownum as num 
 		FROM (SELECT b.b_no, b.b_subject, m.m_nick, b.b_regdate, b.b_grade, b.b_hit
-		FROM board b, member m where b_grade=#{grade} AND b.m_email=m.m_email ORDER BY b.b_no DESC)) 
+		FROM board b, member m WHERE b_grade=#{grade} AND b.m_email=m.m_email ORDER BY b.b_no DESC)) 
 		WHERE num BETWEEN #{start} AND #{end}
 	</select>
 	
@@ -23,10 +23,10 @@
 	</select>
 	
 	<!-- 상세보기 -->
-	<select id="boardContentData" resultType="BoardVO" parameterType="java.util.Map">
-		SELECT b_no, m.m_nick, b_subject, b_regdate, b_grade, b_hit, b_content, b_img_cnt
+	<select id="boardContentData" resultType="BoardVO" parameterType="int">
+		SELECT b_no, m.m_nick, m.m_email, m.m_profile, b_subject, b_regdate, b_grade, b_hit, b_content, b_img_cnt
 		FROM board b, member m
-		WHERE b_grade=#{grade} AND b_no=#{b_no} AND b.m_email=m.m_email
+		WHERE b_no=#{b_no} AND b.m_email=m.m_email
 	</select>
 	<!-- 조회수 증가 -->
 	<update id="boardHitIncrement" parameterType="java.util.Map">
@@ -56,4 +56,11 @@
 		DELETE FROM board
 		WHERE b_no = #{b_no}
 	</delete>
+	
+	<!-- 게시물 수정 -->
+	<update id="boardUpdateData" parameterType="BoardVO">
+		UPDATE SET
+		b_subject=#{b_subject}, b_content=#{b_content}, #{b_img_cnt}
+		WHERE b_no = #{b_no}
+	</update>
 </mapper>

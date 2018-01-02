@@ -1,5 +1,7 @@
 package com.sist.board.dao;
 import java.util.*;
+
+import com.sist.member.dao.MemberVo;
 /*
  * CREATE TABLE board(
 b_no NUMBER CONSTRAINT b_no_pk PRIMARY KEY,
@@ -21,6 +23,15 @@ public class BoardVO {
 	private int b_grade;
 	private int b_hit;
 	private String m_nick; //m_emailÀÌ¶û JOIN
+	private String m_profile;
+
+	
+	public String getM_profile() {
+		return m_profile;
+	}
+	public void setM_profile(String m_profile) {
+		this.m_profile = m_profile;
+	}
 	private int b_img_cnt;
 	
 	public int getB_img_cnt() {

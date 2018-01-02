@@ -71,11 +71,11 @@ public class BoardDAO {
 	}
 	
 	//상세보기
-	public static BoardVO boardContentData(Map map) {
+	public static BoardVO boardContentData(int b_no) {
 		BoardVO vo = new BoardVO();
 		SqlSession session = ssf.openSession();
 		try {
-			vo = session.selectOne("boardContentData",map);
+			vo = session.selectOne("boardContentData",b_no);
 		}catch(Exception e) {
 			System.out.println("boardContentData : "+e.getMessage());
 		}finally {
@@ -136,5 +136,22 @@ public class BoardDAO {
 			if(session!=null) 
 				session.close();
 		}
+	}
+	
+	//글 수정
+	//글 가져오기
+	public static BoardVO boardUpdateData(int b_no) {
+		BoardVO vo = new BoardVO();
+		SqlSession session = ssf.openSession();
+		try {
+			vo = session.selectOne("boardContentData",b_no);
+		}catch(Exception e) {
+			System.out.println("boardUpdateData : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return vo;
 	}
 }
