@@ -204,7 +204,7 @@ div.motel_info p {
 	border-bottom: 2px solid #bbb;
 }
 
-.review_insert {
+.review_insert, .review_update {
 	width: 100%;
 	height: 150px;
 }
@@ -237,12 +237,12 @@ div.motel_info p {
 	color: #fff;
 }
 
-.review_insert table {
+.review_insert table, .review_update table {
 	width: 100%;
 	height: 150px;
 }
 
-.review_insert table textarea {
+.review_insert table textarea, .review_update table textarea {
 	resize: none;
 }
 
@@ -317,7 +317,7 @@ $(function() {
 		$('.like_img').attr("src",src=="cb_detail/image/no_like.png"? "cb_detail/image/like.png" : "cb_detail/image/no_like.png");
 	});
 	
-	// star rating
+	// star rating  re_update
 	var starRating = function(){
 	  var $star = $("#cbc_rating_insert"),
 	      $result = $star.find("output>strong");
@@ -348,7 +348,42 @@ $(function() {
 	    }
 	  });
 	};
-	starRating(); 
+	starRating();
+	
+	
+	// 수정하기 별점
+	var starRating_up = function(){
+	  var $star = $("#update_rating_insert"),
+	      $result = $star.find("output>strong");
+	  $(document)
+	    .on("focusin", "#update_rating_insert>.input", function(){
+	    $(this).addClass("focus");
+	  })
+	    .on("focusout", "#update_rating_insert>.input", function(){
+	    var $this = $(this);
+	    setTimeout(function(){
+	      if($this.find(":focus").length === 0){
+	        $this.removeClass("focus");
+	      }
+	    }, 100);
+	  })
+	    .on("change", "#update_rating_insert :radio", function(){
+	    $result.text($(this).next().text());
+	  })
+	    .on("mouseover", "#update_rating_insert label", function(){
+	    $result.text($(this).text());
+	  })
+	    .on("mouseleave", "#update_rating_insert>.input", function(){
+	    var $checked = $star.find(":checked");
+	    if($checked.length === 0){
+	      $result.text("0");
+	    } else {
+	      $result.text($checked.next().text());
+	    }
+	  });
+	};
+	starRating_up();
+	
 	
 	//id에 p+(평점*10하기)
 	$("#p" + (${cb_map['RATING'] }*10)).prop("checked", true);

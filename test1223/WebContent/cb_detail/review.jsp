@@ -34,7 +34,7 @@
 	float: left;
 }
 
-.review_insert {
+.review_insert, .review_update {
 	margin-bottom: 10px;
 }
 
@@ -137,9 +137,27 @@
 			$("#re_content_" + re_btn_id[2]).focus();
 		});
 		
-		
-		
-		
+		//수정버튼 눌렀을 때
+		var u = 0;
+		$(".review_update").hide();
+		$(".up_btn").click(function() {
+			var up_id = $(this).attr("id");
+			up_id = up_id.split("_");
+			if(u == 0) {
+				u = 1;
+				$("#input_" + up_id[1]).addClass("input");
+				$(this).text("취 소");
+				$("#review_up_" + up_id[1]).show();
+				$("#reviewlist_" + up_id[1]).hide();
+			} else {
+				u = 0;
+				$(this).text("수 정");
+				$("#review_up_" + up_id[1]).hide();
+				$("#input_" + up_id[1]).removeClass("input");
+				$("#reviewlist_" + up_id[1]).show();
+			}
+			
+		});
 	});
 </script>
 
@@ -200,10 +218,11 @@
 
 		</div>
 
+
 		<!-- 리뷰 리스트 -->
 		<div class="review_reply">
 			<c:forEach var="cbc_vo" items="${cbc_list }" varStatus="i">
-				<table class="reviewlist">
+				<table class="reviewlist" id="reviewlist_${i.index }">
 					<!-- 사용자 정보 & 내용 -->
 					<tr>
 						<td width="10%" class="text-center user_info">
@@ -248,12 +267,73 @@
 								<!-- 리뷰등록날짜 --> ${cbc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp;
 								
 								<c:if test="${sessionScope.m_email != cbc_vo.m_email  }">
-									<span>수 정</span>&nbsp;&nbsp;<span>삭 제</span>&nbsp;&nbsp;
+									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
+									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
 								</c:if>
 								
 						</span> <button class="btn reply_btn" id="reply_btn_${i.index }">댓&nbsp;&nbsp;&nbsp;글</button></td>
 					</tr>
 				</table>
+				
+				<!-- --------------------------------------------------------------------- 수정 -->
+				<div class="review_update" id="review_up_${i.index }">
+					<form action="cbc_new_insert.do" method="post">
+						<table>
+							<!-- 사용자 정보 & 리뷰 내용 -->
+							<tr>
+								<td width="10%" class="text-center">
+									<div id="board_pro" style="background-image: url('member/profile/${sessionScope.m_profile }')"></div>
+									<div class="pro_name">
+										<!-- 사용자 닉네임 -->
+										<input type="hidden" name="m_email" value="${sessionScope.m_email }">
+										<input type="hidden" name="cb_no" value="${vo.cb_no }">
+										<input type="hidden" name="review" value="1">
+										 ${sessionScope.m_nick }
+									</div>
+								</td>
+								<td width="90%">
+									<textarea class="form-control" rows="5" cols="100%" name="cbc_content"></textarea>
+								</td>
+								
+								<!-- 별점 & 버튼 -->
+							</tr>
+							
+							<tr>
+							<td>
+								<div class="list_star">
+									<!-- 별점주기 -->
+									<!-- class="update_rating" => 별점기능 활성화 -->
+									<span class="update_rating" id="update_rating_insert">
+											<!-- class="input" -->
+										  <span id="input_${i.index }">
+										    <c:forEach var="k" begin="1" end="10">
+												  		<input type="radio" name="update_rating" id="u${k }" value="${k/2}">
+												  		<label for="u${k }" style="width: ${k*10}px; z-index:${11-k}">${k/2}</label>
+										 	</c:forEach>
+										 </span>
+										 <div class="text-center">
+										 	<output for="update_rating"><strong>0</strong></output>
+										 </div>
+							 		</span>
+								</div>
+							</td>
+							<td class="text-right">
+								<div class="star_insert">
+								<input type="button" class="btn re_reply_btn" id="no_up_${i.index }"
+										value="취&nbsp;&nbsp;&nbsp;&nbsp;소" />
+									<input type="submit" class="btn re_reply_btn" id="up_${i.index }"
+										value="수&nbsp;&nbsp;&nbsp;&nbsp;정" />
+								</div>
+			
+							</td>
+			
+							</tr>
+						</table>
+					</form>
+		
+				</div>
+				<!-- --------------------------------------------------------------------- 수정 -->
+				
 				<!-- 대댓글 리스트 & 대댓글 등록 -->
 				<div class="reply_wrap" id="reply_${i.index }">
 					<c:forEach var="j" begin="1" end="3">
