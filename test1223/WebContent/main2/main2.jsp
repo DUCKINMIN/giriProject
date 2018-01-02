@@ -34,7 +34,7 @@
 	position: relative;
 	margin: 0px auto;
 	height: 480px;
-	background-image: url("main2/back.jpg");
+	background-image: url("main2/img/back.jpg");
 	background-size: cover;
 	padding-top: 120px;
 }
@@ -305,7 +305,7 @@
 					<button class="btn col-md-3" id="main2btn"
 						style="height: 50px; width: 80px; text-align: center; font-size: 20px; position: relative; background-color: rgb(162, 0, 0); color: white;"
 						type="button">
-						<img src="main2/dot.png" style="width: 35px">
+						<img src="main2/img/dot.png" style="width: 35px">
 					</button>
 				</span>
 		</form>

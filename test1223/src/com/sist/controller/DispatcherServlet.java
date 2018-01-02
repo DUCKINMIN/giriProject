@@ -36,10 +36,17 @@ public class DispatcherServlet extends HttpServlet {
 				for (Method m : method) {
 					RequestMapping rm = m.getAnnotation(RequestMapping.class);
 					if (rm.value().equals(cmd)) {
-						String jsp = (String)m.invoke(obj, request,response);
-						RequestDispatcher rd = request.getRequestDispatcher(jsp);
-						rd.forward(request, response);
-						return;
+						String jsp = (String) m.invoke(obj, request, response);
+						// 가변 매개변수임 Object... 필요한갯수는 울가 넣는거
+						String ext = jsp.substring(jsp.lastIndexOf(".") + 1);
+						if (ext.equals("jsp")) {
+							RequestDispatcher rd = request.getRequestDispatcher(jsp);
+							rd.forward(request, response);
+						}else {
+							response.sendRedirect(jsp);
+						}
+						return;// service 메소드 종료
+
 					}
 				}
 			}

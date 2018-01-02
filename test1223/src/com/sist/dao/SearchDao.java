@@ -12,12 +12,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class SearchDao {
 	private static SqlSessionFactory ssf;
-	// xml 파싱내용을 전송
+	// xml 
 	static {
 		try {
-			// xml 읽기
+			// xml
 			Reader reader = Resources.getResourceAsReader("Config.xml");
-			// xml 파싱
+			// xml 
 			ssf = new SqlSessionFactoryBuilder().build(reader);
 
 		} catch (Exception e) {
@@ -31,7 +31,8 @@ public class SearchDao {
 		List<SearchVo> vo = new ArrayList<>();
 
 		try {
-			vo = session.selectOne("jumpoCheck", map);
+			vo = session.selectList("jumpoCheck", map);
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("namecheck = " + e.getMessage());
@@ -41,5 +42,20 @@ public class SearchDao {
 		}
 		return vo;
 
+	}
+	public static int TotalPage(String search_name) {
+		int totalpage = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			
+			totalpage = session.selectOne("searchTotalPage",search_name);
+		}catch(Exception e) {
+			System.out.println("searchTotalPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return totalpage;
 	}
 }

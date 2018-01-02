@@ -34,7 +34,7 @@ $(function() {
 		</div>
 
 		<div class="row"
-			style="background-image: url(main2/club1.jpg); background-size: 100% 100%;">
+			style="background-image: url(main2/img/club1.jpg); background-size: 100% 100%;">
 			<div class="black_box"></div>
 			<div class="jumpo_name">
 
@@ -62,14 +62,14 @@ $(function() {
 							<td>
 								<div class="like text-center">
 									<p>Âò</p>
-									<img src="main2/like.png">
+									<img src="main2/img/like.png">
 									<h4>${vo.jjim }</h4>
 								</div>
 							</td>
 							<td>
 								<div class="hit text-center">
 									<p>Á¶È¸¼ö</p>
-									<img src="main2/hit_icon.png">
+									<img src="main2/img/hit_icon.png">
 									<h4>${vo.avghit }</h4>
 
 								</div>
@@ -87,7 +87,7 @@ $(function() {
 			<p>ÀÌÅÂ¿ø</p>
 		</div>
 		<div class="row"
-			style="background-image: url(main2/club2.jpg); background-size: 100% 100%;">
+			style="background-image: url(main2/img/club2.jpg); background-size: 100% 100%;">
 			<div class="black_box"></div>
 			<div class="jumpo_name">
 			<p>${vo1.cb_name }</p>
@@ -114,14 +114,14 @@ $(function() {
 							<td>
 								<div class="like text-center">
 									<p>Âò</p>
-									<img src="main2/like.png">
+									<img src="main2/img/like.png">
 									<h4>${vo1.jjim }</h4>
 								</div>
 							</td>
 							<td>
 								<div class="hit text-center">
 									<p>Á¶È¸¼ö</p>
-									<img src="main2/hit_icon.png">
+									<img src="main2/img/hit_icon.png">
 									<h4>${vo1.avghit }</h4>
 
 								</div>
@@ -136,7 +136,7 @@ $(function() {
 			<p>È«´ë</p>
 		</div>
 		<div class="row"
-			style="background-image: url(main2/club3.jpg); background-size: 100% 100%;">
+			style="background-image: url(main2/img/club3.jpg); background-size: 100% 100%;">
 			<div class="black_box"></div>
 			<div class="jumpo_name">
 			<p>${vo2.cb_name }</p>
@@ -163,14 +163,14 @@ $(function() {
 							<td>
 								<div class="like text-center">
 									<p>Âò</p>
-									<img src="main2/like.png">
+									<img src="main2/img/like.png">
 									<h4>${vo2.jjim }</h4>
 								</div>
 							</td>
 							<td>
 								<div class="hit text-center">
 									<p>Á¶È¸¼ö</p>
-									<img src="main2/hit_icon.png">
+									<img src="main2/img/hit_icon.png">
 									<h4>${vo2.avghit }</h4>
 
 								</div>
