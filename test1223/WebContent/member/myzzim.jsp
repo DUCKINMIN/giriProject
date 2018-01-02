@@ -76,10 +76,10 @@
 			</tr>
 			<c:forEach var="vo" items="${list }">
 			<tr>
-				<td width="15%" class="text-center">${vo.bvo.b_no }</td>
-				<td width="55%" class="text-left">${vo.bvo.b_subject }</td>
-				<td width="20%" class="text-center">${vo.bvo.b_hit }</td>
-				<td width="10%" class="text-center"><fmt:formatDate value="${vo.bvo.b_regdate }" pattern="yyyy.MM.dd"/></td>
+				<td width="15%" class="text-center">${vo.b_no }</td>
+				<td width="55%" class="text-left">${vo.b_subject }</td>
+				<td width="20%" class="text-center">${vo.b_hit }</td>
+				<td width="10%" class="text-center"><fmt:formatDate value="${vo.b_regdate }" pattern="yyyy.MM.dd"/></td>
 			</tr>
 			</c:forEach>
 		</table>	

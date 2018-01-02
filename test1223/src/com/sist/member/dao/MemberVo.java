@@ -2,7 +2,7 @@ package com.sist.member.dao;
 
 import java.util.Date;
 
-import com.sist.board.dao.BoardVO;
+import com.sist.event.dao.EventVO;
 
 public class MemberVo {
 	private String m_email;
@@ -18,16 +18,17 @@ public class MemberVo {
 	private String m_profile;
 	private int count;
 	
-	// 작성글
-	private BoardVO bvo = new BoardVO();
 	// 작성댓글
+	
 	// 찜
-
-	public BoardVO getBvo() {
-		return bvo;
+	// 참여이벤트
+	private EventVO evo = new EventVO();
+	
+	public EventVO getEvo() {
+		return evo;
 	}
-	public void setBvo(BoardVO bvo) {
-		this.bvo = bvo;
+	public void setEvo(EventVO evo) {
+		this.evo = evo;
 	}
 	public String getM_profile() {
 		return m_profile;

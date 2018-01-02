@@ -8,6 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.sist.board.dao.BoardVO;
+import com.sist.event.dao.EventVO;
+
 public class MemberDao {
 	private static SqlSessionFactory ssf;
 	static {
@@ -196,12 +199,11 @@ public class MemberDao {
 	}
 	
 	// 작성글
-	public static List<MemberVo> myBoardList(Map map) {
-		List<MemberVo> list = new ArrayList<MemberVo>();
+	public static List<BoardVO> myBoardList(Map map) {
+		List<BoardVO> list = new ArrayList<BoardVO>();
 		SqlSession session = ssf.openSession();
 		try {
 			list = session.selectList("myBoardList",map);
-			System.out.println(list.size());
 		} catch (Exception e) {
 			System.out.println("myBoardList : "+e.getMessage());
 		} finally {
@@ -223,6 +225,37 @@ public class MemberDao {
 		return totalpage;
 	}
 	
+	// 참여이벤트
+	public static List<EventVO> myEventList(Map map) {
+		List<EventVO> list = new ArrayList<EventVO>();
+		SqlSession session = ssf.openSession();
+		try {
+			System.out.println(map.get("m_email")+","+map.get("start")+","+map.get("end"));
+			list = session.selectList("myEventList",map);
+			System.out.println(list.size());
+			for (EventVO e : list) {
+				System.out.println("이벤트:"+e.getE_name());
+			}
+		} catch (Exception e) {
+			System.out.println("myEventList : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	// 참여이벤트 총페이지
+	public static int myEventTotalPage(String m_email) {
+		SqlSession session = ssf.openSession();
+		int totalpage=0;
+		try {
+			totalpage = session.selectOne("myEventTotalPage", m_email);
+		} catch (Exception e) {
+			System.out.println("myEventTotalPage : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return totalpage;
+	}
 	
 	
 	

@@ -6,8 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.sist.board.dao.BoardVO;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
+import com.sist.event.dao.EventVO;
 import com.sist.member.dao.MemberDao;
 import com.sist.member.dao.MemberVo;
 
@@ -279,7 +281,7 @@ public class MemberModel {
 		
 		int totalpage = MemberDao.myBoardTotalPage(m_email);
 		
-		List<MemberVo> list = MemberDao.myBoardList(map);
+		List<BoardVO> list = MemberDao.myBoardList(map);
 		
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
@@ -290,12 +292,32 @@ public class MemberModel {
 	}
 	@RequestMapping("myevent.do")
 	public String myevent(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		String m_email = (String) session.getAttribute("m_email");
+		
+		String page=req.getParameter("page");
+		if(page==null)
+			page="1";
+		int curpage = Integer.parseInt(page);
+		int rowSize = 5;
+		int start = (rowSize*curpage)-(rowSize-1);
+		int end = rowSize * curpage;
+
+		Map map = new HashMap<>();
+		map.put("m_email", m_email);
+		map.put("start", start);
+		map.put("end", end);
+		
+		int totalpage = MemberDao.myEventTotalPage(m_email);
+		System.out.println("토탈페이지 : "+totalpage);
+		List<EventVO> list = MemberDao.myEventList(map);
+		System.out.println("성공!");
+		req.setAttribute("curpage", curpage);
+		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("list", list);
+		
 		req.setAttribute("main_jsp", "../member/mypage.jsp");
 		req.setAttribute("member_jsp", "../member/myevent.jsp");
 		return "main/main.jsp";
 	}
-		
-
-
-
 }
