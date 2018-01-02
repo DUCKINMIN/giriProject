@@ -221,7 +221,7 @@
 
 		<div class="row_class">
 			<div class="search_result">
-				<p>"${search_name } " 의 검색결과 ${search_count }</p>
+				<p>"${search_name }" 의 검색결과 </p>
 			</div>
 			<!-- 인크루드 1개 -->
 			<jsp:include page="../main2/search_1.jsp"></jsp:include>

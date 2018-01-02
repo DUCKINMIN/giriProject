@@ -3,6 +3,13 @@ package com.sist.dao;
 import java.util.Date;
 
 public class SearchVo {
+	private int num;
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	private String cb_name;
 	private String a_addr1;
 	private int cb_grade;

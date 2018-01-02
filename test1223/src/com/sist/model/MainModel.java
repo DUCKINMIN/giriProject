@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sist.board.dao.BoardDAO;
+import com.sist.board.dao.BoardVO;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.SearchDao;
@@ -28,6 +28,7 @@ public class MainModel {
 		req.setCharacterEncoding("EUC-KR");
 		String search_name = req.getParameter("search_name");
 		String addr_name = "";
+		System.out.println("서치:" + search_name);
 		if (search_name.equals("홍대")) {
 			addr_name = "마포";
 		} else if (search_name.equals("강남")) {
@@ -37,14 +38,17 @@ public class MainModel {
 		} else {
 			addr_name = search_name;
 		}
+		///////////////////////////////////////////////////
 		String page = req.getParameter("page");
+
 		if (page == null)
 			page = "1";
 		int curpage = Integer.parseInt(page);
 		int rowSize = 5;
 		int start = (curpage * rowSize) - (rowSize - 1);
 		int end = curpage * rowSize;
-		int totalpage = 1;
+		int totalpage = 0;
+
 		Map map = new HashMap();
 		map.put("addr_name", addr_name);
 		map.put("search_name", search_name);
@@ -53,31 +57,38 @@ public class MainModel {
 
 		List<SearchVo> list = SearchDao.namecheck(map);
 		totalpage = SearchDao.TotalPage(addr_name);
-		if (list.size() == 0) {
-			System.out.println("0");
-		}
-		System.out.println(curpage+"현재"+page);
+		/////////////////////////////////////////////////////////////////////////////////////////
+		String p2 = req.getParameter("p2");
+		System.out.println("지금페이지 : " + p2);
+		if (p2 == null)
+			p2 = "1";
+		int curpage2 = Integer.parseInt(p2);
+		int start2 = (curpage2 * rowSize) - (rowSize - 1);
+		int end2 = curpage2 * rowSize;
+		int totalpage2 = 0;
+
+		Map map2 = new HashMap();
+		map.put("search_name", search_name);
+		map.put("start2", start2);
+		map.put("end2", end2);
+		List<BoardVO> list2 = SearchDao.namecheck2(map);
+		totalpage2 = SearchDao.TotalPage2(search_name);
+
+		////////////////////////////////////////////////////
 		// DAO매개변수 넣어주고
 		// System.out.println(search_name + " " + addr_name);
 		req.setAttribute("search_name", search_name);
-		req.setAttribute("page", page);
+		req.setAttribute("curpage", curpage);
 		req.setAttribute("list", list);
 		req.setAttribute("totalpage", totalpage);
+
+		req.setAttribute("curpage2", curpage2);
+		req.setAttribute("list2", list2);
+		req.setAttribute("totalpage2", totalpage2);
+
 		req.setAttribute("main_jsp", "../main2/search_main2.jsp");
 
 		return "main/main.jsp";
-	}
-
-	@RequestMapping("search_1.do")
-	public String search_1(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String page = req.getParameter("page");
-		System.out.println(page);
-	/*	page += 1;
-		
-		req.setAttribute("page", page);*/
-		
-
-		return "main2/test.jsp";
 	}
 
 	/*

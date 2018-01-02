@@ -22,32 +22,38 @@
 						<tr class="table_title1">
 
 							<th width=40% class="text-center">제목</th>
-							<th width=20% class="text-center">이름</th>
+							<th width=20% class="text-center">닉네임</th>
 							<th width=20% class="text-center">작성일</th>
 							<th width=20% class="text-center table_count">조회수</th>
 
 						</tr>
 						<!-- for(FreeBoardVO vo:list) 아래랑 같음 -->
-						<c:forEach var="item" begin="1" end="5" step="1">
+						<c:forEach var="vo2" items="${list2 }">
 
 							<tr class="table_content">
 
-								<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;제목</a>
+								<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;${vo2.b_subject }</a>
 									&nbsp; <%-- <c:if test="${vo.count!=0 }">
 								(${vo.count })
 							</c:if> --%></td>
-								<td width=20% class="text-center">이름</td>
-								<td width=20% class="text-center">작성일</td>
-								<td width=20% class="text-center table_count">조회수</td>
+								<td width=20% class="text-center">${vo2.m_nick }</td>
+								<td width=20% class="text-center">${vo2.b_regdate }</td>
+								<td width=20% class="text-center table_count">${vo2.b_hit }</td>
 							</tr>
 						</c:forEach>
 					</table>
-					<table class="table">
-						<tr>
-							<td class="text-right"><a href="#" class="btn btn-sm">이전</a>&nbsp;
-								pages<a href="#" class="btn btn-sm">다음</a>&nbsp;&nbsp;</td>
-						</tr>
-					</table>
+					
+					<div>
+						<a href="mainsearch.do?p2=${curpage2>1?curpage2-1:curpage2 }&search_name=${search_name }">
+							<img src="main2/img/befor.png" style="cursor:pointer"></a>&nbsp;
+						 
+						<c:forEach  var="i" begin="1" end="${totalpage2<1?1:totalpage2 }">
+						<a href = "mainsearch.do?p2=${i}&search_name=${search_name }" }>${i }</a>
+						</c:forEach>&nbsp; 
+						<a href="mainsearch.do?p2=${curpage2<totalpage2?curpage2+1:curpage2 }&search_name=${search_name }">
+						<img src="main2/img/next.png"style="cursor:pointer"></a>&nbsp;&nbsp;
+					</div>
+
 
 				</div>
 

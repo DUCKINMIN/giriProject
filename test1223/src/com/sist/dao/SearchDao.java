@@ -10,6 +10,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.sist.board.dao.BoardVO;
+
 public class SearchDao {
 	private static SqlSessionFactory ssf;
 	// xml 
@@ -51,6 +53,40 @@ public class SearchDao {
 			totalpage = session.selectOne("searchTotalPage",search_name);
 		}catch(Exception e) {
 			System.out.println("searchTotalPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return totalpage;
+	}
+	/////////////////////////////////////////////////////////////
+	public static List<BoardVO> namecheck2(Map map) {
+		SqlSession session = ssf.openSession();
+		List<BoardVO> vo = new ArrayList<>();
+
+		try {
+			vo = session.selectList("jumpoCheck2", map);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("namecheck2 = " + e.getMessage());
+		} finally {
+			if (session != null)
+				session.close();
+		}
+		return vo;
+
+	}
+	
+	public static int TotalPage2(String search_name) {
+		int totalpage = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			totalpage = session.selectOne("searchTotalPage2",search_name);
+			System.out.println("≈‰≈ª"+totalpage);
+		}catch(Exception e) {
+			System.out.println("searchTotalPage2 : " + e.getMessage());
 		}finally {
 			if(session!=null)
 				session.close();

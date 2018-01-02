@@ -7,40 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <script type="text/javascript">
-$(function() {
-	$('#before').click(function() {
-		/* $.ajax({
-			type : "POST",
-			url : "theater.do",
-			data : {
-				"theater_no" : theater_no
-			},
-			success : function(response) {
-				$('#theater_info').html(response);
-			}
 
-		}); */
-		alert("before")
-
-	});
-	$('#next').click(function() {
-		
-		 $.ajax({
-			type : "POST",
-			url : "search_1.do",
-			data : {
-				"page" : page
-			},
-			success : function(response) {
-				/* $('#theater_info').html(response); */
-				alert(response);
-			}
-
-		}); 
-		 alert("ne");
-
-	});
-});
 </script>
 </head>
 <body>
@@ -97,11 +64,14 @@ $(function() {
 
 
 					<div>
-						<img src="main2/img/befor.png" id="before" style="cursor:pointer">&nbsp; 
+						<a href="mainsearch.do?page=${curpage>1?curpage-1:curpage }&search_name=${search_name }">
+							<img src="main2/img/befor.png" id="before" style="cursor:pointer"></a>&nbsp;
+						 
 						<c:forEach  var="i" begin="1" end="${totalpage<1?1:totalpage }">
-						<a>${i }</a>
+						<a href = "mainsearch.do?page=${i}&search_name=${search_name }" }>${i }</a>
 						</c:forEach>&nbsp; 
-						<img src="main2/img/next.png" id="next" style="cursor:pointer">&nbsp;&nbsp;
+						<a href="mainsearch.do?page=${curpage<totalpage?curpage+1:curpage }&search_name=${search_name }">
+						<img src="main2/img/next.png" id="next" style="cursor:pointer"></a>&nbsp;&nbsp;
 					</div>
 
 
