@@ -124,4 +124,17 @@ public class BoardDAO {
 				session.close();
 		}
 	}
+	
+	//±€ªË¡¶
+	public static void boardDeleteData(int b_no) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.delete("boardDeleteData",b_no);
+		}catch(Exception e) {
+			System.out.println("boardDeleteData : " + e.getMessage());
+		}finally {
+			if(session!=null) 
+				session.close();
+		}
+	}
 }

@@ -24,7 +24,7 @@
 	
 	<!-- 상세보기 -->
 	<select id="boardContentData" resultType="BoardVO" parameterType="java.util.Map">
-		SELECT b_no, m.m_nick, b_subject, b_regdate, b_grade, b_hit, b_content
+		SELECT b_no, m.m_nick, b_subject, b_regdate, b_grade, b_hit, b_content, b_img_cnt
 		FROM board b, member m
 		WHERE b_grade=#{grade} AND b_no=#{b_no} AND b.m_email=m.m_email
 	</select>
@@ -37,12 +37,11 @@
 	
 	
 	<!-- 게시글 작성 -->
-	<!-- grade별 게시물 총 갯수 -->
+	<!-- 게시물 총 갯수 /파일저장시에 필요 -->
 	<select id="boardInsertCount" resultType="int">
-		SELECT COUNT(*)
-		FROM board
+		SELECT NVL(MAX(b_no)+1,1) as b_no FROM board
 	</select>
-	<!-- 게시물추가 -->
+	<!-- 게시물 추가 -->
 	<insert id="boardInsertData" parameterType="BoardVO">
 		<selectKey keyProperty="b_no" resultType="int" order="BEFORE">
 			SELECT NVL(MAX(b_no)+1,1) as b_no FROM board
@@ -51,4 +50,10 @@
 			#{b_no}, #{b_subject}, #{m_email}, SYSDATE, #{b_content}, #{b_grade}, 0 , #{b_img_cnt}
 		)
 	</insert>
+
+	<!-- 게시물 삭제 -->
+	<delete id="boardDeleteData" parameterType="int">
+		DELETE FROM board
+		WHERE b_no = #{b_no}
+	</delete>
 </mapper>

@@ -63,7 +63,8 @@ public class BoardModel {
 		map.put("grade", igrade);
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(map); //상세보기
-	
+		System.out.println("vo.getbno : " + vo.getB_no());
+		System.out.println("vo.getbno : " + vo.getB_img_cnt());
 		req.setAttribute("vo", vo);
 		req.setAttribute("page", curpage);
 		req.setAttribute("grade", grade);
@@ -89,7 +90,7 @@ public class BoardModel {
 	@RequestMapping("board_insert_ok.do")
 	public String board_insert_ok(HttpServletRequest req, HttpServletResponse res) throws Throwable  {
 		req.setCharacterEncoding("EUC-KR");
-		String path = req.getServletContext().getRealPath("/boardImg"); //파일 다운받을 폴더
+		String path = req.getServletContext().getRealPath("/board/boardImg"); //파일 다운받을 폴더
 		System.out.println("path  " + path);
 		int size = 1024*1024*100;
 		String enctype = "EUC-KR";
@@ -109,7 +110,7 @@ public class BoardModel {
 		vo.setB_content(b_content);
 		vo.setB_grade(Integer.parseInt(b_grade));
 		
-		int b_no = BoardDAO.boardInsertCount()+2;
+		int b_no = BoardDAO.boardInsertCount();
 		
 		if (filename != null) {
 			System.out.println("b_no"+b_no);
@@ -121,9 +122,20 @@ public class BoardModel {
             }   
          }
 		vo.setB_img_cnt(b_img_cnt);
-		System.out.println("b_img_cnt : " +b_img_cnt);
 		BoardDAO.boardInsertData(vo); //입력
 		req.setAttribute("grade", b_grade);
 		return "board_list.do?grade="+b_grade; //_ok일때 .do~
+	}
+
+	@RequestMapping("board_delete_ok.do")
+	public String board_delete_ok(HttpServletRequest req, HttpServletResponse res) {
+		String b_grade = req.getParameter("grade");
+		String b_no = req.getParameter("no");
+		String page = req.getParameter("page");
+		BoardDAO.boardDeleteData(Integer.parseInt(b_no));
+		
+		req.setAttribute("page", page);
+		req.setAttribute("grade", b_grade);
+		return "board_list.do";
 	}
 }

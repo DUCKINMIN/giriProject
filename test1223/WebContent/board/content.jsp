@@ -50,14 +50,14 @@
 	font-size: 17px;
 }
 
-#board_cotentBtn {
+#board_contentBtn {
 	margin-top: 30px;
 	height: 40px;
 	width: 100%;
 	text-align: right;
 }
 
-.board_cotentBtn {
+.board_contentBtn {
 	/* float:right; */
 	width: 50px;
 	font-size: 15px;
@@ -84,19 +84,44 @@
 		<!-- 게시판 상세보기 내용 -->
 		<div id="board_content">
 			<p>${vo.b_content }</p>
-			<%-- <c:if test="${vo.b_img_cnt>0 }"> --%>
-				<p>
-					<img width="100%" src="boardImg/board_${vo.b_no }.jpg"/>
+			<c:if test="${vo.b_img_cnt>0 }">
+				<p>	<br><br>
+					<img src="board/boardImg/board_${vo.b_no }.jpg"/>
 				</p>
-			<%-- </c:if> --%>
+			</c:if>
 		</div>
 		<!-- 게시판 상세보기 버튼 -->
-		<div id="board_cotentBtn">
-			<input id="board_updateBtn" class="btn board_btn board_cotentBtn"
-				type="button" value="수정"> <a><input
-				class="btn board_btn board_cotentBtn" type="button" value="삭제"></a>
+		<div id="board_contentBtn">
+			<input id="board_updateBtn" class="btn board_btn board_contentBtn"
+				type="button" value="수정"> 
+			<input class="btn board_btn board_contentBtn" type="button" value="삭제"
+					 id="deleteBtn" data-toggle="modal" data-target="#deleteModal"
+			>
+		<!-- 	<div id="delete" data-toggle="modal" data-target="#deleteModal">
+				<img id="btn_delete" />
+			</div> -->
+			<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true"
+				data-backdrop="static" data-keyboard="fals`e">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true" style="color: black">X</span><span
+									class="sr-only">Close</span>
+							</button>
+							<!-- 
+                        		<h3 class="modal-title" id="myModalLabel"></h3> -->
+						</div>
+						<div class="modal-body">
+							<jsp:include page="delete.jsp" />
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<a href="board_list.do?page=${page }&grade=${vo.b_grade}"><input
-				class="btn board_btn board_cotentBtn" type="button" value="목록"></a>
+				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
 		</div>
 	</div>
 	<!-- 리뷰 -->
