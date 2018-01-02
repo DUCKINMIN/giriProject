@@ -153,14 +153,13 @@
 					<!-- 사용자 정보 & 리뷰 내용 -->
 					<tr>
 						<td width="10%" class="text-center">
-							<div id="board_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
+							<div id="board_pro" style="background-image: url('member/profile/${sessionScope.m_profile }')"></div>
 							<div class="pro_name">
 								<!-- 사용자 닉네임 -->
-								<input type="hidden" name="m_email" value="ys@naver.com">
+								<input type="hidden" name="m_email" value="${sessionScope.m_email }">
 								<input type="hidden" name="cb_no" value="${vo.cb_no }">
 								<input type="hidden" name="review" value="1">
-								
-								USER
+								 ${sessionScope.m_nick }
 							</div>
 						</td>
 						<td width="90%">
@@ -246,6 +245,11 @@
 						</td>
 						<td width="90%" class="text-right"><span>
 								<!-- 리뷰등록날짜 --> ${cbc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp;
+								
+								<c:if test="${sessionScope.m_email != cbc_vo.m_email  }">
+									<span>수 정</span>&nbsp;&nbsp;<span>삭 제</span>&nbsp;&nbsp;
+								</c:if>
+								
 						</span> <button class="btn reply_btn" id="reply_btn_${i.index }">댓&nbsp;&nbsp;&nbsp;글</button></td>
 					</tr>
 				</table>
@@ -276,9 +280,8 @@
 									<span>
 										<!-- 리뷰등록날짜 -->2017-12-15&nbsp;&nbsp;&nbsp;
 									</span> 
-									<c:if test="">
-										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
-										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
+									<c:if test="${sessionScope.m_email != cbc_vo.m_email  }">
+										<span>수 정</span>&nbsp;&nbsp;<span>삭 제</span>&nbsp;&nbsp;
 									</c:if>
 									<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
 								</td>
