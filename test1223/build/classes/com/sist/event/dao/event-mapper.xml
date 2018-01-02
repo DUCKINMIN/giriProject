@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.sist.event.dao.event-mapper">
+  	<select id="eventListData" resultType="EventVO" parameterType="java.util.Map">
+  		SELECT e_no,e_name,TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
+  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content 
+  		FROM event ORDER BY e_enddate ASC ))
+  		WHERE num BETWEEN #{start} AND #{end}
+  	</select>
+  	<select id="eventTotalPage" resultType="int">
+  		SELECT CEIL(COUNT(*)/9) FROM event
+  	</select>
+  	<insert id="eventInsertData" parameterType="EventVO">
+  		INSERT INTO event(e_no, e_name,e_regdate,e_enddate,e_content) 
+  		VALUES(#{e_no},#{e_name},#{e_regdate},#{e_enddate},#{e_content})
+  	</insert>
+  	
+  	<select id="getLastEno" resultType="int">
+  		SELECT MAX(e_no) FROM event
+  	</select>
+  	<!-- 진행중 검색  -->
+  	<select id="eventOngoingData" parameterType="java.util.Map" resultType="EventVO">
+  		SELECT e_no,e_name,TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
+  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content 
+  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC ))
+  		WHERE num BETWEEN #{start} AND #{end}
+  	</select>
+  	<select id="eventOngoingPage" resultType="int">
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  	</select>
+  	<!-- 종료 검색 -->
+  	<select id="eventEndData" parameterType="java.util.Map" resultType="EventVO">
+  		SELECT e_no,e_name,TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
+  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content 
+  		FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC ))
+  		WHERE num BETWEEN #{start} AND #{end}
+  	</select>
+  	<select id="eventEndPage" resultType="int">
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  	</select>
+  </mapper>

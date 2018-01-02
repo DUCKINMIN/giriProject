@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sist.clubbar.dao.clubbar-mapper">
+	<sql id="where_cb_no">
+		WHERE cb_no=#{cb_no}
+	</sql>
+	<!-- cb조회수 올리기 -->
+	<update id="clubbarHitIncrement" parameterType="int">
+		UPDATE clubBar SET cb_hit = cb_hit+1, cb_weekHit = cb_weekHit+1
+		<include refid="where_cb_no"/>
+	</update>
+	<!-- cb정보 가져오기 -->
+	<select id="clubbarDetail" resultType="ClubBarVO" parameterType="int">
+		SELECT cb_no, cb_name, cb_tel, a_addr1, a_addr2, cb_open, cb_content, cb_hit, cb_weekHit, cb_img_cnt
+		FROM clubBar 
+		<include refid="where_cb_no"/>
+	</select>
+	
+	<!-- cb별점, 찜수 구하기 -->
+	<select id="clubbarJjimRating" resultType="java.util.Map" parameterType="int">
+		SELECT j.jjim, cbc.rating, cbc.cnt
+		FROM (SELECT COUNT(*) as jjim
+		FROM cart <include refid="where_cb_no"/>) j, (SELECT NVL(ROUND(AVG(cbc_rating),1),0) as rating, COUNT(*) as cnt
+		FROM clubBar_comment <include refid="where_cb_no"/>) cbc
+	</select>
+	
+	<!-- 주변모텔 가져오기 -->
+	<select id="motelData" resultType="MotelVO" parameterType="int">
+		SELECT m.mt_no , m.mt_name, m.mt_tel, m.a_addr1, m.a_addr2, m.mt_url
+		FROM motel m, clubBar c
+		WHERE m.a_addr1 = c.a_addr1 AND c.cb_no = #{cb_no} AND rownum <![CDATA[<]]> 3
+	</select>
+	
+	<!-- 댓글 가져오기 -->
+	<select id="cbCommentList" resultType="ClubBarCommentVO" parameterType="java.util.Map">
+		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, cbc_rating, m_nick, cbc_group_tab, num
+		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, rownum as num
+		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab
+		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email ORDER BY cbc_group_id DESC, cbc_group_step ASC))
+		WHERE num BETWEEN #{start} AND #{end} 
+ 	</select>
+	
+	<!-- 댓글 등록하기 -->
+	<insert id="cbCommentInsert" parameterType="ClubBarCommentVO">
+		INSERT INTO clubBar_comment(cbc_no, m_email, cbc_regdate, cbc_content, cb_no, cbc_rating, cbc_group_id) VALUES(cbc_no_seq.nextval, 'ys@naver.com', 
+		SYSDATE, #{cbc_content}, #{cb_no}, #{cbc_rating}, 
+		(SELECT NVL(MAX(cbc_group_id)+1, 1) FROM clubbar_comment))
+	</insert>
+	
+	
+</mapper>

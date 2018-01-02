@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sist.board.dao.board-mapper">
+	<!-- 리스트 -->
+	<select id="boardList" resultType="BoardVO" parameterType="java.util.Map">
+		SELECT b_no, b_subject, m_nick, b_regdate, b_grade, b_hit, num
+		FROM (SELECT b_no, b_subject, m_nick,b_regdate, b_grade, b_hit, rownum as num 
+		FROM (SELECT b.b_no, b.b_subject, m.m_nick, b.b_regdate, b.b_grade, b.b_hit
+		FROM board b, member m where b_grade=#{grade} AND b.m_email=m.m_email ORDER BY b.b_no DESC)) 
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- grade별 게시물 총 갯수 -->
+	<select id="boardListCount" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM (SELECT * FROM board)
+		WHERE b_grade=#{grade}
+	</select>
+	<!-- 총페이지 구하기-->
+	<select id="boardTotalPage" resultType="int" parameterType="int">
+		SELECT CEIL(COUNT(*)/10) FROM board WHERE b_grade=#{grade}
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="boardContentData" resultType="BoardVO" parameterType="java.util.Map">
+		SELECT b_no, m.m_nick, b_subject, b_regdate, b_grade, b_hit, b_content, b_img_cnt
+		FROM board b, member m
+		WHERE b_grade=#{grade} AND b_no=#{b_no} AND b.m_email=m.m_email
+	</select>
+	<!-- 조회수 증가 -->
+	<update id="boardHitIncrement" parameterType="java.util.Map">
+		UPDATE board SET
+		b_hit = b_hit + 1
+		WHERE b_no = #{b_no} AND b_grade=#{grade}
+	</update>
+	
+	
+	<!-- 게시글 작성 -->
+	<!-- 게시물 총 갯수 /파일저장시에 필요 -->
+	<select id="boardInsertCount" resultType="int">
+		SELECT NVL(MAX(b_no)+1,1) as b_no FROM board
+	</select>
+	<!-- 게시물 추가 -->
+	<insert id="boardInsertData" parameterType="BoardVO">
+		<selectKey keyProperty="b_no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(b_no)+1,1) as b_no FROM board
+		</selectKey>
+		INSERT INTO board VALUES(
+			#{b_no}, #{b_subject}, #{m_email}, SYSDATE, #{b_content}, #{b_grade}, 0 , #{b_img_cnt}
+		)
+	</insert>
+
+	<!-- 게시물 삭제 -->
+	<delete id="boardDeleteData" parameterType="int">
+		DELETE FROM board
+		WHERE b_no = #{b_no}
+	</delete>
+</mapper>
