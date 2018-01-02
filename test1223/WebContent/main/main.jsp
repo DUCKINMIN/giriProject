@@ -94,6 +94,7 @@ a{
 	padding-top: 40px;
 	color: rgb(170, 170, 170);
 	margin: 0px auto;
+	margin-top: 50px;
 }
 
 #footer span {

@@ -112,6 +112,10 @@
 				<option>작성자</option>
 			</select> <input type="text" id="board_search" /> <input type="button"
 				class="btn boardBtn" value="검색">
+				<div style="float:right">
+				<a href="board_insert.do?grade=${grade}"><input type="button" class="btn boardBtn" value="글쓰기"
+					id="board_insertBtn"></a>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -144,10 +148,6 @@
 		</div>
 		<!-- 버튼, 페이지 -->
 		<div style="margin-top:10px">
-			<div>
-				<a href="board_insert.do?grade=${grade}"><input type="button" class="btn boardBtn" value="글쓰기"
-					id="board_insertBtn"></a>
-			</div>
 			<div style="height: 40px"></div>
 			<div id="board_page">
 				<center>

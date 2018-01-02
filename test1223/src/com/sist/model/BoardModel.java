@@ -91,6 +91,7 @@ public class BoardModel {
 	public String board_insert_ok(HttpServletRequest req, HttpServletResponse res) throws Throwable  {
 		req.setCharacterEncoding("EUC-KR");
 		String path = req.getServletContext().getRealPath("/board/boardImg"); //파일 다운받을 폴더
+		//String path="C:\\git\\giriProject\\test1223\\WebContent\\board\\boardImg";
 		System.out.println("path  " + path);
 		int size = 1024*1024*100;
 		String enctype = "EUC-KR";
@@ -133,6 +134,12 @@ public class BoardModel {
 		String b_no = req.getParameter("no");
 		String page = req.getParameter("page");
 		BoardDAO.boardDeleteData(Integer.parseInt(b_no));
+		String fileName = "board_" + b_no+".jpg"; //지울 파일명
+		String path = req.getServletContext().getRealPath("/board/boardImg/"); //파일이 존재하는 실제경로
+		path += fileName;
+		File f = new File(path); // 파일 객체생성
+		System.out.println("delete path : " + path);
+		if( f.exists()) f.delete(); // 파일이 존재하면 파일을 삭제한다.
 		
 		req.setAttribute("page", page);
 		req.setAttribute("grade", b_grade);
