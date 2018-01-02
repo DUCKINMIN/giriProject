@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 </head>
 <style>
-#board_pro {
-	background-image: url("member/profile/${sessionScope.m_profile }");
+#board_contentPro {
+	background-image: url("member/profile/${vo.m_email}.jpg");
 	background-size: 100%;
 	border-radius: 50%;
 	width: 80px;
@@ -51,7 +51,7 @@
 }
 
 #board_contentBtn {
-	margin-top: 30px;
+	margin-top: 50px;
 	height: 40px;
 	width: 100%;
 	text-align: right;
@@ -67,7 +67,7 @@
 	<!-- 게시판 상세보기 -->
 	<div class="content_wrap">
 		<div style="height: 20px"></div>
-		<div id="board_pro"></div>
+		<div id="board_contentPro"></div>
 		<div id="board_user">
 			<p id="board_name">${vo.m_nick }</p>
 			<p id="board_regdate">

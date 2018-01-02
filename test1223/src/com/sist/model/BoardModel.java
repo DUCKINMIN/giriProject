@@ -64,7 +64,7 @@ public class BoardModel {
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(map); //상세보기
 		System.out.println("vo.getbno : " + vo.getB_no());
-		System.out.println("vo.getbno : " + vo.getB_img_cnt());
+		//System.out.println("vo.getbno : " + vo.getB_img_cnt());
 		req.setAttribute("vo", vo);
 		req.setAttribute("page", curpage);
 		req.setAttribute("grade", grade);
@@ -92,7 +92,7 @@ public class BoardModel {
 		req.setCharacterEncoding("EUC-KR");
 		String path = req.getServletContext().getRealPath("/board/boardImg"); //파일 다운받을 폴더
 		//String path="C:\\git\\giriProject\\test1223\\WebContent\\board\\boardImg";
-		System.out.println("path  " + path);
+
 		int size = 1024*1024*100;
 		String enctype = "EUC-KR";
 		//파일업로드 라이브러리
@@ -104,7 +104,7 @@ public class BoardModel {
 		String b_content = mr.getParameter("b_content");
 		b_content = b_content.replaceAll("\n", "<br>");
 		String b_grade = mr.getParameter("grade");
-		System.out.println("b_grade"+b_grade);
+
 		BoardVO vo = new BoardVO();
 		vo.setM_email(m_email);
 		vo.setB_subject(b_subject);
@@ -141,8 +141,8 @@ public class BoardModel {
 		System.out.println("delete path : " + path);
 		if( f.exists()) f.delete(); // 파일이 존재하면 파일을 삭제한다.
 		
-		req.setAttribute("page", page);
-		req.setAttribute("grade", b_grade);
-		return "board_list.do";
+		/*req.setAttribute("page", page);
+		req.setAttribute("grade", b_grade);*/
+		return "board_list.do?page="+page+"&grade="+b_grade;
 	}
 }
