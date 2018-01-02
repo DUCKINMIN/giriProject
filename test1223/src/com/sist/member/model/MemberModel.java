@@ -15,7 +15,8 @@ import java.io.File;
 import java.util.*;
 @Controller
 public class MemberModel {
-	String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\test1223\\member\\profile";
+	//String path = "C:\\webDev\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\test1223\\member\\profile";
+	
 	// 회원가입페이지이동{
 	@RequestMapping("joinpage.do")
 	public String joinpage(HttpServletRequest req, HttpServletResponse res) {		
@@ -51,6 +52,7 @@ public class MemberModel {
 	@RequestMapping("join.do")
 	public String join(HttpServletRequest req, HttpServletResponse res){
 		try {
+			String path = req.getServletContext().getRealPath("/member/profile");
 			req.setCharacterEncoding("EUC-KR");
 			MemberVo vo = new MemberVo();
 			int size = 1024*1024*100;
@@ -186,6 +188,7 @@ public class MemberModel {
 	@RequestMapping("myinfo_update.do")
 	public String myinfo_update(HttpServletRequest req, HttpServletResponse res){
 		try {
+			String path = req.getServletContext().getRealPath("/member/profile");
 			HttpSession session = req.getSession();
 			req.setCharacterEncoding("EUC-KR");		
 			MemberVo vo = new MemberVo();
@@ -247,6 +250,7 @@ public class MemberModel {
 	// 회원탈퇴
 	@RequestMapping("member_delete.do")
 	public String member_delete(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		String path = req.getServletContext().getRealPath("/member/profile");
 		HttpSession session = req.getSession();
 		String m_email = (String) session.getAttribute("m_email");
 		File file = new File(path+"\\"+m_email+".jpg");

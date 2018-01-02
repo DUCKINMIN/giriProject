@@ -10,7 +10,7 @@
 </head>
 <style>
 #board_pro {
-	background-image: url('image/pro.png');
+	background-image: url("member/profile/${sessionScope.m_profile }");
 	background-size: 100%;
 	border-radius: 50%;
 	width: 80px;

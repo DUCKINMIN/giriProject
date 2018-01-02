@@ -21,7 +21,7 @@
 	height:150px;
 }
 .board_pro{
-    background-image: url('image/pro.png');
+    background-image: url("member/profile/${sessionScope.m_profile }");
     background-size: 100%;
     border-radius: 50%;
     width: 70px;
@@ -29,7 +29,7 @@
     margin:10px auto;
 }
 #board_replypro{
-	background-image: url('image/kang.PNG');
+	background-image: url('member/profile/${rvo.m_email }');
 }
 .pro_name {
     margin-top: 13px;
