@@ -102,6 +102,30 @@
 		DELETE FROM member WHERE m_email=#{m_email}
 	</delete>
 	
+	<!-- 작성글 -->
+	<resultMap type="MemberVo" id="myboardList">
+		<association property="bvo" javaType="com.sist.board.dao.BoardVO">
+			<result property="b_no" column="b_no"/>
+			<result property="b_subject" column="b_subject"/>
+			<result property="b_regdate" column="b_regdate"/>
+			<result property="b_hit" column="b_hit"/>
+		</association>
+	</resultMap>
+	<select id="myBoardList" resultMap="myboardList" parameterType="java.util.Map">
+		SELECT b_no, b_subject, b_regdate, b_hit, num
+		FROM (SELECT b_no, m_email, b_subject, b_regdate, b_hit, rownum AS num
+		FROM (SELECT b.b_no, m.m_email, b.b_subject, b.b_regdate, b.b_hit
+		FROM member m, board b WHERE m.m_email=b.m_email AND m.m_email=#{m_email} ORDER BY b.b_no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+
+	<!-- 총페이지 -->
+	<select id="myBoardTotalPage" resultType="int" parameterType="String">
+		SELECT CEIL(COUNT(*)/5)
+        FROM (SELECT * FROM board)
+        WHERE m_email=#{m_email}
+	</select>
+	
 </mapper>
 
 

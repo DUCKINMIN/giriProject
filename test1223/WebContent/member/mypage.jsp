@@ -158,7 +158,7 @@ $(function(){
 		<div class="row menurow">
 			<div style="height: 5px"></div>
 			<div class="myMenu text-left">
-				<span><a href="mypage.do" class="btn myBtn" id="myboard">찜목록</a></span> 
+				<span><a href="mypage.do" class="btn myBtn" id="myboard">나의활동</a></span> 
 				<span><a href="myevent.do" class="btn myBtn" id="myevent">이벤트</a></span> 
 				<span><a href="myinfo.do" class="btn myBtn" id="myinfo">수정/탈퇴</a></span> 
 			</div>

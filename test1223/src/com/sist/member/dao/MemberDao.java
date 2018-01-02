@@ -8,8 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
-
 public class MemberDao {
 	private static SqlSessionFactory ssf;
 	static {
@@ -140,18 +138,18 @@ public class MemberDao {
 		return vo;
 	}
 	// mynick 중복체크
-		public static MemberVo myNickCheck(Map map) {
-			MemberVo vo = new MemberVo();
-			SqlSession session = ssf.openSession();
-			try {
-				vo.setCount(session.selectOne("myNickCheck",map));
-			} catch (Exception e) {
-				System.out.println("myNickCheck : "+e.getMessage());
-			} finally {
-				if(session!=null) session.close();
-			}
-			return vo;
+	public static MemberVo myNickCheck(Map map) {
+		MemberVo vo = new MemberVo();
+		SqlSession session = ssf.openSession();
+		try {
+			vo.setCount(session.selectOne("myNickCheck",map));
+		} catch (Exception e) {
+			System.out.println("myNickCheck : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
 		}
+		return vo;
+	}
 	// 회원정보 수정
 	public static void myinfo_update(MemberVo vo) {
 		SqlSession session = ssf.openSession(true);
@@ -197,9 +195,33 @@ public class MemberDao {
 		}
 	}
 	
-	
-	
-	
+	// 작성글
+	public static List<MemberVo> myBoardList(Map map) {
+		List<MemberVo> list = new ArrayList<MemberVo>();
+		SqlSession session = ssf.openSession();
+		try {
+			list = session.selectList("myBoardList",map);
+			System.out.println(list.size());
+		} catch (Exception e) {
+			System.out.println("myBoardList : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	// 작성글 총페이지
+	public static int myBoardTotalPage(String m_email) {
+		SqlSession session = ssf.openSession();
+		int totalpage=0;
+		try {
+			totalpage = session.selectOne("myBoardTotalPage", m_email);
+		} catch (Exception e) {
+			System.out.println("myBoardTotalPage : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return totalpage;
+	}
 	
 	
 	

@@ -2,6 +2,8 @@ package com.sist.member.dao;
 
 import java.util.Date;
 
+import com.sist.board.dao.BoardVO;
+
 public class MemberVo {
 	private String m_email;
 	private String m_pwd;
@@ -16,7 +18,17 @@ public class MemberVo {
 	private String m_profile;
 	private int count;
 	
-	
+	// ¿€º∫±€
+	private BoardVO bvo = new BoardVO();
+	// ¿€º∫¥Ò±€
+	// ¬Ú
+
+	public BoardVO getBvo() {
+		return bvo;
+	}
+	public void setBvo(BoardVO bvo) {
+		this.bvo = bvo;
+	}
 	public String getM_profile() {
 		return m_profile;
 	}
