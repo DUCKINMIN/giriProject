@@ -43,4 +43,9 @@
   	<select id="eventEndPage" resultType="int">
   		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
   	</select>
+  	<!-- 점주 체크 -->
+  	<select id="ownerCheck" resultType="int" parameterType="String">
+  		SELECT m_grade FROM member
+  		WHERE m_email=#{m_email}
+  	</select>
   </mapper>
