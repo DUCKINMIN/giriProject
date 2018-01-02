@@ -39,7 +39,7 @@
 	    		</div>
 	    	</a>
 	 	</div>
-	</c:forEach>
+	</c:forEach><!-- ? -->
 	<div class="text-center" >
         <a href="#">&lt;</a>&emsp;
         <c:forEach var="i" begin="1" end="10">
