@@ -82,7 +82,7 @@
 				<td width="10%" class="text-center"><fmt:formatDate value="${vo.b_regdate }" pattern="yyyy.MM.dd"/></td>
 			</tr>
 			</c:forEach>
-		</table>	
+		</table>
 		<table class="table">
 			<tr>
 				<td class="text-center" colspan="4">
@@ -96,7 +96,7 @@
 		</table>
 	</div>	
 	
-	<!-- ¿€º∫¥Ò±€ -->
+	<!-- ¿€º∫¥Ò±€  -->
 	<div>
 		<h4><img alt="comment" src="member/image/comment.png" width="25px">&nbsp;¿€º∫ ¥Ò±€</h4>
 	</div>

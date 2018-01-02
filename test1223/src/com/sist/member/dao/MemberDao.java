@@ -21,7 +21,7 @@ public class MemberDao {
 			System.out.println(e.getMessage());
 		}
 	}
-	// 이메일 중복체크
+	// 이메일 중복체크 
 	public static MemberVo emailCheck(String m_email) {
 		MemberVo vo = new MemberVo();
 		SqlSession session = ssf.openSession();

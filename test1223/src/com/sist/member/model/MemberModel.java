@@ -249,7 +249,7 @@ public class MemberModel {
 		MemberDao.tel_update(map);
 		return "member/myinfo_update.jsp";
 	}
-	// È¸¿øÅ»Åð
+	// È¸¿øÅ»Åð 
 	@RequestMapping("member_delete.do")
 	public String member_delete(HttpServletRequest req, HttpServletResponse res) throws Exception{
 		String path = req.getServletContext().getRealPath("/member/profile");

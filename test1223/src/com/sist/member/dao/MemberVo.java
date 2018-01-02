@@ -18,7 +18,7 @@ public class MemberVo {
 	private String m_profile;
 	private int count;
 	
-	// 작성댓글
+	// 작성댓글 
 	
 	// 찜
 	// 참여이벤트
