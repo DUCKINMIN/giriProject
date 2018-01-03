@@ -150,7 +150,7 @@ html, body {
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a href="login_ok.do" class="" style="color: white"> <img
+			<a href="main.do" class="" style="color: white"> <img
 				id="logo_img" src="image/logo1.png">
 			</a>
 		</div>

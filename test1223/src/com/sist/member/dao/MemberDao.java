@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.sist.board.dao.BoardCommentVO;
 import com.sist.board.dao.BoardVO;
 import com.sist.event.dao.EventVO;
 
@@ -198,6 +199,33 @@ public class MemberDao {
 		}
 	}
 	
+	// 찜
+	public static List<MemberVo> myClubBarList(Map map) {
+		List<MemberVo> list = new ArrayList<MemberVo>();
+		SqlSession session = ssf.openSession();
+		try {
+			list = session.selectList("myClubBarList",map);
+		} catch (Exception e) {
+			System.out.println("myClubBarList : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	// 찜 총페이지
+	public static int myClubBarTotalPage(String m_email) {
+		SqlSession session = ssf.openSession();
+		int totalpage=0;
+		try {
+			totalpage = session.selectOne("myClubBarTotalPage", m_email);
+		} catch (Exception e) {
+			System.out.println("myClubBarTotalPage : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return totalpage;
+	}
+	
 	// 작성글
 	public static List<BoardVO> myBoardList(Map map) {
 		List<BoardVO> list = new ArrayList<BoardVO>();
@@ -225,17 +253,39 @@ public class MemberDao {
 		return totalpage;
 	}
 	
-	// 참여이벤트
-	public static List<EventVO> myEventList(Map map) {
-		List<EventVO> list = new ArrayList<EventVO>();
+	// 작성댓글
+	public static List<BoardCommentVO> myCommentList(Map map) {
+		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
 		SqlSession session = ssf.openSession();
 		try {
-			System.out.println(map.get("m_email")+","+map.get("start")+","+map.get("end"));
+			list = session.selectList("myCommentList",map);
+		} catch (Exception e) {
+			System.out.println("myCommentList : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	// 작성댓글 총페이지
+	public static int myCommentTotalPage(String m_email) {
+		SqlSession session = ssf.openSession();
+		int totalpage=0;
+		try {
+			totalpage = session.selectOne("myCommentTotalPage", m_email);
+		} catch (Exception e) {
+			System.out.println("myCommentTotalPage : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return totalpage;
+	}
+	
+	// 참여이벤트
+	public static List<MemberVo> myEventList(Map map) {
+		List<MemberVo> list = new ArrayList<MemberVo>();
+		SqlSession session = ssf.openSession();
+		try {
 			list = session.selectList("myEventList",map);
-			System.out.println(list.size());
-			for (EventVO e : list) {
-				System.out.println("이벤트:"+e.getE_name());
-			}
 		} catch (Exception e) {
 			System.out.println("myEventList : "+e.getMessage());
 		} finally {
