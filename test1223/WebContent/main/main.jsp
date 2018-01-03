@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+   pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,23 +9,23 @@
 <title>Insert title here</title>
 
 <link href="https://fonts.googleapis.com/css?family=JejuGothic"
-	rel="stylesheet">
+   rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 <style type="text/css">
 * {
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	text-decoration: none;
+   box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   text-decoration: none;
 }
 a:link{
-	text-decoration:none;
+   text-decoration:none;
 }
 a{
-	color:black;
+   color:black;
 }
 .header {
    background: #262626;
@@ -94,6 +94,7 @@ a{
    padding-top: 40px;
    color: rgb(170, 170, 170);
    margin: 0px auto;
+   margin-top: 50px;
 }
 
 #footer span {
@@ -115,7 +116,16 @@ html, body {
    display:inline;
    margin: 0px auto;
 }
-
+@media screen and (min-width: 769px) {
+   #user_img {
+      width:80px; height:80px;
+   }
+}
+@media screen and (max-width: 770px) {
+   #user_img {
+      width:50px; height:50px;
+   }   
+}
 @media (max-width: 460px) {
   #footer {
      height:160px;
@@ -140,35 +150,43 @@ html, body {
             <span class="icon-bar"></span> <span class="icon-bar"></span> <span
                class="icon-bar"></span>
          </button>
-         <a href="main.do" class="" style="color: white"> <img
+         <a href="login_ok.do" class="" style="color: white"> <img
             id="logo_img" src="image/logo1.png">
          </a>
       </div>
       <div class="navbar-collapse collapse">
          <ul class="nav navbar-nav" id="nav">
             <li class="nav_main"><a href="main.jsp?mode=1"><strong>HOT3</strong></a></li>
-            <li class="nav_main"><a href="main.jsp?mode=2"><strong>이벤트</strong></a></li>
+            <li class="nav_main"><a href="event.do"><strong>이벤트</strong></a></li>
             <li class="dropdown nav_main"><a href="#"
                class="dropdown-toggle" data-toggle="dropdown"><strong>커뮤니티<b
                      class="caret"></b></strong> </a>
                <ul class="dropdown-menu">
-                  <li><a id="dropdown_sub" href="music/main.jsp?mode=6"><h5>썰전</h5></a></li>
-                  <li><a id="dropdown_sub" href="music/main.jsp?mode=12"><h5>고민상담</h5></a></li>
+                  <li><a id="dropdown_sub" href="board_list.do"><h5>썰전</h5></a></li>
+                  <li><a id="dropdown_sub" href="board_list.do?grade=1"><h5>고민상담</h5></a></li>
                </ul></li>
          </ul>
-         <!--< ul class="nav navbar-nav navbar-right">
-            <li><a href="#">로그인</a></li>
-         </ul> -->
-         <c:if test="${sessionScope.id==null }">
-            <!-- 로그인X -->
-            <!-- 입장하기로 보내기 -->
-         </c:if>
-         <c:if test="${sessionScope.id==null }">
-            <!-- 유저 -->
+         <!-- 09 -->
+         <c:if test="${sessionScope.m_email==null }">
+            <!-- 미로그인시 -->
             <div class="navbar-right" id="navbar-main">
-               <div class="">
-                  <img src="image/man.png" id="user_img" /> <font color="white">USER</font>
-               </div>
+                  <a href="mypage.do">
+                     <div>
+                        <img src="image/man.png" id="user_img"/>
+                         <font color="white">USER</font>
+                     </div>
+                  </a>
+            </div>
+         </c:if>
+         <c:if test="${sessionScope.m_email!=null }">
+            <!-- 로그인시 -->
+            <div class="navbar-right" id="navbar-main">
+                  <a href="mypage.do">
+                     <div>
+                        <img src="member/profile/${sessionScope.m_profile }" id="user_img"/>
+                         <font color="white">${sessionScope.m_nick }</font>
+                     </div>
+                  </a>
             </div>
          </c:if>
       </div>
@@ -177,7 +195,7 @@ html, body {
    <div style="height: 102px"></div>
 
       <div class="include_wrap">
-      <jsp:include page="${main_jsp }"></jsp:include>
+      <jsp:include page="${main_jsp}"></jsp:include>
       
       <div id="footer" class="text-center">
          <div id="footer_1">
