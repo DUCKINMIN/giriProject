@@ -94,7 +94,6 @@ a{
 	padding-top: 40px;
 	color: rgb(170, 170, 170);
 	margin: 0px auto;
-	margin-top: 50px;
 }
 
 #footer span {
@@ -196,7 +195,7 @@ html, body {
 
 		<div class="include_wrap">
 		<jsp:include page="${main_jsp}"></jsp:include>
-		
+		<div style="height: 102px"></div>
 		<div id="footer" class="text-center">
 			<div id="footer_1">
 				<strong>COMPANY&nbsp;&nbsp;&nbsp;</strong> <span>·¹Ã÷³¢¸´ÄÄÆÛ´Ï</span>

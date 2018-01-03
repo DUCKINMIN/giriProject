@@ -180,4 +180,55 @@ public class BoardDAO {
 				session.close();
 		}
 	}
+	
+	//검색
+	public static List<BoardVO> boardSearch(Map map) {
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		String select = (String)map.get("select");
+		SqlSession session = ssf.openSession();
+		try {
+			if(select.equals("b_subject"))
+				list = session.selectList("boardSubjectSearch",map);
+			else 
+				list = session.selectList("boardNickSearch",map);
+		}catch(Exception e) {
+			System.out.println("boardSearch : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return list;
+	}
+	
+	//검색
+	public static int searchSubjectPage(Map map) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("searchSubjectPage",map);
+		}catch(Exception e) {
+			System.out.println("searchSubjectPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return cnt;
+	}
+	public static int searchNickPage(Map map) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("searchNickPage",map);
+		}catch(Exception e) {
+			System.out.println("searchNickPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return cnt;
+	}
+
 }

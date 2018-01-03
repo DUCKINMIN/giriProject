@@ -28,7 +28,7 @@ public class MainModel {
 		req.setCharacterEncoding("EUC-KR");
 		String search_name = req.getParameter("search_name");
 		String addr_name = "";
-		System.out.println("서치:" + search_name);
+		
 		if (search_name.equals("홍대")) {
 			addr_name = "마포";
 		} else if (search_name.equals("강남")) {
@@ -59,7 +59,7 @@ public class MainModel {
 		totalpage = SearchDao.TotalPage(addr_name);
 		/////////////////////////////////////////////////////////////////////////////////////////
 		String p2 = req.getParameter("p2");
-		System.out.println("지금페이지 : " + p2);
+	
 		if (p2 == null)
 			p2 = "1";
 		int curpage2 = Integer.parseInt(p2);

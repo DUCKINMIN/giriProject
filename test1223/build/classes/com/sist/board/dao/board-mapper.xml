@@ -68,4 +68,30 @@
 		SELECT b_img_cnt FROM board
 		WHERE b_no=#{b_no}
 	</select>
+	
+	<!-- 검색 -->
+	<select id="boardSubjectSearch" resultType="BoardVO" parameterType="java.util.Map">
+		SELECT b_no, b_subject, m_nick, b_regdate, b_grade, b_hit, num
+		FROM (SELECT b_no, b_subject, m_nick,b_regdate, b_grade, b_hit, rownum as num 
+		FROM (SELECT b.b_no, b.b_subject, m.m_nick, b.b_regdate, b.b_grade, b.b_hit
+		FROM board b, member m WHERE b_grade=#{grade} AND b.m_email=m.m_email 
+		AND b_subject LIKE '%'||#{strSearch}||'%' ORDER BY b.b_no DESC)) 
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 검색 총페이지 -->
+	<select id="searchSubjectPage" resultType="int" parameterType="java.util.Map">
+		SELECT CEIL(COUNT(*)/10) FROM board WHERE b_grade=#{grade} AND b_subject LIKE '%'||#{strSearch}||'%'
+	</select>
+	
+	<select id="boardNickSearch" resultType="BoardVO" parameterType="java.util.Map">
+		SELECT b_no, b_subject, m_nick, b_regdate, b_grade, b_hit, num
+		FROM (SELECT b_no, b_subject, m_nick,b_regdate, b_grade, b_hit, rownum as num 
+		FROM (SELECT b.b_no, b.b_subject, m.m_nick, b.b_regdate, b.b_grade, b.b_hit
+		FROM board b, member m WHERE b_grade=#{grade} AND b.m_email=m.m_email 
+		AND m_nick=#{strSearch} ORDER BY b.b_no DESC)) 
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="searchNickPage" resultType="int" parameterType="java.util.Map">
+		SELECT CEIL(COUNT(*)/10) FROM board b, member m  WHERE b_grade=#{grade} AND m_nick=#{strSearch}
+	</select>
 </mapper>

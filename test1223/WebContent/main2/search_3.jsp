@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,12 +33,14 @@
 
 							<tr class="table_content">
 
-								<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;${vo2.b_subject }</a>
-									&nbsp; <%-- <c:if test="${vo.count!=0 }">
-								(${vo.count })
-							</c:if> --%></td>
+								<td width=40% class="text-left">
+								<a href="board_content.do?no=${vo2.b_no }&grade=${vo2.b_grade}">
+								&nbsp;&nbsp;${vo2.b_subject }</a>
+									&nbsp; </td>
 								<td width=20% class="text-center">${vo2.m_nick }</td>
-								<td width=20% class="text-center">${vo2.b_regdate }</td>
+								<td width=20% class="text-center">
+									<fmt:formatDate	value="${vo2.b_regdate }" pattern="yyyy-MM-dd" />
+								</td>
 								<td width=20% class="text-center table_count">${vo2.b_hit }</td>
 							</tr>
 						</c:forEach>
