@@ -50,10 +50,6 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	$("#myinfo").css({
-		"color": "white", "background-color": "#262626"
-	});
-	
 	var nickcount = 1;
 	$("#updateBtn").click(function(){
 		$('#nickcon').html("");
@@ -66,7 +62,7 @@ $(function(){
 			$("#nick").focus();
 			return;
 		}
-		if(grade==1){
+		if(grade==2){
 			var companyno = $("#companyno").val();
 			if (companyno.trim()=="") {
 				$('#gradecon').html("<font color=red>사업자 등록번호를 입력해주세요</font>");
@@ -229,6 +225,7 @@ $(function(){
 		$("#deletecon").html("");
 		var pwd = $("#deletepwd").val();
 		var mypwd = ${sessionScope.m_pwd};
+		alert(mypwd+","+pwd)
 		if (pwd.trim()=="") {
 			$('#deletecon').html("<font color=red>비밀번호를 입력해주세요</font>");
 			$("#deletepwd").focus();
@@ -346,12 +343,12 @@ function readURL(input) {
 		<div class="text-center">
 			<label>사업자 등록 번호</label>
 		</div>
-		<c:if test="${vo.m_grade=='0' }">
+		<c:if test="${vo.m_grade=='1' }">
 		<div class="result_div">
 			<input type="text" class="result_input form-control" value="-" readonly/>
 		</div>
 		</c:if>
-		<c:if test="${vo.m_grade=='1' }">
+		<c:if test="${vo.m_grade=='2' }">
 		<div class="result_div">
 			<input type="text" id="companyno" name="companyno" class="result_input form-control" value=${vo.m_companyno } maxlength="10"/>
 		</div>

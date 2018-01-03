@@ -64,7 +64,7 @@ public class SearchDao {
 	public static List<BoardVO> namecheck2(Map map) {
 		SqlSession session = ssf.openSession();
 		List<BoardVO> vo = new ArrayList<>();
-		System.out.println(map.get("search_name")+"/"+map.get("start2")+"/"+map.get("end2"));
+		
 		try {
 			vo = session.selectList("jumpoCheck2", map);
 			
@@ -84,7 +84,6 @@ public class SearchDao {
 		SqlSession session = ssf.openSession();
 		try {
 			totalpage = session.selectOne("searchTotalPage2",search_name);
-			System.out.println("≈‰≈ª"+totalpage);
 		}catch(Exception e) {
 			System.out.println("searchTotalPage2 : " + e.getMessage());
 		}finally {

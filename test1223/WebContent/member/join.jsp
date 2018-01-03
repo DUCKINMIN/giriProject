@@ -336,9 +336,9 @@ function readURL(input) {
 				<div class="text-center">
 					<label>회원구분</label>
 				</div>
-				<div class="result_div"> <!-- 일반회원 0, 점주회원1 -->
-					<label class="checkbox-wrap col-xs-6">일반회원<br><input type="radio" id="user" name="grade" value="0" class="grade" checked><i class="check-icon"></i></label>
-					<label class="checkbox-wrap col-xs-6">점주회원<br><input type="radio" id="ceo" name="grade" value="1" class="grade"><i class="check-icon"></i></label>
+				<div class="result_div"> <!-- 일반회원 1, 점주회원2 -->
+					<label class="checkbox-wrap col-xs-6">일반회원<br><input type="radio" id="user" name="grade" value="1" class="grade" checked><i class="check-icon"></i></label>
+					<label class="checkbox-wrap col-xs-6">점주회원<br><input type="radio" id="ceo" name="grade" value="2" class="grade"><i class="check-icon"></i></label>
 				</div>
 				<div class="reslut_div" id="grade" style="display: none;">
 					<input type="text" id="companyno" name="companyno" placeholder="사업자 번호를 입력해주세요."size="50px" class="result_input form-control" maxlength="10"/>

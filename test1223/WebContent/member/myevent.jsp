@@ -28,28 +28,24 @@
 	<div>
 		<h4><img alt="like" src="member/image/m_eve.png" width="25px">&nbsp;참여 이벤트</h4>
 	</div>
-	<c:forEach var="vo" items="${list }">
-	<div class="col-sm-6 col-md-4" >
-    	<a href="#">
-    		<div class="thumbnail">
-      			<img src="member/image/event_poster.jpg" alt="이벤트">
-      			<div>
-       				<h2 style="color:white; margin-left:10px;">${vo.eventvo.e_name }</h2>
-      			</div>
-    		</div>
-    	</a>
- 	</div>
- 	</c:forEach>
- 	<table class="table">
-		<tr>
-			<td class="text-center" colspan="4">
-       			<a href="myevent.do?page=${curpage>1?curpage-1:curpage }">&lt;</a>&emsp;
-	       		<c:forEach var="i" begin="1" end="${totalpage<1?1:totalpage }">
-	           		&nbsp;<a href="myevent.do?page=${i}">${i }</a>
-	           	</c:forEach>&emsp;
-	       		<a href="myevent.do?page=${curpage<totalpage?curpage+1:curpage }">&gt;</a>
-              	</td>
-           <tr>
-	</table>
+	<c:forEach var="i" begin="1" end="6">
+		<div class="col-sm-6 col-md-4" >
+	    	<a href="#">
+	    		<div class="thumbnail">
+	      			<img src="member/image/event_poster.jpg" alt="이벤트">
+	      			<div>
+	       				<h2 style="color:white; margin-left:10px;">이벤트 제목</h2>
+	      			</div>
+	    		</div>
+	    	</a>
+	 	</div>
+	</c:forEach><!-- ? -->
+	<div class="text-center" >
+        <a href="#">&lt;</a>&emsp;
+        <c:forEach var="i" begin="1" end="10">
+        	&nbsp;<a href="#">${i }</a>&nbsp;
+        </c:forEach>&emsp;
+        <a href="#">&gt;</a>
+	</div>
 </body>
 </html>

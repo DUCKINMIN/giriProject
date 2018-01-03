@@ -2,9 +2,6 @@ package com.sist.member.dao;
 
 import java.util.Date;
 
-import com.sist.clubbar.dao.CartVO;
-import com.sist.clubbar.dao.ClubBarVO;
-import com.sist.event.dao.EventCartVO;
 import com.sist.event.dao.EventVO;
 
 public class MemberVo {
@@ -21,37 +18,17 @@ public class MemberVo {
 	private String m_profile;
 	private int count;
 	
+	// ÀÛ¼º´ñ±Û 
+	
 	// Âò
-	private ClubBarVO clubbarvo = new ClubBarVO();
-	private CartVO cartvo = new CartVO();
 	// Âü¿©ÀÌº¥Æ®
-	private EventCartVO eventcartvo = new EventCartVO();
-	private EventVO eventvo = new EventVO();
+	private EventVO evo = new EventVO();
 	
-	
-	public ClubBarVO getClubbarvo() {
-		return clubbarvo;
+	public EventVO getEvo() {
+		return evo;
 	}
-	public void setClubbarvo(ClubBarVO clubbarvo) {
-		this.clubbarvo = clubbarvo;
-	}
-	public CartVO getCartvo() {
-		return cartvo;
-	}
-	public void setCartvo(CartVO cartvo) {
-		this.cartvo = cartvo;
-	}
-	public EventCartVO getEventcartvo() {
-		return eventcartvo;
-	}
-	public void setEventcartvo(EventCartVO eventcartvo) {
-		this.eventcartvo = eventcartvo;
-	}
-	public EventVO getEventvo() {
-		return eventvo;
-	}
-	public void setEventvo(EventVO eventvo) {
-		this.eventvo = eventvo;
+	public void setEvo(EventVO evo) {
+		this.evo = evo;
 	}
 	public String getM_profile() {
 		return m_profile;

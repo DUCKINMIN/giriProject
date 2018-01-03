@@ -14,8 +14,7 @@ BC_GROUP_TAB           NUMBER
 BC_ROOT                NUMBER       
 DEPTH                  NUMBER 
  */
-public class BoardCommentVO {
-	private int bc_no;
+public class Board_CommentVO {
 	private String m_email;
 	private Date bc_regdate;
 	private String bc_content;
@@ -26,12 +25,6 @@ public class BoardCommentVO {
 	private int bc_root;
 	private int depth;
 	
-	public int getBc_no() {
-		return bc_no;
-	}
-	public void setBc_no(int bc_no) {
-		this.bc_no = bc_no;
-	}
 	public String getM_email() {
 		return m_email;
 	}

@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.sist.board.dao.BoardCommentVO;
 import com.sist.board.dao.BoardVO;
 import com.sist.event.dao.EventVO;
 
@@ -199,33 +198,6 @@ public class MemberDao {
 		}
 	}
 	
-	// ¬Ú
-	public static List<MemberVo> myClubBarList(Map map) {
-		List<MemberVo> list = new ArrayList<MemberVo>();
-		SqlSession session = ssf.openSession();
-		try {
-			list = session.selectList("myClubBarList",map);
-		} catch (Exception e) {
-			System.out.println("myClubBarList : "+e.getMessage());
-		} finally {
-			if(session!=null) session.close();
-		}
-		return list;
-	}
-	// ¬Ú √—∆‰¿Ã¡ˆ
-	public static int myClubBarTotalPage(String m_email) {
-		SqlSession session = ssf.openSession();
-		int totalpage=0;
-		try {
-			totalpage = session.selectOne("myClubBarTotalPage", m_email);
-		} catch (Exception e) {
-			System.out.println("myClubBarTotalPage : "+e.getMessage());
-		} finally {
-			if(session!=null) session.close();
-		}
-		return totalpage;
-	}
-	
 	// ¿€º∫±€
 	public static List<BoardVO> myBoardList(Map map) {
 		List<BoardVO> list = new ArrayList<BoardVO>();
@@ -253,39 +225,17 @@ public class MemberDao {
 		return totalpage;
 	}
 	
-	// ¿€º∫¥Ò±€
-	public static List<BoardCommentVO> myCommentList(Map map) {
-		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
-		SqlSession session = ssf.openSession();
-		try {
-			list = session.selectList("myCommentList",map);
-		} catch (Exception e) {
-			System.out.println("myCommentList : "+e.getMessage());
-		} finally {
-			if(session!=null) session.close();
-		}
-		return list;
-	}
-	// ¿€º∫¥Ò±€ √—∆‰¿Ã¡ˆ
-	public static int myCommentTotalPage(String m_email) {
-		SqlSession session = ssf.openSession();
-		int totalpage=0;
-		try {
-			totalpage = session.selectOne("myCommentTotalPage", m_email);
-		} catch (Exception e) {
-			System.out.println("myCommentTotalPage : "+e.getMessage());
-		} finally {
-			if(session!=null) session.close();
-		}
-		return totalpage;
-	}
-	
 	// ¬¸ø©¿Ã∫•∆Æ
-	public static List<MemberVo> myEventList(Map map) {
-		List<MemberVo> list = new ArrayList<MemberVo>();
+	public static List<EventVO> myEventList(Map map) {
+		List<EventVO> list = new ArrayList<EventVO>();
 		SqlSession session = ssf.openSession();
 		try {
+			System.out.println(map.get("m_email")+","+map.get("start")+","+map.get("end"));
 			list = session.selectList("myEventList",map);
+			System.out.println(list.size());
+			for (EventVO e : list) {
+				System.out.println("¿Ã∫•∆Æ:"+e.getE_name());
+			}
 		} catch (Exception e) {
 			System.out.println("myEventList : "+e.getMessage());
 		} finally {

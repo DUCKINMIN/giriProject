@@ -28,7 +28,6 @@ public class MainModel {
 		req.setCharacterEncoding("EUC-KR");
 		String search_name = req.getParameter("search_name");
 		String addr_name = "";
-		System.out.println("서치:" + search_name);
 		if (search_name.equals("홍대")) {
 			addr_name = "마포";
 		} else if (search_name.equals("강남")) {
