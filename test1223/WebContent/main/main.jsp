@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-   pageEncoding="EUC-KR"%>
-
+	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,19 +9,24 @@
 <title>Insert title here</title>
 
 <link href="https://fonts.googleapis.com/css?family=JejuGothic"
-   rel="stylesheet">
+	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 <style type="text/css">
 * {
-   box-sizing: border-box;
-   -webkit-box-sizing: border-box;
-   -moz-box-sizing: border-box;
-   text-decoration: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	text-decoration: none;
 }
-
+a:link{
+	text-decoration:none;
+}
+a{
+	color:black;
+}
 .header {
    background: #262626;
    /* height: 80px; */
@@ -135,7 +140,7 @@ html, body {
             <span class="icon-bar"></span> <span class="icon-bar"></span> <span
                class="icon-bar"></span>
          </button>
-         <a href="main.jsp" class="" style="color: white"> <img
+         <a href="main.do" class="" style="color: white"> <img
             id="logo_img" src="image/logo1.png">
          </a>
       </div>
