@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -145,6 +146,9 @@
 	outline: 1px dotted #d2310e;
 	/* float:left; */
 }
+#fileDiv{
+	display: none;
+} 
 
 /* 미디어쿼리 */
 @media ( max-width : 993px) {
@@ -167,7 +171,16 @@
 </style>
 <script type="text/javascript">
 	$(function() {
+		var img_cnt = $('#fileDiv').attr("img_cnt");
+		if(img_cnt>0)
+			$('#fileDiv').show();
 		$('#upload01').on('change', function() {
+			var file = $('#upload01').val();
+			file = file.trim();
+			if(file!="")
+				$('#fileDiv').show();
+			else
+				$('#fileDiv').hide();
 			readURL(this);
 		});
 		$("#board_updateBtn").click(function() {
@@ -209,6 +222,7 @@
 				<p id="board_name">${sessionScope.m_nick }</p>
 				<input type="hidden" name="m_email" value="${sessionScope.m_email }">
 				<input type="hidden" name="grade" value="${vo.b_grade }">
+				<input type="hidden" name="b_no" value="${vo.b_no }">
 			</div>
 			<div style="height: 30px"></div>
 			<!-- 게시판 insert -->
@@ -238,8 +252,8 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<div style="width: 200px; height: 200px">
-							<img id="myimg" src="board/boardImg/board_${vo.b_no }.jpg">
+						<div style="width: 200px; height: 200px" id="fileDiv" img_cnt=${vo.b_img_cnt }>
+							<img id="myimg" src="board/boardImg/board_${vo.b_no }.jpg" width="100%">
 						</div>
 					</td>
 				</tr>
