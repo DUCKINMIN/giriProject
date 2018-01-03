@@ -138,7 +138,7 @@
 				<div id="login" data-toggle="modal" data-target="#loginModal"> <img id="btn_enter" /></div>
 				<!-- 09-->
             	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            	data-backdrop="static" data-keyboard="fals`e">
+            	data-backdrop="static" data-keyboard="false">
                		<div class="modal-dialog">
                   		<div class="modal-content">
                      		<div class="modal-header">
