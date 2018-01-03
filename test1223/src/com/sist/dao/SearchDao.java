@@ -66,13 +66,13 @@ public class SearchDao {
 	public static List<BoardVO> namecheck2(Map map) {
 		SqlSession session = ssf.openSession();
 		List<BoardVO> vo = new ArrayList<>();
-
+		System.out.println(map.get("search_name")+"/"+map.get("start2")+"/"+map.get("end2"));
 		try {
 			vo = session.selectList("jumpoCheck2", map);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("namecheck2 = " + e.getMessage());
+			System.out.println("jumpoCheck2 = " + e.getMessage());
 		} finally {
 			if (session != null)
 				session.close();

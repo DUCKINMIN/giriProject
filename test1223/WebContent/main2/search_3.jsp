@@ -47,13 +47,13 @@
 					</table>
 					
 					<div>
-						<a href="mainsearch.do?p2=${curpage2>1?curpage2-1:curpage2 }&search_name=${search_name }">
+						<a href="mainsearch.do?page=${curpage }&p2=${curpage2>1?curpage2-1:curpage2 }&search_name=${search_name }">
 							<img src="main2/img/befor.png" style="cursor:pointer"></a>&nbsp;
 						 
 						<c:forEach  var="i" begin="1" end="${totalpage2<1?1:totalpage2 }">
 						<a href = "mainsearch.do?p2=${i}&search_name=${search_name }" }>${i }</a>
 						</c:forEach>&nbsp; 
-						<a href="mainsearch.do?p2=${curpage2<totalpage2?curpage2+1:curpage2 }&search_name=${search_name }">
+						<a href="mainsearch.do?page=${curpage }&p2=${curpage2<totalpage2?curpage2+1:curpage2 }&search_name=${search_name }">
 						<img src="main2/img/next.png"style="cursor:pointer"></a>&nbsp;&nbsp;
 					</div>
 
