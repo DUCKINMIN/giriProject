@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.sist.board.dao.BoardCommentVO;
 import com.sist.board.dao.BoardVO;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
@@ -45,7 +46,6 @@ public class MemberModel {
 	@RequestMapping("telCheck.do")
 	public String telCheck(HttpServletRequest req, HttpServletResponse res) {	
 		int checkno = (int)(Math.random() * 89999) + 10000;
-		System.out.println(checkno);
 		req.setAttribute("checkno", checkno);
 		return "member/telcheck.jsp";
 	}
@@ -265,27 +265,58 @@ public class MemberModel {
 	public String mypage(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		String m_email = (String) session.getAttribute("m_email");
+		String zzimPage = req.getParameter("zzimPage");
+		String boardPage=req.getParameter("boardPage");
+		String commentPage = req.getParameter("commentPage");
 		
-		String page=req.getParameter("page");
-		if(page==null)
-			page="1";
-		int curpage = Integer.parseInt(page);
+		if(zzimPage==null)
+			zzimPage="1";
 		int rowSize = 5;
+		int curpage = Integer.parseInt(zzimPage);
 		int start = (rowSize*curpage)-(rowSize-1);
 		int end = rowSize * curpage;
-
 		Map map = new HashMap<>();
 		map.put("m_email", m_email);
 		map.put("start", start);
 		map.put("end", end);
 		
-		int totalpage = MemberDao.myBoardTotalPage(m_email);
+		if(boardPage==null)
+			boardPage="1";
+		int bcurpage = Integer.parseInt(boardPage);
+		int bstart = (rowSize*bcurpage)-(rowSize-1);
+		int bend = rowSize * bcurpage;
+		Map bmap = new HashMap<>();
+		bmap.put("m_email", m_email);
+		bmap.put("bstart", bstart);
+		bmap.put("bend", bend);
 		
-		List<BoardVO> list = MemberDao.myBoardList(map);
+		if(commentPage==null)
+			commentPage="1";
+		int ccurpage = Integer.parseInt(commentPage);
+		int cstart = (rowSize*ccurpage)-(rowSize-1);
+		int cend = rowSize * ccurpage;
+		Map cmap = new HashMap<>();
+		cmap.put("m_email", m_email);
+		cmap.put("cstart", cstart);
+		cmap.put("cend", cend);
 		
+		int totalpage = MemberDao.myClubBarTotalPage(m_email);
+		int btotalpage = MemberDao.myBoardTotalPage(m_email);
+		int ctotalpage = MemberDao.myCommentTotalPage(m_email);
+		
+		List<MemberVo> list = MemberDao.myClubBarList(map);
+		List<BoardVO> blist = MemberDao.myBoardList(bmap);
+		List<BoardCommentVO> clist = MemberDao.myCommentList(cmap);		
+
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);
+		req.setAttribute("bcurpage", bcurpage);
+		req.setAttribute("btotalpage", btotalpage);
+		req.setAttribute("blist", blist);
+		req.setAttribute("ccurpage", ccurpage);
+		req.setAttribute("ctotalpage", ctotalpage);
+		req.setAttribute("clist", clist);
 		req.setAttribute("main_jsp", "../member/mypage.jsp");
 		req.setAttribute("member_jsp", "../member/myzzim.jsp");
 		return "main/main.jsp";
@@ -309,9 +340,7 @@ public class MemberModel {
 		map.put("end", end);
 		
 		int totalpage = MemberDao.myEventTotalPage(m_email);
-		System.out.println("토탈페이지 : "+totalpage);
-		List<EventVO> list = MemberDao.myEventList(map);
-		System.out.println("성공!");
+		List<MemberVo> list = MemberDao.myEventList(map);
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);
