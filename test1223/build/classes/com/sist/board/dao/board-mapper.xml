@@ -58,9 +58,14 @@
 	</delete>
 	
 	<!-- 게시물 수정 -->
-	<update id="boardUpdateData" parameterType="BoardVO">
-		UPDATE SET
-		b_subject=#{b_subject}, b_content=#{b_content}, #{b_img_cnt}
+	<update id="boardUpdate" parameterType="BoardVO">
+		UPDATE board SET
+		b_subject=#{b_subject}, b_content=#{b_content}, b_img_cnt=#{b_img_cnt}, b_regdate=SYSDATE
 		WHERE b_no = #{b_no}
 	</update>
+	<!-- 이미지 cnt -->
+	<select id="boardImgCnt" parameterType="int" resultType="int">
+		SELECT b_img_cnt FROM board
+		WHERE b_no=#{b_no}
+	</select>
 </mapper>
