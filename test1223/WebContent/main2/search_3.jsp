@@ -35,25 +35,26 @@
 
 								<td width=40% class="text-left">
 								<a href="board_content.do?no=${vo2.b_no }&grade=${vo2.b_grade}">
-								&nbsp;&nbsp;${vo2.b_subject }</a>
-									&nbsp; </td>
+ 								&nbsp;&nbsp;${vo2.b_subject }</a></td>
+
 								<td width=20% class="text-center">${vo2.m_nick }</td>
 								<td width=20% class="text-center">
-									<fmt:formatDate	value="${vo2.b_regdate }" pattern="yyyy-MM-dd" />
-								</td>
+
+ 									<fmt:formatDate	value="${vo2.b_regdate }" pattern="yyyy-MM-dd" />
+ 								</td>
 								<td width=20% class="text-center table_count">${vo2.b_hit }</td>
 							</tr>
 						</c:forEach>
 					</table>
 					
 					<div>
-						<a href="mainsearch.do?p2=${curpage2>1?curpage2-1:curpage2 }&search_name=${search_name }">
+						<a href="mainsearch.do?page=${curpage }&p2=${curpage2>1?curpage2-1:curpage2 }&search_name=${search_name }">
 							<img src="main2/img/befor.png" style="cursor:pointer"></a>&nbsp;
 						 
 						<c:forEach  var="i" begin="1" end="${totalpage2<1?1:totalpage2 }">
 						<a href = "mainsearch.do?p2=${i}&search_name=${search_name }" }>${i }</a>
 						</c:forEach>&nbsp; 
-						<a href="mainsearch.do?p2=${curpage2<totalpage2?curpage2+1:curpage2 }&search_name=${search_name }">
+						<a href="mainsearch.do?page=${curpage }&p2=${curpage2<totalpage2?curpage2+1:curpage2 }&search_name=${search_name }">
 						<img src="main2/img/next.png"style="cursor:pointer"></a>&nbsp;&nbsp;
 					</div>
 

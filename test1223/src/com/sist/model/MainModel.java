@@ -28,7 +28,6 @@ public class MainModel {
 		req.setCharacterEncoding("EUC-KR");
 		String search_name = req.getParameter("search_name");
 		String addr_name = "";
-		
 		if (search_name.equals("홍대")) {
 			addr_name = "마포";
 		} else if (search_name.equals("강남")) {
@@ -40,7 +39,6 @@ public class MainModel {
 		}
 		///////////////////////////////////////////////////
 		String page = req.getParameter("page");
-
 		if (page == null)
 			page = "1";
 		int curpage = Integer.parseInt(page);
@@ -68,10 +66,10 @@ public class MainModel {
 		int totalpage2 = 0;
 
 		Map map2 = new HashMap();
-		map.put("search_name", search_name);
-		map.put("start2", start2);
-		map.put("end2", end2);
-		List<BoardVO> list2 = SearchDao.namecheck2(map);
+		map2.put("search_name", search_name);
+		map2.put("start2", start2);
+		map2.put("end2", end2);
+		List<BoardVO> list2 = SearchDao.namecheck2(map2);
 		totalpage2 = SearchDao.TotalPage2(search_name);
 
 		////////////////////////////////////////////////////

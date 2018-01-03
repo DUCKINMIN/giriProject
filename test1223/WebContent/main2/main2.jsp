@@ -60,7 +60,7 @@
 	position: absolute;
 	background-color: black;
 	opacity: 0.4;
-	width: 100%;
+	width: 50%;
 	height: 480px;
 }
 
@@ -290,7 +290,7 @@
 <body>
 
 	<div class="main_north">
-
+		<div id="black_box"></div>
 		<div class="north_name">
 			<p style="color: white; font-size: 25pt;">ø¿¥√ º÷∑ŒµÈ¿∫</p>
 			<p style="color: white; font-size: 35pt;">ππ«œ∞Ì ≥Ó¡ˆ?</p>
@@ -308,10 +308,12 @@
 						<img src="main2/img/dot.png" style="width: 35px">
 					</button>
 				</span>
+			</div>
 		</form>
 
+
 	</div>
-	</div>
+
 
 
 
