@@ -128,6 +128,21 @@ public class EventDAO {
 		}
 		return eno;
 	}
+	
+	public static int ownerCheck(String m_email) {
+		int grade = 0;
+		SqlSession session=ssf.openSession();
+		try {
+			grade = session.selectOne("ownerCheck",m_email);
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return grade;
+		
+	}
 }
 
 

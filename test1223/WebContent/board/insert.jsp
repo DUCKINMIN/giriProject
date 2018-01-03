@@ -101,6 +101,9 @@
 	background-color: rgb(162, 0, 0);
 	color: white;
 }
+#fileDiv{
+	display: none;
+}
 
 /* 파일업로드 */
 .input-file {
@@ -168,7 +171,14 @@
 <script type="text/javascript">
 	$(function() {
 		$('#upload01').on('change', function() {
-			readURL(this);
+			var file = $('#upload01').val();
+			file = file.trim();
+			alert(file);
+			if(file!="")
+				$('#fileDiv').show();
+			else
+				$('#fileDiv').hide();
+			readURL(this);	
 		});
 		$("#board_insertBtn").click(function() {
 
@@ -238,8 +248,8 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<div style="width: 100px; height: 100px">
-							<img id="myimg" src="" style="width: 100px; height: 100px">
+						<div style="width: 200px; height: 200px"  id="fileDiv">
+							<img id="myimg" src="" width="100%">
 						</div>
 					</td>
 				</tr>

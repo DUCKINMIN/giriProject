@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -15,6 +16,8 @@ import com.sist.controller.RequestMapping;
 public class EventModel {
 	@RequestMapping("event.do")
 	public String event_detail(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session=req.getSession();
+		String email=(String)session.getAttribute("m_email");
 		String page=req.getParameter("page");
 		if(page==null)
 			page="1";
@@ -28,6 +31,10 @@ public class EventModel {
 		List<EventVO> list=EventDAO.eventListData(map);
 		int totalpage=EventDAO.eventTotalPage();
 		
+		
+		//점주 체크
+		int grade=EventDAO.ownerCheck(email);
+		req.setAttribute("grade", grade);
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);

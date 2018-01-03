@@ -161,6 +161,9 @@ $(function(){
 				<span><a href="mypage.do" class="btn myBtn" id="myboard">나의활동</a></span> 
 				<span><a href="myevent.do" class="btn myBtn" id="myevent">이벤트</a></span> 
 				<span><a href="myinfo.do" class="btn myBtn" id="myinfo">수정/탈퇴</a></span> 
+				<c:if test="${sessionScope.m_grade==1 }">
+				<span><a href="member_event.do" class="btn myBtn" id="myinfo">이벤트 관리</a></span>
+			 	</c:if>
 			</div>
 		</div>
 		<div class="row mypagerow">

@@ -88,10 +88,10 @@
 		<div class="row">
 		<c:set var="i" value="0"/>
 		<c:forEach var="vo" items="${list }">
-		  <div class="col-sm-6 col-md-4" style="width=300px; height=250px;">
-		    <div class="thumbnail" data-toggle="modal" data-target="#myModal_${i}" >
+		  <div class="col-sm-6 col-md-4"  >
+		    <div class="thumbnail" data-toggle="modal" data-target="#myModal_${i}" style="overflow-y:hidden;" >
 		      <%-- <img src="${vo.e_picture }" alt="이벤트"  style="max-width:100%; max-height:100%;"  > --%>
-		      <img src="event/eventImage/${vo.e_no }.jpg" alt="이벤트"  style="max-width:100%; max-height:100%;"  >
+		      <img src="event/eventImage/${vo.e_no }.jpg" alt="이벤트" style="width:100%;  height:300px;">
 		      <div class="caption">
 		        <h2 style="color:white; margin-left:10px;">${vo.e_name}</h2>
 		      </div>
@@ -194,6 +194,7 @@
          </div>  
 	     
 	  	<%--이벤트 등록 버튼 --%>
+	  	<c:if test="${grade==1 }">
 		<div class="text-center" style="float:left; width: 20%; 
 				 margin-bottom:40px;"> 
 		   	<button type="button" class="btn btn-lg btn-info" 
@@ -202,7 +203,8 @@
 		   				 color:white;">이벤트 등록</a>
 		   				 
 			</button>
-		</div> 
+		</div>
+		</c:if> 
 	  </div>
 	    
 	  </div>

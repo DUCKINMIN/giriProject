@@ -88,10 +88,10 @@
 		<div class="row">
 		<c:set var="i" value="0"/>
 		<c:forEach var="vo" items="${list }">
-		  <div class="col-sm-6 col-md-4" style="width=300px; height=250px;">
+		  <div class="col-sm-6 col-md-4" >
 		    <div class="thumbnail" data-toggle="modal" data-target="#myModal_${i}" >
 		      <%-- <img src="${vo.e_picture }" alt="이벤트"  style="max-width:100%; max-height:100%;"  > --%>
-		      <img src="event/eventImage/${vo.e_no }.jpg" alt="이벤트"  style="max-width:100%; max-height:100%;"  >
+		      <img src="event/eventImage/${vo.e_no }.jpg" alt="이벤트"  style="width:100%;  height:300px;"  >
 		      <div class="caption">
 		        <h2 style="color:white; margin-left:10px;">${vo.e_name}</h2>
 		      </div>
