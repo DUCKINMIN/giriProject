@@ -76,7 +76,7 @@
 			<c:forEach var="bvo" items="${blist }">
 			<tr>
 				<td width="15%" class="text-center">${bvo.b_no }</td>
-				<td width="55%" class="text-left"><a href="board_content.do?b_no=${bvo.b_no }&b_grade=${bvo.b_grade}">${bvo.b_subject }</a></td>
+				<td width="55%" class="text-left"><a href="board_content.do?no=${bvo.b_no }&grade=${bvo.b_grade}">${bvo.b_subject }</a></td>
 				<td width="20%" class="text-center">${bvo.b_hit }</td>
 				<td width="10%" class="text-center"><fmt:formatDate value="${bvo.b_regdate }" pattern="yyyy.MM.dd"/></td>
 			</tr>
