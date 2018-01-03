@@ -73,4 +73,32 @@ public class ClubBarModel {
 		req.setAttribute("cb_no", cb_no);
 		return "cb_detail/comment_ok.jsp";
 	}
+	
+	@RequestMapping("cbc_update.do")
+	public String cbcUupdate(HttpServletRequest req, HttpServletResponse res) {
+		try {
+			req.setCharacterEncoding("EUC-KR");
+		} catch (Exception e) { }
+		
+		String cb_no = req.getParameter("cb_no");
+		System.out.println("cb_no: " + cb_no);
+		String cbc_no = req.getParameter("cbc_no");
+		System.out.println("cbc_no: " + cbc_no);
+		String cbc_content = req.getParameter("cbc_content");
+		System.out.println("cbc_content: " + cbc_content);
+		double cbc_rating = Double.parseDouble(req.getParameter("update_rating_" + cbc_no));
+		System.out.println("cbc_rating: " + cbc_rating);
+		
+		ClubBarCommentVO vo = new ClubBarCommentVO();
+		vo.setCbc_no(Integer.parseInt(cbc_no));
+		vo.setCbc_content(cbc_content);
+		vo.setCbc_rating(cbc_rating);
+		
+		ClubBarCommentDAO.cbCommentUpdate(vo);
+		
+		String review = req.getParameter("review");
+		req.setAttribute("review", review);
+
+		return "cb_detail.do?cb_no=" + cb_no;
+	}
 }

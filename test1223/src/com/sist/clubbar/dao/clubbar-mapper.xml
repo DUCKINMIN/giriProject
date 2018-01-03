@@ -48,5 +48,29 @@
 		(SELECT NVL(MAX(cbc_group_id)+1, 1) FROM clubbar_comment))
 	</insert>
 	
+	<!-- 댓글 수정 -->
+	<update id="cbCommentUpdate" parameterType="ClubBarCommentVO">
+		UPDATE clubbar_comment SET
+		cbc_content = #{cbc_content}, cbc_rating = #{cbc_rating}
+		WHERE cbc_no = #{cbc_no}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	
+	<!-- 대댓글 추가 -->
+	<select id="cbcGetParentInfo" resultType="ClubBarCommentVO" parameterType="int">
+		SELECT group_id, group_step, group_tab FROM clubbar_comment
+		WHERE cbc_no = #{cbc_no}
+	</select>
+	<update id="cbcStepIncrement" parameterType="">
+		
+	</update>
+	<insert id="">
+		
+	</insert>
+	<update id="">
+		
+	</update>
+	<!-- 대댓글 목록출력 -->
 	
 </mapper>

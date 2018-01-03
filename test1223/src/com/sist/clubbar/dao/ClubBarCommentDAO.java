@@ -48,4 +48,16 @@ public class ClubBarCommentDAO {
 		
 		return list;
 	}
+	
+	//´ñ±Û ¼öÁ¤
+	public static void cbCommentUpdate(ClubBarCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("cbCommentUpdate", vo);
+		} catch (Exception e) {
+			System.out.println("cbCommentUpdate : " + e.getMessage());
+		}
+		
+	}
 }
