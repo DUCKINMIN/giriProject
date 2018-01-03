@@ -54,6 +54,8 @@ public class BoardModel {
 		String no = req.getParameter("no");
 		String page = req.getParameter("page");
 		String grade = req.getParameter("grade");
+		if(page==null)
+			page="1";
 		System.out.println(grade);
 		int igrade = Integer.parseInt(grade);
 		int curpage = Integer.parseInt(page);
