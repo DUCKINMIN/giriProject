@@ -37,7 +37,7 @@
 
 							<tr class="table_content">
 
-								<td width=40% class="text-left"><a href="cb_detail.do?cb_no=${vo.cb_no }">&nbsp;&nbsp;${vo.cb_name }</a>
+								<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;${vo.cb_name }</a>
 									&nbsp;</td>
 								<td width=20% class="text-center">${vo.a_addr1 }</td>
 								<td width=20% class="text-center"><c:choose>

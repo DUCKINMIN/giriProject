@@ -154,4 +154,30 @@ public class BoardDAO {
 		
 		return vo;
 	}
+	//이미지 카운트 가져오기
+	public static int boardImgCnt(int b_no) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("boardImgCnt",b_no);
+		}catch(Exception e) {
+			System.out.println("boardImgCnt : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return cnt;
+	}
+	//수정
+	public static void boardUpdate(BoardVO vo) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("boardUpdate",vo);
+		}catch(Exception e) {
+			System.out.println("boardUpdate : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
 }
