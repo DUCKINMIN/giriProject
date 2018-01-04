@@ -59,12 +59,19 @@ public class ClubBarModel {
 		try {
 			req.setCharacterEncoding("EUC-KR");
 		} catch (Exception e) { }
+		
+		String cbc_rating = req.getParameter("cbc_rating");
+		String cbc_content = req.getParameter("cbc_content");
+		
+		if(cbc_rating == null)
+			cbc_rating = "0";
 
 		int cb_no = Integer.parseInt(req.getParameter("cb_no"));
 		ClubBarCommentVO cbc_vo = new ClubBarCommentVO();
 		cbc_vo.setCb_no(Integer.parseInt(req.getParameter("cb_no")));
-		cbc_vo.setCbc_content(req.getParameter("cbc_content"));
-		cbc_vo.setCbc_rating(Double.parseDouble(req.getParameter("cbc_rating")));
+		cbc_vo.setM_email(req.getParameter("m_email"));
+		cbc_vo.setCbc_content(cbc_content);
+		cbc_vo.setCbc_rating(Double.parseDouble(cbc_rating));
 		ClubBarCommentDAO.cbCommentInsert(cbc_vo);
 		
 		String review = req.getParameter("review");
@@ -95,6 +102,18 @@ public class ClubBarModel {
 		vo.setCbc_rating(cbc_rating);
 		
 		ClubBarCommentDAO.cbCommentUpdate(vo);
+		
+		String review = req.getParameter("review");
+		req.setAttribute("review", review);
+
+		return "cb_detail.do?cb_no=" + cb_no;
+	}
+	
+	@RequestMapping("re_reply_insert.do")
+	public String cbcReReplyInsert(HttpServletRequest req, HttpServletResponse res) {
+		
+
+		String cb_no = req.getParameter("cb_no");
 		
 		String review = req.getParameter("review");
 		req.setAttribute("review", review);
