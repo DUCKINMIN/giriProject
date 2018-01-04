@@ -34,7 +34,7 @@ $(function() {
 		</div>
 
 		<div class="row"
-			style="background-image: url(main2/img/club1.jpg); background-size: 100% 100%;">
+			style="background-image: url(hot3/cb_img/cb_img_${vo.cb_no}.jpg); background-size: 100% 100%;">
 			<div class="black_box"></div>
 			<div class="jumpo_name">
 
@@ -87,7 +87,7 @@ $(function() {
 			<p>이태원</p>
 		</div>
 		<div class="row"
-			style="background-image: url(main2/img/club2.jpg); background-size: 100% 100%;">
+			style="background-image: url(hot3/cb_img/cb_img_${vo1.cb_no}.jpg); background-size: 100% 100%;">
 			<div class="black_box"></div>
 			<div class="jumpo_name">
 			<p>${vo1.cb_name }</p>
@@ -136,7 +136,7 @@ $(function() {
 			<p>홍대</p>
 		</div>
 		<div class="row"
-			style="background-image: url(main2/img/club3.jpg); background-size: 100% 100%;">
+			style="background-image: url(hot3/cb_img/cb_img_${vo2.cb_no}.jpg); background-size: 100% 100%;">
 			<div class="black_box"></div>
 			<div class="jumpo_name">
 			<p>${vo2.cb_name }</p>

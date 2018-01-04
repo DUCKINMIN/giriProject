@@ -34,9 +34,7 @@ public class SearchDao {
 
 		try {
 			vo = session.selectList("jumpoCheck", map);
-			for(SearchVo s:vo) {
-				System.out.println(s.getCb_no());
-			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("namecheck = " + e.getMessage());

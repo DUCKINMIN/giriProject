@@ -34,7 +34,7 @@
 	position: relative;
 	margin: 0px auto;
 	height: 480px;
-	background-image: url("main2/img/back.jpg");
+	background-image: url("main2/img/back.png");
 	background-size: cover;
 	padding-top: 120px;
 }
@@ -290,7 +290,7 @@
 <body>
 
 	<div class="main_north">
-		<div id="black_box"></div>
+		
 		<div class="north_name">
 			<p style="color: white; font-size: 25pt;">ø¿¥√ º÷∑ŒµÈ¿∫</p>
 			<p style="color: white; font-size: 35pt;">ππ«œ∞Ì ≥Ó¡ˆ?</p>
