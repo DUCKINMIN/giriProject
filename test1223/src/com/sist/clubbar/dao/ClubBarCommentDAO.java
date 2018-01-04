@@ -127,4 +127,15 @@ public class ClubBarCommentDAO {
 		
 		return list;
 	}
+	
+	//´ë´ñ±Û ¼öÁ¤
+	public static void cbcReplyUpdate(ClubBarCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("cbcReplyUpdate", vo);
+		} catch (Exception e) {
+			System.out.println("cbcReplyUpdate : " + e.getMessage());
+		}
+	}
 }
