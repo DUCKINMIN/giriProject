@@ -34,21 +34,19 @@ public class MainModel {
 			addr_name = "강남";
 		} else if (search_name.equals("이태원")) {
 			addr_name = "용산";
-		} else if (search_name=="") {
-			System.out.println("null");
 		} else {
 
 			addr_name = search_name;
 		}
-		///////////////////////////////////////////////////
-		String page = req.getParameter("page");
-		if (page == null)
-			page = "1";
-		int curpage = Integer.parseInt(page);
+		/////////////////////////////////////////////////// 첫게시판 시작
+		String p1 = req.getParameter("p1");
+		if (p1 == null)
+			p1 = "1";
+		int curpage1 = Integer.parseInt(p1);
 		int rowSize = 5;
-		int start = (curpage * rowSize) - (rowSize - 1);
-		int end = curpage * rowSize;
-		int totalpage = 0;
+		int start = (curpage1 * rowSize) - (rowSize - 1);
+		int end = curpage1 * rowSize;
+		int totalpage1 = 0;
 
 		Map map = new HashMap();
 		map.put("addr_name", addr_name);
@@ -56,9 +54,10 @@ public class MainModel {
 		map.put("start", start);
 		map.put("end", end);
 
-		List<SearchVo> list = SearchDao.namecheck(map);
-		totalpage = SearchDao.TotalPage(addr_name);
-		/////////////////////////////////////////////////////////////////////////////////////////
+		List<SearchVo> list1 = SearchDao.namecheck(map);
+		
+		totalpage1 = SearchDao.TotalPage(addr_name);
+		/////////////////////////////////////////////////////////////////////////////////////////둘 게시판 시작
 		String p2 = req.getParameter("p2");
 
 		if (p2 == null)
@@ -73,19 +72,40 @@ public class MainModel {
 		map2.put("start2", start2);
 		map2.put("end2", end2);
 		List<BoardVO> list2 = SearchDao.namecheck2(map2);
-		totalpage2 = SearchDao.TotalPage2(search_name);
+		/*totalpage2 = SearchDao.TotalPage2(search_name);*/
 
-		////////////////////////////////////////////////////
+		////////////////////////////////////////////////////3게시판 시작
 		// DAO매개변수 넣어주고
-		// System.out.println(search_name + " " + addr_name);
+		
+		String p3 = req.getParameter("p3");
+
+		if (p3 == null)
+			p3 = "1";
+		int curpage3 = Integer.parseInt(p3);
+		int start3 = (curpage3 * rowSize) - (rowSize - 1);
+		int end3 = curpage3 * rowSize;
+		int totalpage3 = 0;
+
+		Map map3 = new HashMap();
+		map3.put("search_name", search_name);
+		map3.put("start3", start3);
+		map3.put("end3", end3);
+		List<BoardVO> list3 = SearchDao.namecheck3(map3);
+		totalpage3 = SearchDao.TotalPage3(search_name);		
+		
+		//////////////////////////////////////////////////마지막
 		req.setAttribute("search_name", search_name);
-		req.setAttribute("curpage", curpage);
-		req.setAttribute("list", list);
-		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("curpage1", curpage1);
+		req.setAttribute("list1", list1);
+		req.setAttribute("totalpage1", totalpage1);
 
 		req.setAttribute("curpage2", curpage2);
 		req.setAttribute("list2", list2);
 		req.setAttribute("totalpage2", totalpage2);
+		
+		req.setAttribute("curpage3", curpage3);
+		req.setAttribute("list3", list3);
+		req.setAttribute("totalpage3", totalpage3);
 
 		req.setAttribute("main_jsp", "../main2/search_main2.jsp");
 
