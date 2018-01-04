@@ -85,8 +85,7 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	<!-- 대댓글 목록출력 -->
-
-
+	
 		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
 		SELECT cb_no, cb_name, cb_content, cb_hit, rating, jjim, num
 		FROM(SELECT cb_no, cb_name, cb_content, cb_hit, rating, jjim, rownum AS num
