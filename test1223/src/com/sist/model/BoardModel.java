@@ -36,9 +36,9 @@ public class BoardModel {
 		map.put("grade", igrade);
 		int totalpage = BoardDAO.boardTotalPage(igrade);
 		int boardCount = BoardDAO.boardListCount(igrade);
-		System.out.println("vo boardCount : "+boardCount);
-		List<BoardVO> list = BoardDAO.boardList(map);
 		
+		List<BoardVO> list = BoardDAO.boardList(map);
+	
 		//list.jsp 로 값 전송(req.setAttribute())
 		req.setAttribute("cnt", boardCount);
 		req.setAttribute("curpage", curpage);
@@ -66,10 +66,26 @@ public class BoardModel {
 		map.put("grade", igrade);
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
-		System.out.println("vo.getbno : " + vo.getB_no());
+		///////////////////////////////////////////////////////
+		
+		int rowSize = 10;
+		String cpage = req.getParameter("page");
+		if(cpage==null)
+			cpage = "1";
+		int icpage = Integer.parseInt(cpage);
+		int totalpage = BoardDAO.commentTotalPage(b_no);
+		int start = (rowSize*icpage)-(rowSize-1);
+		int end = (rowSize*icpage);
+		Map cmap = new HashMap();//댓글 맵
+		cmap.put("b_no", no);
+		cmap.put("start", start);
+		cmap.put("end", end);
+		List<BoardCommentVO> clist = BoardDAO.commentListData(cmap);
 
+		req.setAttribute("clist", clist);
 		req.setAttribute("vo", vo);
 		req.setAttribute("page", curpage);
+		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("grade", grade);
 		req.setAttribute("main_jsp", "../board/board_main.jsp");
 		req.setAttribute("sub_jsp", "../board/content.jsp");
@@ -248,6 +264,24 @@ public class BoardModel {
 		req.setAttribute("main_jsp", "../board/board_main.jsp");
 		req.setAttribute("sub_jsp", "../board/search.jsp");
 		return "main/main.jsp";
+	}
+	
+	//댓글 입력
+	@RequestMapping("board_comment_insert.do")
+	public String board_commnet_insert(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		req.setCharacterEncoding("EUC-KR");
+		String m_email = req.getParameter("m_email");
+		int b_no = Integer.parseInt(req.getParameter("b_no"));
+		String bc_content = req.getParameter("bc_content");
+		
+		BoardCommentVO vo = new BoardCommentVO();
+		vo.setM_email(m_email);
+		vo.setB_no(b_no);
+		vo.setBc_content(bc_content);
+		BoardDAO.commentNewInsert(vo);
+		
+		req.setAttribute("no", b_no);
+		return "board_content.do";
 	}
 	
 }

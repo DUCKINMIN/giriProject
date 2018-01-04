@@ -231,4 +231,48 @@ public class BoardDAO {
 		return cnt;
 	}
 
+	//댓글 리스트 출력
+	public static List<BoardCommentVO> commentListData(Map map) {
+		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
+		SqlSession session = ssf.openSession();
+		try {
+			list = session.selectList("commentListData",map);
+		}catch(Exception e) {
+			System.out.println("commentListData : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return list;
+		
+	}
+	
+	public static int commentTotalPage(int b_no) {
+		int totalpage = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			totalpage = session.selectOne("commentTotalPage",b_no);
+		}catch(Exception e) {
+			System.out.println("commentTotalPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return totalpage;
+	}
+	
+	public static void commentNewInsert(BoardCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		System.out.println("m_email: " + vo.getM_email() + " b_no: " +vo.getB_no()+" bc_content : " + vo.getBc_content());
+		try {
+			session.insert("commentNewInsert",vo);
+		}catch(Exception e) {
+			System.out.println("commentNewInsert : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
 }
