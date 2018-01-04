@@ -57,7 +57,7 @@ public class MainModel {
 		totalpage = SearchDao.TotalPage(addr_name);
 		/////////////////////////////////////////////////////////////////////////////////////////
 		String p2 = req.getParameter("p2");
-		System.out.println("지금페이지 : " + p2);
+	
 		if (p2 == null)
 			p2 = "1";
 		int curpage2 = Integer.parseInt(p2);
