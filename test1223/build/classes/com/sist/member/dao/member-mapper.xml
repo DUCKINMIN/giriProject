@@ -142,11 +142,18 @@
 	</select>
 	
 	<!-- 작성댓글 -->
-	<select id="myCommentList" resultType="BoardCommentVO" parameterType="java.util.Map">		
-		SELECT bc_no, bc_content, bc_regdate, b_no, num
-		FROM (SELECT bc_no, m_email, bc_content, bc_regdate, b_no, rownum AS num
-		FROM (SELECT bc_no, m_email, bc_content, bc_regdate, b_no
-		FROM board_comment WHERE m_email=#{m_email} ORDER BY bc_no ASC))
+	<resultMap type="BoardCommentVO" id="myBoard">
+		<result property="bc_no" column="bc_no"/>
+		<result property="bc_content" column="bc_content"/>
+		<result property="bc_regdate" column="bc_regdate"/>
+		<result property="b_no" column="b_no"/>
+		<result property="bvo.b_grade" column="b_grade"/>
+	</resultMap>
+	<select id="myCommentList" resultMap="myBoard" parameterType="java.util.Map">		
+		SELECT bc_no, bc_content, bc_regdate, b_no, b_grade, num
+		FROM (SELECT bc_no, m_email, bc_content, bc_regdate, b_no, b_grade, rownum AS num
+		FROM (SELECT bc.bc_no, bc.m_email, bc.bc_content, bc.bc_regdate, bc.b_no, b.b_grade
+		FROM board_comment bc, board b WHERE bc.b_no=b.b_no AND bc.m_email=#{m_email} ORDER BY bc_no ASC))
 		WHERE num BETWEEN #{cstart} AND #{cend}
 	</select>
 	<!-- 작성댓글 총페이지 -->
