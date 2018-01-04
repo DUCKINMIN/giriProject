@@ -68,8 +68,8 @@ public class BoardModel {
 		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
 		///////////////////////////////////////////////////////
 		
-		int rowSize = 10;
-		String cpage = req.getParameter("page");
+		int rowSize = 5;
+		String cpage = req.getParameter("cpage");
 		if(cpage==null)
 			cpage = "1";
 		int icpage = Integer.parseInt(cpage);
@@ -281,7 +281,7 @@ public class BoardModel {
 		BoardDAO.commentNewInsert(vo);
 		
 		req.setAttribute("no", b_no);
-		return "board_content.do";
+		return "board_content.do?no="+b_no;
 	}
 	
 }

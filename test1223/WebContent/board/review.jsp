@@ -312,20 +312,17 @@
 					<tr>
 						<td width="10%" class="text-center user_info">
 							<div id="reply_pro"
-								style="background-image: url('cb_detail/image/pro.png')"></div>
+								style="background-image: url('member/profile/${bc_vo.mvo.m_profile }')"></div>
 							<div class="pro_name">
 								<!-- 사용자 닉네임 -->
 								<!-- 임시로 이메일 -->
-								${bc_vo.m_nick }
+								${bc_vo.mvo.m_nick }
 								<!-- 리뷰닉네임 -->
 							</div>
 						</td>
 						<td width="90%" class="text-left">
 							<div class="review_content">
 								<p>
-									<!-- 저 어제 여기 다녀왔는데요....<br> 사장님은 너무 친절하셨는데 알바생인지 매니저였는지 모르겠지만..<br>
-									너무 불친절했어요...기분 좋게 놀러갔다가 기분 나쁜채로 나왔네요..<br> 알바생만 아니면 너무
-									놀기좋은 곳입니다!!! 어제 썸남생겼네요!!! ㅎㅎ헤개꿀  -->
 									${bc_vo.bc_content }
 								</p>
 							</div>
@@ -336,8 +333,8 @@
 					<tr>
 						<td width="10%" class="text-center"></td>
 						<td width="90%" class="text-right"><span> <!-- 리뷰등록날짜 -->
-								${cbc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp; <c:if
-									test="${sessionScope.m_email == cbc_vo.m_email  }">
+								${bc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp; <c:if
+									test="${sessionScope.m_email == bc_vo.m_email  }">
 									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
 									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
 								</c:if>
@@ -354,19 +351,19 @@
 							<!-- 사용자 정보 & 리뷰 내용 -->
 							<tr>
 								<td width="10%" class="text-center">
-									<div id="board_pro"></div>
+									<div id="board_pro" style="background-image: url('member/profile/${bc_vo.mvo.m_profile }')"></div>
 									<div class="pro_name">
 										<!-- 사용자 닉네임 -->
 										<input type="hidden" name="m_email"
 											value="${sessionScope.m_email }"> <input
-											type="hidden" name="cb_no" value="${vo.cb_no }"> <input
-											type="hidden" name="cbc_no" value="${cbc_vo.cbc_no }">
+											type="hidden" name="b_no" value="${bc_vo.b_no }"> <input
+											type="hidden" name="bc_no" value="${bc_vo.bc_no }">
 										<input type="hidden" name="review" value="1">
 										${sessionScope.m_nick }
 									</div>
 								</td>
 								<td width="90%"><textarea class="form-control" rows="5"
-										cols="100%" name="cbc_content">${cbc_vo.cbc_content }</textarea>
+										cols="100%" name="cbc_content">${bc_vo.bc_content }</textarea>
 								</td>
 
 								<!-- 별점 & 버튼 -->
@@ -462,8 +459,8 @@
 										<!-- 사용자 닉네임 -->
 										<input type="hidden" name="m_email"
 											value="${sessionScope.m_email }"> <input
-											type="hidden" name="cb_no" value="${vo.cb_no }"> <input
-											type="hidden" name="cbc_pno" value="${cbc_vo.cbc_no }">
+											type="hidden" name="b_no" value="${vo.b_no }"> <input
+											type="hidden" name="cbc_pno" value="${bc_vo.bc_root }">
 										<input type="hidden" name="review" value="1">
 										${sessionScope.m_nick }
 									</div>
