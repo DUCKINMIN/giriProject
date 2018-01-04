@@ -387,6 +387,8 @@ public class MemberModel {
 		
 		int totalpage = MemberDao.myEventCallTotalPage(m_email);
 		List<EventVO> list=MemberDao.EventCallData(map);
+		
+		req.setAttribute("listSize", list.size());
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);
@@ -422,18 +424,10 @@ public class MemberModel {
 			page="1";
 		try {
 			req.setCharacterEncoding("EUC-KR");
-			String e_no=req.getParameter("e_no");
 			
-			String path="C:\\git\\giriProject\\test1223\\WebContent\\event\\eventImage";
-			//파일 삭제
-			File fileDelete = new File(path+"\\"+e_no+".jpg");
-	        
-	            if(fileDelete.delete()){
-	                System.out.println("파일삭제 성공");
-	            }else{
-	                System.out.println("파일삭제 실패");
-	            }
-			//파일 업로드
+			
+			String path = req.getServletContext().getRealPath("\\event\\eventImage");
+			
 			
 			int size=1024*1024*100;
 			//업로드 파일 한글변환 
@@ -442,26 +436,36 @@ public class MemberModel {
 			
 			
 			String e_name=mr.getParameter("name");
-			String e_startdate=mr.getParameter("startDate");
+			String e_regdate=mr.getParameter("startDate");
 			String e_enddate=mr.getParameter("closeDate");
 			String e_content=mr.getParameter("content");
+			String e_no=mr.getParameter("e_no");
 			e_content=e_content.replaceAll("\n", "<br>");
 			
 			String filename=mr.getOriginalFileName("upload");
 			
-			
+			//파일 삭제
+			File fileDelete = new File(path+"\\"+e_no+".jpg");
+	        
+	            if(fileDelete.delete()){
+	                System.out.println("파일삭제 성공");
+	            }else{
+	                System.out.println("파일삭제 실패");
+	            }
+	        //파일 업로드
 			File file = new File(path + "\\" + filename);
+			System.out.println("1");
 			File file2 =  new File(path + "\\" + e_no + ".jpg");
-			
+			System.out.println("2");
 				if (!file.renameTo(file2)) {
 					System.err.println("이름 변경 에러 : " + file);
 	
 				}
-			
+				System.out.println("3");
 			EventVO vo=new EventVO();
 			//필수
 			vo.setE_name(e_name);
-			vo.setE_regdate(e_startdate);
+			vo.setE_regdate(e_regdate);
 			vo.setE_enddate(e_enddate);
 			vo.setE_content(e_content);
 	
@@ -472,9 +476,9 @@ public class MemberModel {
 				System.out.println(ex.getMessage());
 			}
 			
-		req.setAttribute("main_jsp", "../member/mypage.jsp");
-		req.setAttribute("member_jsp", "../member/eventManage.jsp");
-			return "main/main.jsp";	
+//			req.setAttribute("main_jsp", "../member/mypage.jsp");
+//			req.setAttribute("member_jsp", "../member/eventManage.jsp");
+			return "member_event.do?page="+page;	
 		
 	}
 	@RequestMapping("eventDelete.do")
@@ -483,11 +487,23 @@ public class MemberModel {
 		String e_no=req.getParameter("e_no");
 		if(page==null)
 			page="1";
+		
 		MemberDao dao=new MemberDao();
 		dao.eventDelete(Integer.parseInt(e_no));
-		req.setAttribute("main_jsp", "../member/mypage.jsp");
-		req.setAttribute("member_jsp", "../member/eventManage.jsp");
-		return "main/main.jsp";	
+		
+		
+		//파일 삭제
+		String path = req.getServletContext().getRealPath("\\event\\eventImage");
+		File fileDelete = new File(path+"\\"+e_no+".jpg");
+        
+            if(fileDelete.delete()){
+                System.out.println("파일삭제 성공");
+            }else{
+                System.out.println("파일삭제 실패");
+            }
+//		req.setAttribute("main_jsp", "../member/mypage.jsp");
+//		req.setAttribute("member_jsp", "../member/eventManage.jsp");
+		return "member_event.do?page="+page;	
 	}
 }
 

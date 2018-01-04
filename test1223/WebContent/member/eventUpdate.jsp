@@ -215,6 +215,7 @@
 				<div class="buttonGroup">
 					<input type="submit" value="수정" class="btn result_btn" >
 					<input type="button" value="취소" class="btn result_btn" onclick="javascript:history.back()">
+					<input type="hidden" value="${vo.e_no }" name="e_no">
 				</div>
 			</form>
 		</div>

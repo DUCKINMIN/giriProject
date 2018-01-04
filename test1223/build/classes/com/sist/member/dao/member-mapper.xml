@@ -206,7 +206,7 @@
 		WHERE e_no=#{e_no}
 	</select>
 		<update id="eventUpdateOk" parameterType="int">
-		UPDATE event SET e_name=#{e_name},e_startdate=#{e_startdate}
+		UPDATE event SET e_name=#{e_name},e_regdate=#{e_regdate}
 		,e_enddate=#{e_enddate},e_content=#{e_content}
 		WHERE e_no=#{e_no}
 ,	</update>

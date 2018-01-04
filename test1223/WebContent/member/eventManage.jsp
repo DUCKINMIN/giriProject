@@ -19,11 +19,12 @@ $(function(){
 			$('#manage'+no).hide();
 			i=0;
 		}
-
-	$('#delBtn').click(function(){
+	
+	$('.delBtn').click(function(){
+		var no=$(this).attr("value");
 		var answer = confirm('이벤트를 삭제하시겠습니까?'); 
 		if(answer){
-			$('#delfrm').submit();
+			$('#delfrm'+no).submit();
 		  }else{
 		   return false;
 		  }
@@ -75,51 +76,58 @@ $(function(){
 </style>
 </head>
 <body>
-	<div style="height:30px;"></div>
+	<div style="height:50px;"></div>
 	<div class="tContainer" >
 	<div class="container" >
 		<div class="row">
 		
-		
+		<c:if test="${listSize==0 }">
+			<h2 style="text-align: center;">등록된 이벤트가 없습니다.</h2>
+			<div style="height:30px"></div>
+		</c:if>
+		<c:if test="${listSize!=0 }">
 		<c:forEach var="vo" items="${list }" varStatus="s">
-			<form action="eventUpdate.do" method="get">
+		
+		
 		  <div value="${vo.e_no }" class="col-sm-6 col-md-4 manageBox"  >
-		  <input type="hidden" name="e_no" value="${vo.e_no }">
+		 
 		    <div class="thumbnail" data-toggle="modal" <%-- data-target="#myModal_${i}" --%> >
 		      <img src="event/eventImage/${vo.e_no }.jpg" alt="이벤트" style="width:100%; height:300px; ">
 		      <div class="caption">
 		        <h2 style="color:white; margin-left:10px;">${vo.e_name }</h2>
 		      </div>
 		      <div  id="manage${vo.e_no }" align="center" style="display:none;">
-		      	<div style="float:left;">
-		      	<a href="eventUpdate.do"><input class="btn btn-info" type=submit  value="수정"></a>
-		      	</form>
-		      	</div>
-		      	<div >
-		      	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		      	<form action="eventDelete.do" method="get" id="delfrm" style="border:1px solid red;">
-		      	<input type="hidden" value="${vo.e_no }" name="e_no">
-		      	<input class="btn btn-danger" type="submit" value="삭제" id="delBtn" style="margin-left:10px;">
-		      	</form>
-		      	</div>
+		      	<table>
+		      		<tr>
+				      	<form action="eventUpdate.do" method="get" >
+					      	<a href="eventUpdate.do"><input class="btn btn-info btn-lg" type=submit  value="수정"></a>
+					      	 <input type="hidden" name="e_no" value="${vo.e_no }">
+				      	</form>
+		      			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				      	<form action="eventDelete.do" method="get" id="delfrm${vo.e_no }" value=${vo.e_no } >
+					      	<input type="hidden" value="${vo.e_no }" name="e_no">
+					      	<input class="btn btn-danger btn-lg" type="submit" value="삭제" class="delBtn" value=${vo.e_no } >
+				      	</form>
+		      		</tr>
+		      	</table>
 		      	</div>
 		    </div>
 		 </div>
-		   
 		
-		   
 		  </c:forEach> 
-		   
+		    </c:if> 
 	     </div>
 	     </div>
 	     </div>
-	     <table id="table_content" width="700">
+	     <table id="table_content" align=center width="700">
 	     	<tr>
-	     		<td align=right>
-	     		<a href="member_event.do?page=${curpage>1?curpage-1:curpage }">이전</a>&nbsp;
-	     		<a href="member_event.do?page=${curpage<totalpage?curpage+1:curpage }">다음</a>&nbsp;&nbsp;
-	     		[${curpage }] page / [${totalpage }] pages
+	     		<td align=center style="font-size: 30px;">
+	     		<div style="height:30px;"></div>
+	     		<a href="member_event.do?page=${curpage>1?curpage-1:curpage }">이전</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	     		<a href="member_event.do?page=${curpage<totalpage?curpage+1:curpage }">다음</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	     		[${curpage }]  page&nbsp;&nbsp;  /&nbsp;&nbsp;   [${totalpage }]  pages
 	     		</td>
+	     		
 	     	</tr>
 	     </table>
 	     

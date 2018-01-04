@@ -30,11 +30,14 @@ public class EventModel {
 		map.put("end", end);
 		//System.out.println(start +","+end);
 		List<EventVO> list=EventDAO.eventListData(map);
+//		System.out.println(list.get(0));
+//		System.out.println(list.get(1));
 		int totalpage=EventDAO.eventTotalPage();
 		
 		//System.out.println(list.get(1).getCb().getCb_name());
 		//점주 체크
 		int grade=EventDAO.ownerCheck(email);
+		
 		req.setAttribute("grade", grade);
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
@@ -47,6 +50,7 @@ public class EventModel {
 		String page=req.getParameter("page");
 		if(page==null)
 			page="1";
+		
 		int curpage=Integer.parseInt(page);
 		int rowSize=9;
 		int start=(rowSize*curpage)-(rowSize-1);
@@ -56,6 +60,7 @@ public class EventModel {
 		map.put("end", end);
 		List<EventVO> list=EventDAO.eventOngoingData(map);
 		int totalpage=EventDAO.eventOngoingPage();
+		
 		
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
@@ -68,6 +73,7 @@ public class EventModel {
 		String page=req.getParameter("page");
 		if(page==null)
 			page="1";
+		
 		int curpage=Integer.parseInt(page);
 		int rowSize=9;
 		int start=(rowSize*curpage)-(rowSize-1);
@@ -77,6 +83,7 @@ public class EventModel {
 		map.put("end", end);
 		List<EventVO> list=EventDAO.eventEndData(map);
 		int totalpage=EventDAO.eventEndPage();
+		
 		
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
@@ -96,7 +103,7 @@ public class EventModel {
 		try {
 		req.setCharacterEncoding("EUC-KR");
 		//저장경로
-		String path="C:\\webDev\\mvcStudy\\Gittit\\WebContent\\event\\eventImage";
+		String path = req.getServletContext().getRealPath("\\event\\eventImage");
 		//저장가능 용량
 		int size=1024*1024*100;
 		int eno = EventDAO.getLastEno()+1;
