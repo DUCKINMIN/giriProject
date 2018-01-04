@@ -20,8 +20,8 @@ import com.sist.controller.RequestMapping;
 public class ClubBarModel {
 	@RequestMapping("cb_detail.do")
 	public String cbDetail(HttpServletRequest req, HttpServletResponse res) {
-//		String cb_no = req.getParameter("cb_no");
-		String s_cb_no = "34";
+
+		String s_cb_no = req.getParameter("cb_no");
 		int cb_no = Integer.parseInt(s_cb_no);
 		ClubBarDAO.clubbarHitIncrement(cb_no);
 		ClubBarVO vo = ClubBarDAO.clubbarDetail(cb_no);
@@ -116,8 +116,7 @@ public class ClubBarModel {
 
 		return "cb_detail.do?cb_no=" + cb_no;
 	}
-<<<<<<< HEAD
-	
+
 	@RequestMapping("re_reply_insert.do")
 	public String cbcReReplyInsert(HttpServletRequest req, HttpServletResponse res) {
 		
@@ -128,7 +127,8 @@ public class ClubBarModel {
 		req.setAttribute("review", review);
 
 		return "cb_detail.do?cb_no=" + cb_no;
-=======
+	}
+	
 	@RequestMapping("hot3.do")
 	public String main_page(HttpServletRequest req, HttpServletResponse res) {
 		req.setAttribute("main_jsp", "../hot3/hot3main.jsp");
@@ -181,6 +181,5 @@ public class ClubBarModel {
 		req.setAttribute("list", list);
 		
 		return "hot3/hot3list.jsp";
->>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
 	}
 }
