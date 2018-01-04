@@ -84,6 +84,7 @@ public class SearchDao {
 		SqlSession session = ssf.openSession();
 		try {
 			totalpage = session.selectOne("searchTotalPage2",search_name);
+
 		}catch(Exception e) {
 			System.out.println("searchTotalPage2 : " + e.getMessage());
 		}finally {

@@ -5,6 +5,15 @@ public class WeekBestVO {
 	private int avghit; // clubBar - cb_hit Á¶È¸¼ö
 	private float roundrating;// clubBar - cb_weekHit ÁÖ°£ Á¶È¸¼ö
 	private int jjim;// Âò °¹¼ö
+	private int cb_no;
+
+	public int getCb_no() {
+		return cb_no;
+	}
+
+	public void setCb_no(int cb_no) {
+		this.cb_no = cb_no;
+	}
 
 	public String getCb_name() {
 		return cb_name;

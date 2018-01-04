@@ -43,7 +43,11 @@
 	
 	<!-- 댓글 등록하기 -->
 	<insert id="cbCommentInsert" parameterType="ClubBarCommentVO">
-		INSERT INTO clubBar_comment(cbc_no, m_email, cbc_regdate, cbc_content, cb_no, cbc_rating, cbc_group_id) VALUES(cbc_no_seq.nextval, 'ys@naver.com', 
+		<selectKey keyProperty="cbc_no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(cbc_no)+1, 1) as cbc_no FROM clubbar_comment
+		</selectKey>
+		INSERT INTO clubBar_comment(cbc_no, m_email, cbc_regdate, cbc_content, cb_no, cbc_rating, cbc_group_id) 
+		VALUES(#{cbc_no}, #{m_email}, 
 		SYSDATE, #{cbc_content}, #{cb_no}, #{cbc_rating}, 
 		(SELECT NVL(MAX(cbc_group_id)+1, 1) FROM clubbar_comment))
 	</insert>
@@ -59,11 +63,29 @@
 	
 	<!-- 대댓글 추가 -->
 	<select id="cbcGetParentInfo" resultType="ClubBarCommentVO" parameterType="int">
-		SELECT group_id, group_step, group_tab FROM clubbar_comment
+		SELECT cbc_group_id, cbc_group_step, cbc_group_tab FROM clubbar_comment
 		WHERE cbc_no = #{cbc_no}
 	</select>
-	
+	<update id="cbcStepIncrement" parameterType="ClubBarCommentVO">
+		UPDATE clubbar_comment SET
+		cbc_group_step = cbc_group_step+1
+		WHERE group_id = #{cbc_group_id} AND cbc_group_step > #{cbc_group_step}
+	</update>
+	<insert id="cbcReplyInsert" parameterType="ClubBarCommentVO">
+		<selectKey keyProperty="cbc_no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(cbc_no)+1, 1) as cbc_no FROM clubbar_comment
+		</selectKey>
+		INSERT INTO clubbar_comment VALUES(#{cbc_no}, #{m_email}, #{m_nick}, SYSDATE, #{cbc_content},
+		#{cb_no}, #{cbc_rating}, #{cbc_group_id}, #{cbc_group_step},
+		#{cbc_group_tab}, #{cbc_root}, 0)
+	</insert>
+	<update id="cbcDepthIncrement" parameterType="int">
+		UPDATE clubbar_comment SET
+		depth=depth+1
+		WHERE cbc_no = #{cbc_no}
+	</update>
 	<!-- 대댓글 목록출력 -->
+	
 		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
 				SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
 	  			  FROM clubBar cb,

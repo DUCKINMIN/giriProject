@@ -7,8 +7,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(function() {
+		var strSearch = $('#strSearch').val();
+		$(".apage").click(function() {
+			var aid = $(this).attr("id");
+
+			$('#'+aid+'Frm').submit(); //데이터 전송
+		});
+		if(strSearch==""){		
+			$('.row').html('<div style="height: 40px"></div><div align="center"'+
+					' style="margin-bottom:40px"><h2>"${strSearch }" 에 대한 검색결과가 없습니다</h2>'+
+					'</div></div>'
+			);
+			$('#board_page').html("");
+		}
+	});
+
+</script>
 </head>
 <style>
+form {
+	display: inline;
+ }
 .boardBtn {
 	background-color: white;
 	border: 1px solid #B4B4B4;
@@ -28,6 +49,7 @@
 
 #search {
 	margin-top: 10px;
+
 }
 
 #board_searchSel {
@@ -115,16 +137,15 @@
 			<input type="submit" class="btn boardBtn" value="검색">
 			<input type="hidden" name="grade" value="${grade }">
 			
-				<div style="float:right">
-				<a href="board_insert.do?grade=${grade}"><input type="button" class="btn boardBtn" value="글쓰기"
-					id="board_insertBtn"></a>
-			</div>
 			</form>
 		</div>
 		
 	</div>
 	<div class="row">
 		<div style="height: 40px"></div>
+		<div align="center" style="margin-bottom:40px">
+				<h2>"${strSearch }" 검색결과</h2>
+		</div>
 		<!-- 게시판 리스트 -->
 		<div style="height:440px">
 		<table class="table">
@@ -135,17 +156,15 @@
 				<th width=20% class="text-center board-th">작성일</th>
 				<th width=15% class="text-center board-th">조회수</th>
 			</tr>
-			<c:set var="cnt" value="${cnt-(curpage*10-10)}"></c:set>
 			<c:forEach var="vo" items="${list }">
 				<tr id="board_tr">
-					<td width=10% class="text-center board-td board_Tno">${cnt}</td>
+					<td width=10% class="text-center board-td board_Tno">${vo.b_no }</td>
 					<td width=45% class="text-left board-td board_Tsub"><a
-						href="board_content.do?no=${vo.b_no }&page=${curpage}&grade=${vo.b_grade}">${vo.b_subject }</a></td>
+						href="board_content.do?no=${vo.b_no }&grade=${vo.b_grade}">${vo.b_subject }</a></td>
 					<td width=15% class="text-center board-td">${vo.m_nick }</td>
 					<td width=20% class="text-center board-td"><fmt:formatDate
 							value="${vo.b_regdate }" pattern="yyyy-MM-dd" /></td>
 					<td width=10% class="text-center board-td">${vo.b_hit }</td>
-					<c:set var="cnt" value="${cnt-1}"></c:set>
 				</tr>
 			</c:forEach>
 		</table>
@@ -156,12 +175,30 @@
 			<div style="height: 40px"></div>
 			<div id="board_page">
 				<center>
-					<a href="board_list.do?page=${curpage>1?curpage-1:curpage }&grade=${grade}"><</a>&nbsp;&nbsp;&nbsp;
-					<c:forEach var="i" begin="1" end="${totalpage }">
-						<a href="board_list.do?page=${i}&grade=${grade}">${i }</a>&nbsp;
-							</c:forEach>
-					&nbsp;&nbsp;&nbsp;<a
-						href="board_list.do?page=${curpage<totalpage?curpage+1:curpage }&grade=${grade}">></a>
+					<form id="preFrm" action="board_search.do" method="POST">
+					<a id="pre" class="apage"><</a>&nbsp;&nbsp;&nbsp;
+					<input type="hidden" value="${curpage>1?curpage-1:curpage }" name="page">
+					<input type="hidden" value="${grade}" name="grade">
+					<input type="hidden" value="${select }" name="select">
+					<input type="hidden" value="${strSearch }" name="strSearch">
+					</form>
+					<c:forEach var="i" begin="1" end="${totalpage<1?1:totalpage }">
+						<form id="iFrm" action="board_search.do" method="POST">
+							<a id="i" class="apage">${i }</a>&nbsp;
+							<input type="hidden" value="${i }" name="page">
+							<input type="hidden" value="${grade}" name="grade">
+							<input type="hidden" value="${select }" name="select">
+							<input type="hidden" value="${strSearch }" name="strSearch">
+						</form>
+					</c:forEach>
+					&nbsp;&nbsp;&nbsp;
+					<form id="nextFrm" action="board_search.do" method="POST">
+					<a id="next" class="apage">></a>
+						<input type="hidden" value="${curpage<totalpage?curpage+1:curpage }" name="page">
+						<input type="hidden" value="${grade}" name="grade">
+						<input type="hidden" value="${select }" name="select">
+						<input type="hidden" value="${strSearch }" name="strSearch" id="strSearch">
+					</form>
 				</center>
 			</div>
 		</div>

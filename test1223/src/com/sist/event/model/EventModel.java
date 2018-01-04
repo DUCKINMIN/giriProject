@@ -28,10 +28,11 @@ public class EventModel {
 		Map map=new HashMap();
 		map.put("start", start);
 		map.put("end", end);
+		//System.out.println(start +","+end);
 		List<EventVO> list=EventDAO.eventListData(map);
 		int totalpage=EventDAO.eventTotalPage();
 		
-		
+		//System.out.println(list.get(1).getCb().getCb_name());
 		//점주 체크
 		int grade=EventDAO.ownerCheck(email);
 		req.setAttribute("grade", grade);

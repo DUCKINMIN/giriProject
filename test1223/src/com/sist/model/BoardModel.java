@@ -50,7 +50,8 @@ public class BoardModel {
 		return "main/main.jsp";
 	}
 	@RequestMapping("board_content.do")
-	public String ssul_content(HttpServletRequest req, HttpServletResponse res) {
+	public String ssul_content(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		req.setCharacterEncoding("EUC-KR");
 		String no = req.getParameter("no");
 		String page = req.getParameter("page");
 		String grade = req.getParameter("grade");
@@ -66,7 +67,7 @@ public class BoardModel {
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
 		System.out.println("vo.getbno : " + vo.getB_no());
-		//System.out.println("vo.getbno : " + vo.getB_img_cnt());
+
 		req.setAttribute("vo", vo);
 		req.setAttribute("page", curpage);
 		req.setAttribute("grade", grade);
@@ -202,5 +203,51 @@ public class BoardModel {
 		return "board_content.do?no="+b_no+"&grade="+b_grade;
 	}
 	
+	//검색
+	@RequestMapping("board_search.do")
+	public String board_search(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		req.setCharacterEncoding("EUC-KR");
+		int totalpage = 0;
+		String page = req.getParameter("page");
+		String grade = req.getParameter("grade");
+		String select = req.getParameter("select");
+		String strSearch = req.getParameter("strSearch");
+		strSearch = strSearch.trim();
+		
+		if(page==null) {
+			page="1";
+		}
+		if(grade==null) {
+			grade="0";
+		}
+		int igrade = Integer.parseInt(grade);
+		int rowSize = 10;
+		int curpage = Integer.parseInt(page);
+		int start = (rowSize*curpage)-(rowSize-1);
+		int end = (rowSize*curpage);
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("grade", igrade);
+		map.put("select", select);
+		map.put("strSearch", strSearch);
+		if(select.equals("b_subject"))
+			totalpage = BoardDAO.searchSubjectPage(map);
+		else 
+			totalpage = BoardDAO.searchNickPage(map);
+		
+		List<BoardVO> list = BoardDAO.boardSearch(map);
+		
+		//list.jsp 로 값 전송(req.setAttribute())
+		req.setAttribute("curpage", curpage);
+		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("list", list); 
+		req.setAttribute("grade", grade);
+		req.setAttribute("select", select);
+		req.setAttribute("strSearch", strSearch);
+		req.setAttribute("main_jsp", "../board/board_main.jsp");
+		req.setAttribute("sub_jsp", "../board/search.jsp");
+		return "main/main.jsp";
+	}
 	
 }

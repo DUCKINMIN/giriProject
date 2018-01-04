@@ -22,7 +22,7 @@
 	position: relative;
 	margin: 0px auto;
 	height: 480px;
-	background-image: url("main2/img/back.jpg");
+	background-image: url("main2/img/back.png");
 	background-size: cover;
 	padding-top: 120px;
 }

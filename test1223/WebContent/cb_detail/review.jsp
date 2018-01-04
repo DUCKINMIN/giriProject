@@ -73,6 +73,10 @@
 .reply_btn, .reply_insert_btn {
 	margin: 4px 0px;
 }
+
+.re_re_xBtn {
+	cursor: pointer;
+}
 .review {
 	margin-bottom: 50px;
 }
@@ -167,9 +171,17 @@
 			var re_btn_id = $(this).attr("id");
 			re_btn_id = re_btn_id.split("_");
 			$("#re_content_" + re_btn_id[2]).val("");
-			$("#re_content_" + re_btn_id[2]).val(
-					 "@"+ $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
+			$("#re_re_pname_" + re_btn_id[2]).text("");
+			$("#re_re_xBtn_" + re_btn_id[2]).html("<img src='cb_detail/image/xBtn.png' style='width: 10px'>");
+			$("#re_re_pname_" + re_btn_id[2]).text("@" + $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
 			$("#re_content_" + re_btn_id[2]).focus();
+		});
+		
+		$(".re_re_xBtn").click(function() {
+			var x_btn_id = $(this).attr("id");
+			x_btn_id = x_btn_id.split("_"); //인덱스 3으로 아이디분류
+			$("#re_re_xBtn_" + x_btn_id[3]).html("");
+			$("#re_re_pname_" + x_btn_id[3]).text("");
 		});
 		
 		//<span class="update_rating update_rating_${i.index }" id="update_rating_insert">
@@ -420,30 +432,42 @@
 			               &nbsp;&nbsp;&nbsp;<a href="#">></a>
 			            </center>
          			</div>
-					<!-- 대댓글 등록 -->
-					<table class="reply_insert">
-						<!-- 사용자 정보 & 내용 -->
-						<tr>
-							<td widht="3%" class="reply_tab"></td>
-							<td rowspan="2" width="100px"
-								class="text-center user_info reply_user">
-								<div id="reply_pro"  style="background-image: url('cb_detail/image/pro.png')"></div>
-								<div class="reply_name"><!-- 사용자 닉네임 -->리뷰닉네임</div>
-							</td>
-							<td width="87%" class="text-left reply_content_td">
-								<div class="re_content_insert">
-									<textarea class="form-control" rows="2" id="re_content_${i.index }"></textarea>
-								</div>
-							</td>
-						</tr>
-
-						<!-- 별점 & 댓글 버튼 -->
-						<tr>
-							<td colspan="2"></td>
-							<td width="87%" class="text-right"><input type="button"
-								class="btn reply_insert_btn" value="등&nbsp;&nbsp;&nbsp;록" /></td>
-						</tr>
-					</table>
+					<!-- 대댓글 등록---------------------------------------------------------------------------------------------- -->
+					<form action="re_reply_insert.do" method="post">
+						<table class="reply_insert">
+							<!-- 사용자 정보 & 내용 -->
+							<tr>
+								<td widht="3%" class="reply_tab"></td>
+								<td rowspan="2" width="100px"
+									class="text-center user_info reply_user">
+									<div id="reply_pro"  style="background-image: url('member/profile/${sessionScope.m_profile }')"></div>
+									<div class="reply_name"><!-- 사용자 닉네임 -->
+										<input type="hidden" name="m_email" value="${sessionScope.m_email }">
+										<input type="hidden" name="cb_no" value="${vo.cb_no }">
+										<input type="hidden" name="review" value="1">
+										${sessionScope.m_nick }
+									</div>
+									
+								</td>
+								<td width="87%" class="text-left reply_content_td">
+									<div class="re_re_pname">
+										<span id="re_re_pname_${i.index }"></span>
+										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
+									</div>
+									<div class="re_content_insert">
+										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="cbc_content"></textarea>
+									</div>
+								</td>
+							</tr>
+	
+							<!-- 별점 & 댓글 버튼 -->
+							<tr>
+								<td colspan="2"></td>
+								<td width="87%" class="text-right"><input type="button"
+									class="btn reply_insert_btn" value="등&nbsp;&nbsp;&nbsp;록" /></td>
+							</tr>
+						</table>
+					</form>
 				</div>
 			</c:forEach>
 			
