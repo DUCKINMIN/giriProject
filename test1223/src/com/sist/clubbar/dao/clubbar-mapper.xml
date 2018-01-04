@@ -59,6 +59,13 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	
+	<!-- 대댓글 수정 -->
+	<update id="cbcReplyUpdate" parameterType="ClubBarCommentVO">
+		UPDATE clubbar_comment SET
+		cbc_content = #{cbc_content}
+		WHERE cbc_no = #{cbc_no}
+	</update>
+	
 	<!-- 댓글 삭제 -->
 	
 	<!-- 대댓글 추가 -->

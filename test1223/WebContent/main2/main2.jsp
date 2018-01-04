@@ -19,7 +19,7 @@
 				$('#weekbest').html(res);
 			}
 		});
-		
+
 		$.ajax({
 			type : "post",
 			url : "rank.do",
@@ -67,7 +67,7 @@
 .sidenav {
 	margin-top: 95px;
 	height: 450px;
-	width: 16%;
+	width: 17%;
 	border-radius: 8px;
 }
 
@@ -219,7 +219,7 @@
 	}
 	.sidenav {
 		margin: 0px auto;
-		height: 300px;
+		height: 400px;
 		width: 95%;
 		margin-top: 45px;
 		border-radius: 8px;
@@ -309,7 +309,7 @@
 <body>
 
 	<div class="main_north">
-		
+
 		<div class="north_name">
 			<p style="color: white; font-size: 25pt;">ø¿¥√ º÷∑ŒµÈ¿∫</p>
 			<p style="color: white; font-size: 35pt;">ππ«œ∞Ì ≥Ó¡ˆ?</p>
@@ -340,13 +340,9 @@
 
 	<div class="container-fluid">
 
-		<div class="content time_side">
-			<div class="col-sm-3 sidenav">
-				<div class="input-group" id="rank">
-					
-				</div>
-			</div>
-		</div>
+
+		<div class="col-sm-3 sidenav" id="rank"></div>
+
 
 		<div class="weekend">
 
@@ -366,8 +362,6 @@
 
 
 
-	<footer>
-		<p>&copy; ¥ˆ¿Œ Company</p>
-	</footer>
+	<footer> </footer>
 </body>
 </html>

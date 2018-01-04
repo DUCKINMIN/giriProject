@@ -24,38 +24,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM( SELECT cb_name, a_addr1, cb_grade, cb_hit
 		FROM clubBar
 		WHERE a_addr1 LIKE '%'||#{addr_name}||'%' )
-	</select>	
-	
-	<select id="jumpoCheck2" resultType="SearchVo" parameterType="java.util.Map">
+	</select>
 
-		SELECT cb_name, a_addr1, cb_grade, cb_hit, cb_no
-		FROM ( SELECT cb_name,
-		a_addr1, cb_grade, cb_hit, cb_no, rownum as num
-		FROM ( SELECT cb_name,
-		a_addr1, cb_grade, cb_hit, cb_no
-		FROM clubBar WHERE a_addr1 LIKE
-		'%'||#{addr_name}||'%' OR cb_name LIKE
-		'%'||#{search_name}||'%'))
-		WHERE
-		num BETWEEN #{start} AND #{end}
+	<resultMap type="EventVO" id="id">
+
+		<result property="e_name" column="e_name" />
+		<result property="e_regdate" column="e_regdate" />
+		<result property="e_enddate" column="e_enddate" />
+		<result property="cb.cb_name" column="cb_name" />
+		<result property="cb.a_addr1" column="a_addr1" />
+	</resultMap>
+
+	<select id="jumpoCheck2" resultMap="id" parameterType="java.util.Map">
+
+		SELECT e_name, cb_name, a_addr1, TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate, TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate, num
+		FROM (SELECT e_name, cb_name, a_addr1, e_regdate, e_enddate, rownum as num
+		FROM (SELECT e.e_name, cb.cb_name, cb.a_addr1, e.e_regdate, e.e_enddate
+		FROM event e, clubbar cb WHERE e.cb_no=cb.cb_no AND cb.a_addr1 LIKE
+		'%'||#{addr_name}||'%'))
+		WHERE num BETWEEN #{start2} AND #{end2}
 	</select>
 	<!-- 총페이지 -->
-	<select id="searchTotalPage2" resultType="int" parameterType="String">
+	 <select id="searchTotalPage2" resultType="int" parameterType="String">
 		SELECT CEIL(COUNT(*)/5)
-		FROM( SELECT cb_name, a_addr1, cb_grade, cb_hit
-		FROM clubBar
-		WHERE a_addr1 LIKE '%'||#{addr_name}||'%' )
-	</select>	
-	
-	
+        FROM (SELECT * FROM event e, clubbar cb where e.cb_no=cb.cb_no)
+        WHERE a_addr1 LIKE '%'||#{addr_name}||'%'
+	</select> 
+
+
 	<select id="jumpoCheck3" resultType="BoardVO" parameterType="java.util.Map">
 		SELECT b_no,b_subject, m_nick, b_regdate,b_grade, b_hit, num
-		FROM (SELECT b_no,b_subject, m_nick,b_regdate,b_grade, b_hit, rownum as
+		FROM
+		(SELECT b_no,b_subject, m_nick,b_regdate,b_grade, b_hit, rownum as
 		num
 		FROM (SELECT b_no,b.b_subject, m.m_nick, b.b_regdate,b_grade, b.b_hit
-		FROM board b, member m where b_subject LIKE '%'||#{search_name}||'%' AND
+		FROM board b, member m where b_subject LIKE '%'||#{search_name}||'%'
+		AND
 		b.m_email=m.m_email ORDER BY b.b_no DESC))
-		WHERE num BETWEEN #{start3} AND #{end3}
+		WHERE num BETWEEN
+		#{start3} AND #{end3}
 	</select>
 
 	<select id="searchTotalPage3" resultType="int" parameterType="String">

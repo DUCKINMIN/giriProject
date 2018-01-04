@@ -11,7 +11,7 @@
 <script src="path/to/js/star-rating.min.js" type="text/javascript"></script>
 <style>
 .reply_btn, .reply_insert_btn, .re_reply_btn,
- .re_update_btn, .re_noupdate_btn {
+ .re_update_btn, .re_noupdate_btn, .rere_noup_btn, .rere_update_btn {
 	color: #262626;
 	background: #fff;
 	border: 1px solid #999;
@@ -92,6 +92,9 @@
 	padding: 5px 0px;
 	background: rgb(247, 247, 247);
 }
+.click_ok {
+	cursor: pointer;
+}
 @media ( max-width : 570px) {
 	.reply_list td:first-child, .reply_insert td:first-child {
 		width: 60px;
@@ -171,9 +174,9 @@
 			var re_btn_id = $(this).attr("id");
 			re_btn_id = re_btn_id.split("_");
 			$("#re_content_" + re_btn_id[2]).val("");
-			$("#re_re_pname_" + re_btn_id[2]).text("");
+			$("#re_re_nick_" + re_btn_id[2]).text("");
+			$("#re_re_nick_" + re_btn_id[2]).text("@" + $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
 			$("#re_re_xBtn_" + re_btn_id[2]).html("<img src='cb_detail/image/xBtn.png' style='width: 10px'>");
-			$("#re_re_pname_" + re_btn_id[2]).text("@" + $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
 			$("#re_content_" + re_btn_id[2]).focus();
 		});
 		
@@ -181,11 +184,11 @@
 			var x_btn_id = $(this).attr("id");
 			x_btn_id = x_btn_id.split("_"); //인덱스 3으로 아이디분류
 			$("#re_re_xBtn_" + x_btn_id[3]).html("");
-			$("#re_re_pname_" + x_btn_id[3]).text("");
+			$("#re_re_nick_" + x_btn_id[3]).text("");
 		});
 		
 		//<span class="update_rating update_rating_${i.index }" id="update_rating_insert">
-		//수정버튼 눌렀을 때
+		//댓글 = 수정버튼 눌렀을 때
 		var u = 0;
 		$(".review_update").hide();
 		$(".up_btn").click(function() {
@@ -209,6 +212,32 @@
 			$("#input_" + up_id[2]).removeClass("input");
 			$("#reviewlist_" + up_id[2]).show();
 		});
+		//대댓글 = 수정버튼 눌렀을 때
+		//<span class="click_ok re_up_btn" id="re_up_btn_${i.index }_${j.index}">수 정</span>&nbsp;&nbsp;
+		/*
+		
+			<input type="button" class="btn rere_noup_btn" id="rere_noup_${i.index }_${j.index}" value="취&nbsp;&nbsp;&nbsp;소" />
+			<input type="submit" class="btn rere_update_btn" id="rere_up_${i.index }_${j.index}" value="수&nbsp;&nbsp;&nbsp;정" />
+		*/
+		
+		var ru = 0;
+		$(".reply_update").hide();
+		$(".re_up_btn").click(function() {
+			var up_id = $(this).attr("id");
+			up_id = up_id.split("_");
+			if(u == 0) {
+				u = 1;
+				$("#reply_up_" + up_id[3] + "_" + up_id[4]).show();
+				$("#replylist_" + up_id[3] + "_" + up_id[4]).hide();
+			}
+		});
+		$(".rere_noup_btn").click(function() {
+			var up_id = $(this).attr("id");
+			up_id = up_id.split("_");
+			u = 0;
+			$("#reply_up_" + up_id[2] + "_" + up_id[3]).hide();
+			$("#replylist_" + up_id[2] + "_" + up_id[3]).show();
+		}); 
 	});
 </script>
 
@@ -318,8 +347,8 @@
 								<!-- 리뷰등록날짜 --> ${cbc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp;
 								
 								<c:if test="${sessionScope.m_email == cbc_vo.m_email  }">
-									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
-									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
+									<span class="up_btn click_ok" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
+									<span class="del_btn click_ok" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
 								</c:if>
 								
 						</span> <button class="btn reply_btn" id="reply_btn_${i.index }">댓&nbsp;&nbsp;&nbsp;글</button></td>
@@ -392,7 +421,7 @@
 					<c:forEach var="cvo" items="${rc_list }" varStatus="j">
 						<!-- 대댓글 리스트 -->
 						<c:if test="${cvo.cbc_root==cbc_vo.cbc_no }">
-							<table class="reply_list">
+							<table class="reply_list" id="replylist_${i.index }_${j.index}">
 								<!-- 사용자 정보 & 내용 -->
 								<tr>
 									<td widht="3%" class="reply_tab"></td>
@@ -419,13 +448,56 @@
 											<!-- 리뷰등록날짜 --><!-- 2017-12-15 -->${cvo.dbday }&nbsp;&nbsp;&nbsp;
 										</span> 
 										<c:if test="${sessionScope.m_email == cvo.m_email  }">
-											<span>수 정</span>&nbsp;&nbsp;<span>삭 제</span>&nbsp;&nbsp;
+											<span class="click_ok re_up_btn" id="re_up_btn_${i.index }_${j.index}">수 정</span>&nbsp;&nbsp;
+											<span class="click_ok re_del_btn" id="re_del_btn_${i.index }_${j.index}">삭 제</span>&nbsp;&nbsp;
 										</c:if>
 										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }">댓&nbsp;&nbsp;&nbsp;글</button>
 									</td>
 								</tr>
 							</table>
 						</c:if>
+						<!-- 대댓글 수정-------------------------------------------------------------------------------------------------- -->
+						<div class="reply_update" id="reply_up_${i.index }_${j.index}">
+							<form action="re_reply_update.do" method="post">
+								<table class="reply_insert">
+									<!-- 사용자 정보 & 내용 -->
+									<tr>
+										<td widht="3%" class="reply_tab"></td>
+										<td rowspan="2" width="100px"
+											class="text-center user_info reply_user">
+											<div id="reply_pro"  style="background-image: url('member/profile/${sessionScope.m_profile }')"></div>
+											<div class="reply_name"><!-- 사용자 닉네임 -->
+												<input type="hidden" name="m_email" value="${sessionScope.m_email }">
+												<input type="hidden" name="cb_no" value="${vo.cb_no }">
+												<input type="hidden" name="cbc_no" value="${cvo.cbc_no }">
+												<input type="hidden" name="review" value="1">
+												${sessionScope.m_nick }
+											</div>
+											
+										</td>
+										<td width="87%" class="text-left reply_content_td">
+											<div class="re_re_pname" id="re_re_pname_${i.index }">
+												<span id="re_reup_nick_${i.index }" ></span>
+												<a id="re_re_xBtnup_${i.index }" class="re_re_xBtn"></a>
+											</div>
+											<div class="re_content_insert">
+												<textarea class="form-control" rows="2" id="rere_content_${i.index }" name="cbc_content">${cvo.cbc_content }</textarea>
+											</div>
+										</td>
+									</tr>
+			
+									<!-- 별점 & 댓글 버튼 -->
+									<tr>
+										<td colspan="2"></td>
+										<td width="87%" class="text-right">
+											<input type="button" class="btn rere_noup_btn" id="rere_noup_${i.index }_${j.index}" value="취&nbsp;&nbsp;&nbsp;소" />
+											<input type="submit" class="btn rere_update_btn" id="rere_up_${i.index }_${j.index}" value="수&nbsp;&nbsp;&nbsp;정" />
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+						<!--대댓글수정 --------------------------------------------------------------------------------------------------------- -->
 					</c:forEach>
 							
 					<div id="reply_page">
@@ -457,7 +529,7 @@
 								</td>
 								<td width="87%" class="text-left reply_content_td">
 									<div class="re_re_pname" id="re_re_pname_${i.index }">
-										<span id="re_re_pname_${i.index }"></span>
+										<span id="re_re_nick_${i.index }" ></span>
 										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
 									</div>
 									<div class="re_content_insert">
@@ -476,6 +548,7 @@
 						</table>
 					</form>
 				</div>
+
 			</c:forEach>
 			
 		</div>
