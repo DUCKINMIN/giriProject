@@ -22,7 +22,7 @@
 		SELECT j.jjim, cbc.rating, cbc.cnt
 		FROM (SELECT COUNT(*) as jjim
 		FROM cart <include refid="where_cb_no"/>) j, (SELECT NVL(ROUND(AVG(cbc_rating),1),0) as rating, COUNT(*) as cnt
-		FROM clubBar_comment <include refid="where_cb_no"/>) cbc
+		FROM clubBar_comment <include refid="where_cb_no"/> AND cbc_root=0) cbc
 	</select>
 	
 	<!-- 주변모텔 가져오기 -->
@@ -34,10 +34,10 @@
 	
 	<!-- 댓글 가져오기 -->
 	<select id="cbCommentList" resultType="ClubBarCommentVO" parameterType="java.util.Map">
-		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, cbc_rating, m_nick, cbc_group_tab, num
-		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, rownum as num
-		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab
-		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email ORDER BY cbc_group_id DESC, cbc_group_step ASC))
+		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI') as dbday, cbc_rating, m_nick, m_email, cbc_group_tab, num
+		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, m_email, rownum as num
+		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, m.m_email
+		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root=0 ORDER BY cbc_group_id DESC, cbc_group_step ASC))
 		WHERE num BETWEEN #{start} AND #{end} 
  	</select>
 	
@@ -69,13 +69,13 @@
 	<update id="cbcStepIncrement" parameterType="ClubBarCommentVO">
 		UPDATE clubbar_comment SET
 		cbc_group_step = cbc_group_step+1
-		WHERE group_id = #{cbc_group_id} AND cbc_group_step > #{cbc_group_step}
+		WHERE cbc_group_id = #{cbc_group_id} AND cbc_group_step > #{cbc_group_step}
 	</update>
 	<insert id="cbcReplyInsert" parameterType="ClubBarCommentVO">
 		<selectKey keyProperty="cbc_no" resultType="int" order="BEFORE">
 			SELECT NVL(MAX(cbc_no)+1, 1) as cbc_no FROM clubbar_comment
 		</selectKey>
-		INSERT INTO clubbar_comment VALUES(#{cbc_no}, #{m_email}, #{m_nick}, SYSDATE, #{cbc_content},
+		INSERT INTO clubbar_comment VALUES(#{cbc_no}, #{m_email}, SYSDATE, #{cbc_content},
 		#{cb_no}, #{cbc_rating}, #{cbc_group_id}, #{cbc_group_step},
 		#{cbc_group_tab}, #{cbc_root}, 0)
 	</insert>
@@ -85,7 +85,13 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	<!-- 대댓글 목록출력 -->
-	
+	<select id="cbcReplyList" resultType="ClubBarCommentVO" parameterType="java.util.Map">
+		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI') as dbday, cbc_rating, m_nick, cbc_group_tab, cbc_root, m_email, num
+		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, cbc_root, m_email, rownum as num
+		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, cbc.cbc_root, m.m_email
+		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root NOT IN (0) ORDER BY cbc_group_id DESC, cbc_group_step ASC))
+		WHERE num BETWEEN #{start} AND #{end} 
+ 	</select>
 		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
 				SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
 	  			  FROM clubBar cb,
@@ -120,5 +126,42 @@
 					</otherwise>
 	  			 </choose>
 	  			  DESC, cb_name ASC
+	</select>
+	
+		<!-- count (다솜) -->
+	<select id="cbrTimeCount" parameterType="ClubBarRankVO" resultType="int">
+		SELECT COUNT(*) FROM clubbar_rank
+		WHERE cb_no=#{cb_no} AND cbr_time=#{cbr_time}
+	</select>
+	<!-- 시간별 row 추가 -->
+	<insert id="cbrTimeInsert" parameterType="ClubBarRankVO">
+		INSERT INTO clubbar_rank VALUES(
+			#{cb_no}, #{cbr_time}, 0
+		)
+	</insert>
+	<!-- 시간별 조회수 업데이트 -->
+	<update id="cbrHitUpdate" parameterType="ClubBarRankVO">
+		UPDATE clubbar_rank SET
+		cbr_hit = cbr_hit + 1
+		WHERE cb_no=#{cb_no} AND cbr_time=#{cbr_time}
+	</update>
+	<!-- 시간별 조회수 리스트 -->
+	<resultMap type="ClubBarRankVO" id="cbrVO">
+		<result property="cb_no" column="cb_no"/>
+		<result property="cbr_time" column="cbr_time"/>
+		<result property="cbr_hit" column="cbr_hit"/>
+		<association property="cvo" javaType="com.sist.clubbar.dao.ClubBarVO">
+			<result property="cb_name" column="cb_name"/>
+			<result property="a_addr1" column="a_addr1"/>
+		</association>
+	</resultMap>
+	<select id="cbrList" parameterType="String" resultMap="cbrVO">
+		SELECT cb_name, a_addr1, cb_no, cbr_time, cbr_hit, num
+		FROM (SELECT cb_name, a_addr1, cb_no, cbr_time, cbr_hit, rownum as num
+		FROM (SELECT cb.cb_name, cb.a_addr1, cbr.cb_no, cbr.cbr_time, cbr.cbr_hit
+		FROM clubbar cb, clubbar_rank cbr	
+		WHERE cb.cb_no=cbr.cb_no AND cbr_time=#{cbr_time}	
+		ORDER BY cbr_hit DESC))
+		where num BETWEEN 1 AND 10
 	</select>
 </mapper>

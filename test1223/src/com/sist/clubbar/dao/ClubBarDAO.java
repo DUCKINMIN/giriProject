@@ -86,4 +86,60 @@ public class ClubBarDAO {
 		
 		return list;
 	}
+	
+	//다솜
+		//카운트
+		public static int cbrTimeCount(ClubBarRankVO vo) {
+			int cnt = 0;
+			SqlSession session = ssf.openSession();
+			
+			try {
+				cnt = session.selectOne("cbrTimeCount", vo);
+			} catch(Exception ex) {
+				System.out.println("cbrTimeCount : "+ex.getMessage());
+			} finally {
+				if(session != null) 
+					session.close();
+			}
+			
+			return cnt;
+		}
+		//시간별  row 추가
+		public static void cbrTimeInsert(ClubBarRankVO vo) {
+			SqlSession session = ssf.openSession(true);
+			try {
+				session.insert("cbrTimeInsert", vo);
+			} catch(Exception ex) {
+				System.out.println("cbrTimeInsert : "+ex.getMessage());
+			} finally {
+				if(session != null) 
+					session.close();
+			}
+		}
+		//시간별 조회수 증가
+		public static void cbrHitUpdate(ClubBarRankVO vo) {
+			SqlSession session = ssf.openSession(true);
+			try {
+				session.insert("cbrHitUpdate", vo);
+			} catch(Exception ex) {
+				System.out.println("cbrHitUpdate : "+ex.getMessage());
+			} finally {
+				if(session != null) 
+					session.close();
+			}
+		}
+		//리스트
+		public static List<ClubBarRankVO> cbrList(String cbr_time){
+			List<ClubBarRankVO> list = new ArrayList<ClubBarRankVO>();
+			SqlSession session = ssf.openSession();
+			try {
+				list = session.selectList("cbrList",cbr_time);
+			} catch(Exception ex) {
+				System.out.println("cbrList : "+ex.getMessage());
+			} finally {
+				if(session != null) 
+					session.close();
+			}
+			return list;
+		}
 }

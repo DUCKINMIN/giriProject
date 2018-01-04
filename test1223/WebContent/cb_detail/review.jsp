@@ -317,7 +317,7 @@
 						<td width="90%" class="text-right"><span>
 								<!-- 리뷰등록날짜 --> ${cbc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp;
 								
-								<c:if test="${sessionScope.m_email != cbc_vo.m_email  }">
+								<c:if test="${sessionScope.m_email == cbc_vo.m_email  }">
 									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
 									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
 								</c:if>
@@ -388,39 +388,44 @@
 				
 				<!-- 대댓글 리스트 & 대댓글 등록 -->
 				<div class="reply_wrap" id="reply_${i.index }">
-					<c:forEach var="j" begin="1" end="3">
+					<%-- <c:forEach var="j" begin="1" end="3"> --%>
+					<c:forEach var="cvo" items="${rc_list }" varStatus="j">
 						<!-- 대댓글 리스트 -->
-						<table class="reply_list">
-							<!-- 사용자 정보 & 내용 -->
-							<tr>
-								<td widht="3%" class="reply_tab"></td>
-								<td rowspan="2" width="100px"
-									class="text-center user_info reply_user">
-									<div id="reply_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
-									<div class="reply_name" id="re_name_${i.index }_${j }">리뷰닉네임</div>
-								</td>
-								<td width="87%" class="text-left reply_content_td">
-									<div class="reply_content">
-										<p>와 여기 괜찮나요? 소문은 별로라던데...!!!</p>
-									</div>
-								</td>
-							</tr>
-
-							<!-- 별점 & 댓글 버튼 -->
-							<tr>
-								<td colspan="2"></td>
-								<td width="87%" class="text-right">
-									<span>
-										<!-- 리뷰등록날짜 -->2017-12-15&nbsp;&nbsp;&nbsp;
-									</span> 
-									<c:if test="${sessionScope.m_email != cbc_vo.m_email  }">
-										<span>수 정</span>&nbsp;&nbsp;<span>삭 제</span>&nbsp;&nbsp;
-									</c:if>
-									<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j }">댓&nbsp;&nbsp;&nbsp;글</button>
-								</td>
-							</tr>
-						</table>
-				
+						<c:if test="${cvo.cbc_root==cbc_vo.cbc_no }">
+							<table class="reply_list">
+								<!-- 사용자 정보 & 내용 -->
+								<tr>
+									<td widht="3%" class="reply_tab"></td>
+									<td rowspan="2" width="100px"
+										class="text-center user_info reply_user">
+										<div id="reply_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
+										<div class="reply_name" id="re_name_${i.index }_${j.index }"><!-- 리뷰닉네임 -->${cvo.m_nick }</div>
+									</td>
+									<td width="87%" class="text-left reply_content_td">
+										<div class="reply_content">
+											<p>
+												<!-- 와 여기 괜찮나요? 소문은 별로라던데...!!! -->
+												${cvo.cbc_content }
+											</p>
+										</div>
+									</td>
+								</tr>
+	
+								<!-- 별점 & 댓글 버튼 -->
+								<tr>
+									<td colspan="2"></td>
+									<td width="87%" class="text-right">
+										<span>
+											<!-- 리뷰등록날짜 --><!-- 2017-12-15 -->${cvo.dbday }&nbsp;&nbsp;&nbsp;
+										</span> 
+										<c:if test="${sessionScope.m_email == cvo.m_email  }">
+											<span>수 정</span>&nbsp;&nbsp;<span>삭 제</span>&nbsp;&nbsp;
+										</c:if>
+										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }">댓&nbsp;&nbsp;&nbsp;글</button>
+									</td>
+								</tr>
+							</table>
+						</c:if>
 					</c:forEach>
 							
 					<div id="reply_page">
@@ -444,13 +449,14 @@
 									<div class="reply_name"><!-- 사용자 닉네임 -->
 										<input type="hidden" name="m_email" value="${sessionScope.m_email }">
 										<input type="hidden" name="cb_no" value="${vo.cb_no }">
+										<input type="hidden" name="cbc_pno" value="${cbc_vo.cbc_no }">
 										<input type="hidden" name="review" value="1">
 										${sessionScope.m_nick }
 									</div>
 									
 								</td>
 								<td width="87%" class="text-left reply_content_td">
-									<div class="re_re_pname">
+									<div class="re_re_pname" id="re_re_pname_${i.index }">
 										<span id="re_re_pname_${i.index }"></span>
 										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
 									</div>
@@ -463,8 +469,9 @@
 							<!-- 별점 & 댓글 버튼 -->
 							<tr>
 								<td colspan="2"></td>
-								<td width="87%" class="text-right"><input type="button"
-									class="btn reply_insert_btn" value="등&nbsp;&nbsp;&nbsp;록" /></td>
+								<td width="87%" class="text-right">
+									<input type="submit" class="btn reply_insert_btn" value="등&nbsp;&nbsp;&nbsp;록" />
+								</td>
 							</tr>
 						</table>
 					</form>

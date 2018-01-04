@@ -19,6 +19,26 @@
 				$('#weekbest').html(res);
 			}
 		});
+		
+		$.ajax({
+			type : "post",
+			url : "rank.do",
+			success : function(res) {
+				//alert(res);
+				$('#rank').html(res);
+			}
+		});
+		//실시간 다솜
+		playAlert = setInterval(function() {
+			$.ajax({
+				type : "post",
+				url : "rank.do",
+				success : function(res) {
+					//alert(res);
+					$('#rank').html(res);
+				}
+			});
+		}, 3000);//3초 반복
 
 	});
 </script>
@@ -46,7 +66,6 @@
 
 .sidenav {
 	margin-top: 95px;
-	background-color: #f1f1f1;
 	height: 450px;
 	width: 16%;
 	border-radius: 8px;
@@ -323,11 +342,8 @@
 
 		<div class="content time_side">
 			<div class="col-sm-3 sidenav">
-				<h4>실시간 핫3</h4>
-				<div class="input-group">
-					<span class="input-group-btn">
-						<h1>photo</h1>
-					</span>
+				<div class="input-group" id="rank">
+					
 				</div>
 			</div>
 		</div>
