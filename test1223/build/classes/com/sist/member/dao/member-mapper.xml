@@ -177,6 +177,25 @@
         FROM (SELECT * FROM event_cart)
         WHERE m_email=#{m_email}
 	</select>
+	<!-- 등록된 이벤트  불러오기 -->
+	<!-- <resultMap type="EventVO" id="eventRegistCallData">
+  	<result property="e_no" column="e_no"/>
+  	<result property="cb_no" column="cb_no"/>
+  	<result property="e_name" column="e_name"/>
+  	<result property="e_regdate" column="e_regdate"/>
+  	<result property="e_enddate" column="e_enddate"/>
+  	<result property="e_content" column="e_content"/>
+  	<result property="cb.cb_name" column="cb_name"/>
+  	<result property="cb.a_addr1" column="a_addr1"/>
+  	<result property="cb.a_addr2" column="a_addr2"/>
+  </resultMap> -->
+  <!-- <select id="eventCall" parameterType="java.util.Map" resultMap="eventRegistCallData">
+  	SELECT c.cb_no,e.e_no,e.e_name,e.num
+  	FROM clubbar c,(SELECT e_no,e_name,rownum as num
+  	FROM (SELECT e_no,e_name
+  	FROM event ORDER BY e_enddate ASC )) e
+  	WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
+  </select> -->
 </mapper>
 
 
