@@ -38,6 +38,8 @@ public class MainModel {
 
 			addr_name = search_name;
 		}
+		
+		
 		/////////////////////////////////////////////////// 첫게시판 시작
 		String p1 = req.getParameter("p1");
 		if (p1 == null)
@@ -47,6 +49,8 @@ public class MainModel {
 		int start = (curpage1 * rowSize) - (rowSize - 1);
 		int end = curpage1 * rowSize;
 		int totalpage1 = 0;
+		
+		
 
 		Map map = new HashMap();
 		map.put("addr_name", addr_name);
@@ -68,11 +72,12 @@ public class MainModel {
 		int totalpage2 = 0;
 
 		Map map2 = new HashMap();
+		map2.put("addr_name", addr_name);
 		map2.put("search_name", search_name);
 		map2.put("start2", start2);
 		map2.put("end2", end2);
 		List<BoardVO> list2 = SearchDao.namecheck2(map2);
-		/*totalpage2 = SearchDao.TotalPage2(search_name);*/
+		totalpage2 = SearchDao.TotalPage2(search_name);
 
 		////////////////////////////////////////////////////3게시판 시작
 		// DAO매개변수 넣어주고

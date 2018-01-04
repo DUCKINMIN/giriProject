@@ -13,7 +13,7 @@
 .timeranking_wrap {
 	margin: 0px auto;
 	width: 100%;
-	height: 450px;
+	height: 430px;
 	border: 2px solid black;
 }
 
@@ -53,7 +53,7 @@
 @media screen and (max-width: 750px) {
 	.timeranking_wrap {
 		margin: 0px auto;
-		height: 300px;
+		height: 400px;
 		width: 100%;
 	}
 	
