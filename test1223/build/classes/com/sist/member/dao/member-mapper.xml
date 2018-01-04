@@ -184,7 +184,7 @@
         FROM (SELECT * FROM event_cart)
         WHERE m_email=#{m_email}
 	</select>
-	<!-- 등록된 이벤트  불러오기 -->
+	<!-- 이벤트 관리 호출 -->
 	<select id="EventCallData" resultType="EventVO" parameterType="java.util.Map">
 		SELECT e_no,e_name,num
 		FROM (select e_no,e_name,rownum as num
@@ -199,6 +199,22 @@
 		FROM event e,member m, clubbar c
 		WHERE m.m_email=#{m_email} AND m.m_email=c.m_email AND c.cb_no=e.cb_no 
 	</select>
+	<!-- 이벤트 관리 수정 -->
+	<select id="eventUpdateData" resultType="EventVO" parameterType="int">
+		SELECT e_no,e_name,e_regdate,e_enddate,e_content
+		FROM event
+		WHERE e_no=#{e_no}
+	</select>
+		<update id="eventUpdateOk" parameterType="int">
+		UPDATE event SET e_name=#{e_name},e_startdate=#{e_startdate}
+		,e_enddate=#{e_enddate},e_content=#{e_content}
+		WHERE e_no=#{e_no}
+,	</update>
+	<!-- 이벤트 관리 삭제 -->
+	<delete id="eventDelete" parameterType="int">
+		DELETE FROM event
+		WHERE e_no=#{e_no}
+	</delete>
 </mapper>
 
 

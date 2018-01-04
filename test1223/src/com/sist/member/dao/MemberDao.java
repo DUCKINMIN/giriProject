@@ -319,7 +319,7 @@ public class MemberDao {
 		}
 		return list;
 	}
-	//불러오기 이벤트 총 페이지
+	//이벤트관리 페이지 이벤트 총 페이지
 	public static int myEventCallTotalPage(String m_email) {
 		SqlSession session = ssf.openSession();
 		int totalpage=0;
@@ -332,8 +332,40 @@ public class MemberDao {
 		}
 		return totalpage;
 	}
-	
-	
+	//이벤트관리 수정
+	public static EventVO eventUpdateData(int e_no) {
+		EventVO vo=new EventVO();
+		SqlSession session = ssf.openSession();
+		try {
+			vo=session.selectOne("eventUpdateData",e_no);
+		} catch (Exception e) {
+			System.out.println("eventUpdateData : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return vo;
+	}
+	public static void eventUpdateOk(int e_no) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("eventUpdateOk", e_no);
+		} catch (Exception e) {
+			System.out.println("eventUpdateOk : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+	}
+	//이벤트 관리 삭제
+	public static void eventDelete(int e_no) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("eventDelete", e_no);
+		} catch (Exception e) {
+			System.out.println("eventDelete : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+	}
 	
 	
 	

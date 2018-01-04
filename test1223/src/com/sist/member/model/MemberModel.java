@@ -10,11 +10,12 @@ import com.sist.board.dao.BoardCommentVO;
 import com.sist.board.dao.BoardVO;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
+import com.sist.event.dao.EventDAO;
 import com.sist.event.dao.EventVO;
 import com.sist.member.dao.MemberDao;
 import com.sist.member.dao.MemberVo;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 @Controller
 public class MemberModel {
@@ -351,31 +352,134 @@ public class MemberModel {
 		return "main/main.jsp";
 	}
 	//이벤트 설정
-		@RequestMapping("member_event.do")
-		public String member_event(HttpServletRequest req,HttpServletResponse res) {
-			HttpSession session = req.getSession();
-			String m_email = (String) session.getAttribute("m_email");
-			
-			String page=req.getParameter("page");
-			if(page==null)
-				page="1";
-			int curpage = Integer.parseInt(page);
-			int rowSize = 3;
-			int start = (rowSize*curpage)-(rowSize-1);
-			int end = rowSize * curpage;
+	@RequestMapping("member_event.do")
+	public String member_event(HttpServletRequest req,HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		String m_email = (String) session.getAttribute("m_email");
+		
+		String page=req.getParameter("page");
+		if(page==null)
+			page="1";
+		int curpage = Integer.parseInt(page);
+		int rowSize = 3;
+		int start = (rowSize*curpage)-(rowSize-1);
+		int end = rowSize * curpage;
 
-			Map map = new HashMap<>();
-			map.put("m_email", m_email);
-			map.put("start", start);
-			map.put("end", end);
+		Map map = new HashMap<>();
+		map.put("m_email", m_email);
+		map.put("start", start);
+		map.put("end", end);
+		
+		int totalpage = MemberDao.myEventCallTotalPage(m_email);
+		List<EventVO> list=MemberDao.EventCallData(map);
+		req.setAttribute("curpage", curpage);
+		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("list", list);
+		req.setAttribute("main_jsp", "../member/mypage.jsp");
+		req.setAttribute("member_jsp", "../member/eventManage.jsp");
+		return "main/main.jsp";
+	}
+	@RequestMapping("eventUpdate.do")
+	public String event_Update(HttpServletRequest req,HttpServletResponse res) {
+		try {
+			req.setCharacterEncoding("EUC-KR");
+		}catch(Exception ex) {}
+		String page=req.getParameter("page");
+		String e_no=req.getParameter("e_no");
+		
+		EventVO vo=new EventVO();
+		vo=MemberDao.eventUpdateData(Integer.parseInt(e_no));
+		String e_content=vo.getE_content().replaceAll("<br>", "\n");
+		vo.setE_content(e_content);
+		
+		req.setAttribute("vo", vo);
+		req.setAttribute("main_jsp", "../member/eventUpdate.jsp");
+		req.setAttribute("member_jsp", "../member/eventUpdate.jsp");
+		return "main/main.jsp";	
+		
+	}
+	
+	
+	@RequestMapping("eventUpdate_ok.do")
+	public String event_Update_ok(HttpServletRequest req,HttpServletResponse res) {
+		String page=req.getParameter("page");
+		if(page==null)
+			page="1";
+		try {
+			req.setCharacterEncoding("EUC-KR");
+			String e_no=req.getParameter("e_no");
 			
-			int totalpage = MemberDao.myEventCallTotalPage(m_email);
-			List<EventVO> list=MemberDao.EventCallData(map);
-			req.setAttribute("curpage", curpage);
-			req.setAttribute("totalpage", totalpage);
-			req.setAttribute("list", list);
-			req.setAttribute("main_jsp", "../member/mypage.jsp");
-			req.setAttribute("member_jsp", "../member/eventManage.jsp");
-			return "main/main.jsp";
-		}
+			String path="C:\\git\\giriProject\\test1223\\WebContent\\event\\eventImage";
+			//파일 삭제
+			File fileDelete = new File(path+"\\"+e_no+".jpg");
+	        
+	            if(fileDelete.delete()){
+	                System.out.println("파일삭제 성공");
+	            }else{
+	                System.out.println("파일삭제 실패");
+	            }
+			//파일 업로드
+			
+			int size=1024*1024*100;
+			//업로드 파일 한글변환 
+			String enctype="EUC-KR";
+			MultipartRequest mr= new MultipartRequest(req, path, size, enctype);
+			
+			
+			String e_name=mr.getParameter("name");
+			String e_startdate=mr.getParameter("startDate");
+			String e_enddate=mr.getParameter("closeDate");
+			String e_content=mr.getParameter("content");
+			e_content=e_content.replaceAll("\n", "<br>");
+			
+			String filename=mr.getOriginalFileName("upload");
+			
+			
+			File file = new File(path + "\\" + filename);
+			File file2 =  new File(path + "\\" + e_no + ".jpg");
+			
+				if (!file.renameTo(file2)) {
+					System.err.println("이름 변경 에러 : " + file);
+	
+				}
+			
+			EventVO vo=new EventVO();
+			//필수
+			vo.setE_name(e_name);
+			vo.setE_regdate(e_startdate);
+			vo.setE_enddate(e_enddate);
+			vo.setE_content(e_content);
+	
+			//DAO연결
+			MemberDao dao=new MemberDao();
+			dao.eventUpdateOk(Integer.parseInt(e_no));
+			}catch(Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+			
+		req.setAttribute("main_jsp", "../member/mypage.jsp");
+		req.setAttribute("member_jsp", "../member/eventManage.jsp");
+			return "main/main.jsp";	
+		
+	}
+	@RequestMapping("eventDelete.do")
+	public String event_Delete(HttpServletRequest req, HttpServletResponse res){
+		String page=req.getParameter("page");
+		String e_no=req.getParameter("e_no");
+		if(page==null)
+			page="1";
+		MemberDao dao=new MemberDao();
+		dao.eventDelete(Integer.parseInt(e_no));
+		req.setAttribute("main_jsp", "../member/mypage.jsp");
+		req.setAttribute("member_jsp", "../member/eventManage.jsp");
+		return "main/main.jsp";	
+	}
 }
+
+
+
+
+
+
+
+

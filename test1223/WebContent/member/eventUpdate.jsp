@@ -179,21 +179,21 @@
 			<div style="height: 90px">
 				<h1>이벤트 수정</h1>
 			</div>
-			<form  action="eventInsert.do" method="post" enctype="multipart/form-data">
+			<form  action="eventUpdate_ok.do" method="post" enctype="multipart/form-data">
 				<div class="result_div">
-					<input type="name" id="name" name="name" placeholder="이벤트 이름을 입력해주세요." size="50px" class="result_input form-control" required/>
+					<input type="name" id="name" name="name" value="${vo.e_name }" size="50px" class="result_input form-control" required/>
 				</div>
 				<div class="text-left labelDiv" >
 					<label id="label">이벤트 시작일</label>
 				</div>
 				<div class="result_div">
-					<input type="date" id="startDate" name="startDate" size="60px" class="result_input form-control" required />
+					<input type="date" id="startDate" name="startDate" value="${vo.e_regdate }" size="60px" class="result_input form-control" required />
 				</div>
 				<div class="text-left labelDiv">
 					<label id="label">이벤트 종료일</label>
 				</div>
 				<div class="result_div">
-					<input type="date" id="closeDate" name="endDate" size="60px" class="result_input form-control" required />
+					<input type="date" id="closeDate" name="endDate" value="${vo.e_enddate }" size="60px" class="result_input form-control" required />
 				</div>
 				<div class="text-left labelDiv" >
 					<label id="label">이벤트 포스터를 올려주세요</label>
@@ -210,7 +210,7 @@
 							background-color:#AF4848"> -->
 				</div>
 				<div class="result_div">
-					<textarea class="form-control" rows="7" id="comment" name="content" placeholder="이벤트 정보를 입력해주세요."  required/></textarea>
+					<textarea class="form-control" rows="7" id="comment" name="content" required/>${vo.e_content }</textarea>
 				</div>
 				<div class="buttonGroup">
 					<input type="submit" value="수정" class="btn result_btn" >
