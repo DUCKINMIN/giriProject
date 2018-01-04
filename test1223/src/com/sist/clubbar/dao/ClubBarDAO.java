@@ -1,7 +1,10 @@
 package com.sist.clubbar.dao;
 
-import java.util.*;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -68,4 +71,19 @@ public class ClubBarDAO {
 		return map;
 	}
 
+	public static List<ClubBarVO> hot3Search(Map map) {
+		List<ClubBarVO> list = new ArrayList<ClubBarVO>();
+		SqlSession session = ssf.openSession();
+		
+		try {
+			list = session.selectList("hot3Search", map);
+		} catch(Exception ex) {
+			System.out.println("hot3Search() : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+		
+		return list;
+	}
 }

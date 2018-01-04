@@ -37,7 +37,7 @@
 
 							<tr class="table_content">
 
-								<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;${vo.cb_name }</a>
+								<td width=40% class="text-left"><a href="cb_detail.do?cb_no=${vo.cb_no }">&nbsp;&nbsp;${vo.cb_name }</a>
 									&nbsp;</td>
 								<td width=20% class="text-center">${vo.a_addr1 }</td>
 								<td width=20% class="text-center"><c:choose>
@@ -64,14 +64,24 @@
 
 
 					<div>
-						<a href="mainsearch.do?page=${curpage>1?curpage-1:curpage }&search_name=${search_name }">
-							<img src="main2/img/befor.png" id="before" style="cursor:pointer"></a>&nbsp;
+						<a href="mainsearch.do?page=${curpage>1?curpage-1:curpage }&p2=${curpage2 }&search_name=${search_name }">
+							<!-- <img src="main2/img/befor.png" id="before" style="cursor:pointer"> --><</a>&nbsp;
 						 
 						<c:forEach  var="i" begin="1" end="${totalpage<1?1:totalpage }">
-						<a href = "mainsearch.do?page=${i}&search_name=${search_name }" }>${i }</a>
+						
+						
+							<c:if test="${curpage==i }">
+								<font size="4pt"><b>${i }</b></font>
+							</c:if>
+							<c:if test="${curpage!=i }">
+						 		<a href = "mainsearch.do?page=${i}&p2=${curpage2 }&search_name=${search_name }"}>${i }</a>
+							</c:if>
+						
+					
+						
 						</c:forEach>&nbsp; 
-						<a href="mainsearch.do?page=${curpage<totalpage?curpage+1:curpage }&search_name=${search_name }">
-						<img src="main2/img/next.png" id="next" style="cursor:pointer"></a>&nbsp;&nbsp;
+						<a href="mainsearch.do?page=${curpage<totalpage?curpage+1:curpage }&p2=${curpage2 }&search_name=${search_name }">
+						<!-- <img src="main2/img/next.png" id="next" style="cursor:pointer"> -->></a>&nbsp;&nbsp;
 					</div>
 
 

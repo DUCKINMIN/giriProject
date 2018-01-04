@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +10,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=JejuGothic"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
@@ -21,12 +21,15 @@
 	-moz-box-sizing: border-box;
 	text-decoration: none;
 }
-a:link{
-	text-decoration:none;
+
+a:link {
+	text-decoration: none;
 }
-a{
-	color:black;
+
+a {
+	color: black;
 }
+
 .header {
 	background: #262626;
 	/* height: 80px; */
@@ -82,7 +85,7 @@ a{
 	background: #262626;
 }
 /* .navbar-inverse .navbar-nav > .open > a:focus {
-	color:#9d9d9d;
+   color:#9d9d9d;
 } */
 #footer {
 	background: #303030;
@@ -110,120 +113,122 @@ html, body {
 	min-height: 100%;
 	padding-bottom: 120px;
 	margin: 0px auto;
-	width:100%;
+	width: 100%;
 }
+
 #footer_1, #footer_2, #footer_3, #footer_4 {
-	display:inline;
+	display: inline;
 	margin: 0px auto;
 }
+
 @media screen and (min-width: 769px) {
 	#user_img {
-		width:80px; height:80px;
+		width: 80px;
+		height: 80px;
 	}
 }
+
 @media screen and (max-width: 770px) {
 	#user_img {
-		width:50px; height:50px;
-	}	
+		width: 50px;
+		height: 50px;
+	}
 }
-@media (max-width: 460px) {
-  #footer {
-  	height:160px;
-  }
-  #footer_5 {
-  	padding-bottom: 10px;
-  }
-  .main_wrap {
-  	padding-bottom:160px;
-  }
+
+@media ( max-width : 460px) {
+	#footer {
+		height: 160px;
+	}
+	#footer_5 {
+		padding-bottom: 10px;
+	}
+	.main_wrap {
+		padding-bottom: 160px;
+	}
 }
 </style>
 
 </head>
 <body>
-<div class="main_wrap">
-	<nav class="navbar navbar-inverse navbar-fixed-top header">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target=".navbar-collapse">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a href="login_ok.do" class="" style="color: white"> <img
-				id="logo_img" src="image/logo1.png">
-			</a>
+	<div class="main_wrap">
+		<nav class="navbar navbar-inverse navbar-fixed-top header">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a href="main.do" class="" style="color: white"> <img
+					id="logo_img" src="image/logo1.png">
+				</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav" id="nav">
+					<li class="nav_main"><a href="hot3.do"><strong>HOT3</strong></a></li>
+					<li class="nav_main"><a href="event.do"><strong>이벤트</strong></a></li>
+					<li class="dropdown nav_main"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"><strong>커뮤니티<b
+								class="caret"></b></strong> </a>
+						<ul class="dropdown-menu">
+							<li><a id="dropdown_sub" href="board_list.do"><h5>썰전</h5></a></li>
+							<li><a id="dropdown_sub" href="board_list.do?grade=1"><h5>고민상담</h5></a></li>
+						</ul></li>
+				</ul>
+				<!-- 09 -->
+				<c:if test="${sessionScope.m_email==null }">
+					<!-- 미로그인시 -->
+					<div class="navbar-right" id="navbar-main">
+						<a href="mypage.do">
+							<div>
+								<img src="image/man.png" id="user_img" /> <font color="white">USER</font>
+							</div>
+						</a>
+					</div>
+				</c:if>
+				<c:if test="${sessionScope.m_email!=null }">
+					<!-- 로그인시 -->
+					<div class="navbar-right" id="navbar-main">
+						<a href="mypage.do">
+							<div>
+								<img src="member/profile/${sessionScope.m_profile }"
+									id="user_img" /> <font color="white">${sessionScope.m_nick }</font>
+							</div>
+						</a>
+					</div>
+				</c:if>
+			</div>
 		</div>
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav" id="nav">
-				<li class="nav_main"><a href="main.jsp?mode=1"><strong>HOT3</strong></a></li>
-				<li class="nav_main"><a href="event.do"><strong>이벤트</strong></a></li>
-				<li class="dropdown nav_main"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"><strong>커뮤니티<b
-							class="caret"></b></strong> </a>
-					<ul class="dropdown-menu">
-						<li><a id="dropdown_sub" href="board_list.do"><h5>썰전</h5></a></li>
-						<li><a id="dropdown_sub" href="board_list.do?grade=1"><h5>고민상담</h5></a></li>
-					</ul></li>
-			</ul>
-			<!-- 09 -->
-			<c:if test="${sessionScope.m_email==null }">
-				<!-- 미로그인시 -->
-				<div class="navbar-right" id="navbar-main">
-						<a href="mypage.do">
-							<div>
-								<img src="image/man.png" id="user_img"/>
-							 	<font color="white">USER</font>
-							</div>
-						</a>
+		</nav>
+		<div style="height: 102px"></div>
+		<div class="include_wrap">
+			<jsp:include page="${main_jsp}"></jsp:include>
+			<div style="height: 102px"></div>
+			<div id="footer" class="text-center">
+				<div id="footer_1">
+					<strong>COMPANY&nbsp;&nbsp;&nbsp;</strong> <span>레츠끼릿컴퍼니</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
-			</c:if>
-			<c:if test="${sessionScope.m_email!=null }">
-				<!-- 로그인시 -->
-				<div class="navbar-right" id="navbar-main">
-						<a href="mypage.do">
-							<div>
-								<img src="member/profile/${sessionScope.m_profile }" id="user_img"/>
-							 	<font color="white">${sessionScope.m_nick }</font>
-							</div>
-						</a>
+				<div id="footer_2">
+					<strong>OWNER&nbsp;&nbsp;&nbsp;</strong> <span>김다솜 문예슬 송창석
+						조명연 권영규 민덕인</span> &nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
-			</c:if>
+				<div id="footer_3">
+					<strong>TEL&nbsp;&nbsp;&nbsp;</strong> <span>02-1234-1234</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+				<div id="footer_4">
+					<strong>E-MAIL&nbsp;&nbsp;&nbsp;</strong> <span>lets@getit.com</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+				<br> <br>
+				<div id="footer_5">
+					<strong>ADDRESS&nbsp;&nbsp;&nbsp;</strong> <span>서울특별시 서대문구
+						북아현동 125-44 4층</span>
+				</div>
+			</div>
 		</div>
 	</div>
-	</nav>
-	<div style="height: 102px"></div>
-
-		<div class="include_wrap">
-		<jsp:include page="${main_jsp}"></jsp:include>
-		
-		<div id="footer" class="text-center">
-			<div id="footer_1">
-				<strong>COMPANY&nbsp;&nbsp;&nbsp;</strong> <span>레츠끼릿컴퍼니</span>
-				&nbsp;&nbsp;&nbsp;&nbsp; 
-			</div>
-			<div id="footer_2">
-				<strong>OWNER&nbsp;&nbsp;&nbsp;</strong> <span>김다솜 문예슬 송창석 조명연 권영규 민덕인</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-			<div id="footer_3"> 
-				<strong>TEL&nbsp;&nbsp;&nbsp;</strong> <span>02-1234-1234</span> 
-			 	&nbsp;&nbsp;&nbsp;&nbsp; 
-			</div>
-			<div id="footer_4"> 
-				<strong>E-MAIL&nbsp;&nbsp;&nbsp;</strong> <span>lets@getit.com</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-			<br> <br>
-			<div id="footer_5"> 
-				<strong>ADDRESS&nbsp;&nbsp;&nbsp;</strong> <span>서울특별시 서대문구
-				북아현동 125-44 4층</span>
-			</div>
-
-		</div>
-
-</div>
-</div>
 
 </body>
 </html>

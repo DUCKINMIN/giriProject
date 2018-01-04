@@ -102,7 +102,7 @@ $(function(){
 		$("#").val("");
 		$('#infoUpdateModal').modal('hide');
 	});
-	// 메뉴
+	/* // 메뉴
 	$("#myinfo").click(function(){
 		$("#myboard").css({
 			"color": "black", "background-color": "white"
@@ -113,7 +113,7 @@ $(function(){
 		$("#myinfo").css({
 			"color": "white", "background-color": "#262626"
 		});
-	});		
+	});	 */	
 });
 </script>
 </head>

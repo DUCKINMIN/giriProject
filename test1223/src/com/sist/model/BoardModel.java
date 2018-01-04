@@ -50,11 +50,14 @@ public class BoardModel {
 		return "main/main.jsp";
 	}
 	@RequestMapping("board_content.do")
-	public String ssul_content(HttpServletRequest req, HttpServletResponse res) {
+	public String ssul_content(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		req.setCharacterEncoding("EUC-KR");
 		String no = req.getParameter("no");
 		String page = req.getParameter("page");
 		String grade = req.getParameter("grade");
-		System.out.println(grade);
+		if(page==null)
+			page="1";
+		
 		int igrade = Integer.parseInt(grade);
 		int curpage = Integer.parseInt(page);
 		int b_no = Integer.parseInt(no);
@@ -64,7 +67,7 @@ public class BoardModel {
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
 		System.out.println("vo.getbno : " + vo.getB_no());
-		//System.out.println("vo.getbno : " + vo.getB_img_cnt());
+
 		req.setAttribute("vo", vo);
 		req.setAttribute("page", curpage);
 		req.setAttribute("grade", grade);
@@ -92,7 +95,7 @@ public class BoardModel {
 		req.setCharacterEncoding("EUC-KR");
 		String path = req.getServletContext().getRealPath("/board/boardImg"); //파일 다운받을 폴더
 		//String path="C:\\git\\giriProject\\test1223\\WebContent\\board\\boardImg";
-
+		System.out.println(path);
 		int size = 1024*1024*100;
 		String enctype = "EUC-KR";
 		//파일업로드 라이브러리
@@ -159,10 +162,92 @@ public class BoardModel {
 		return "main/main.jsp";
 	}
 	@RequestMapping("board_update_ok.do")
-	public String board_update_ok(HttpServletRequest req, HttpServletResponse res) {
+	public String board_update_ok(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		req.setCharacterEncoding("EUC-KR");
+		String path = req.getServletContext().getRealPath("/board/boardImg"); //파일 다운받을 폴더
+		int size = 1024*1024*100;
+		String enctype = "EUC-KR";
+		//파일업로드 라이브러리
+		MultipartRequest mr = new MultipartRequest(req, path, size, enctype);
+		String filename = mr.getOriginalFileName("uploadFile");
+		int b_no = Integer.parseInt(mr.getParameter("b_no"));
+		System.out.println("b_no"+b_no);
+		String m_email = mr.getParameter("m_email");
+		String b_subject = mr.getParameter("b_subject");
+		String b_content = mr.getParameter("b_content");
+		b_content = b_content.replaceAll("\n", "<br>");
+		String b_grade = mr.getParameter("grade");
+		int b_img_cnt = BoardDAO.boardImgCnt(b_no);
 		
-		return "board_content.do";
+		BoardVO vo = new BoardVO();
+		vo.setM_email(m_email);
+		vo.setB_subject(b_subject);
+		vo.setB_content(b_content);
+		vo.setB_grade(Integer.parseInt(b_grade));
+		vo.setB_no(b_no);
+		
+		if (filename != null) {
+			File oldFile = new File(path+"\\board_"+b_no+".jpg");
+			oldFile.delete();
+			b_img_cnt = 1;
+            File f = new File(path+"\\"+filename);
+            File f2 = new File(path+"\\board_"+b_no+".jpg");
+            if (!f.renameTo(f2)) {
+               System.err.println("이름 변경 에러 : " + f);
+            }   
+         }
+		
+		vo.setB_img_cnt(b_img_cnt);
+		BoardDAO.boardUpdate(vo); //입력
+		
+		return "board_content.do?no="+b_no+"&grade="+b_grade;
 	}
 	
+	//검색
+	@RequestMapping("board_search.do")
+	public String board_search(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		req.setCharacterEncoding("EUC-KR");
+		int totalpage = 0;
+		String page = req.getParameter("page");
+		String grade = req.getParameter("grade");
+		String select = req.getParameter("select");
+		String strSearch = req.getParameter("strSearch");
+		strSearch = strSearch.trim();
+		
+		if(page==null) {
+			page="1";
+		}
+		if(grade==null) {
+			grade="0";
+		}
+		int igrade = Integer.parseInt(grade);
+		int rowSize = 10;
+		int curpage = Integer.parseInt(page);
+		int start = (rowSize*curpage)-(rowSize-1);
+		int end = (rowSize*curpage);
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("grade", igrade);
+		map.put("select", select);
+		map.put("strSearch", strSearch);
+		if(select.equals("b_subject"))
+			totalpage = BoardDAO.searchSubjectPage(map);
+		else 
+			totalpage = BoardDAO.searchNickPage(map);
+		
+		List<BoardVO> list = BoardDAO.boardSearch(map);
+		
+		//list.jsp 로 값 전송(req.setAttribute())
+		req.setAttribute("curpage", curpage);
+		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("list", list); 
+		req.setAttribute("grade", grade);
+		req.setAttribute("select", select);
+		req.setAttribute("strSearch", strSearch);
+		req.setAttribute("main_jsp", "../board/board_main.jsp");
+		req.setAttribute("sub_jsp", "../board/search.jsp");
+		return "main/main.jsp";
+	}
 	
 }

@@ -123,9 +123,14 @@
 					</div>
 				</div>
 			</div>
-
+			<c:if test="${strSearch==null }">
 			<a href="board_list.do?page=${page }&grade=${vo.b_grade}"><input
 				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
+			</c:if>
+			<c:if test="${strSearch!=null }">
+			<a href="board_search.do?page=${page }&grade=${vo.b_grade}&strSearch=${strSearch}&select=${select}"><input
+				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
+			</c:if>
 		</div>
 	</div>
 	<!-- 리뷰 -->

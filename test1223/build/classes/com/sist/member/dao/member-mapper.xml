@@ -21,7 +21,7 @@
 		INSERT INTO member 
 		VALUES(#{m_email},#{m_pwd},#{m_name},#{m_sex},#{m_birth},#{m_nick},SYSDATE,#{m_grade},#{m_tel},
 				<choose>
-				    <when test="m_grade==2">
+				    <when test="m_grade==1">
 				    	#{m_companyno},
 				    </when>
 				    <otherwise>
@@ -80,7 +80,7 @@
 		UPDATE member
 			<set>
 				m_nick=#{m_nick}
-				<if test='m_grade eq 2'>, m_companyno=#{m_companyno}</if>
+				<if test='m_grade eq 1'>, m_companyno=#{m_companyno}</if>
 				<if test="m_profile != null">, m_profile=#{m_profile}</if>
 			</set>
 			WHERE m_email = #{m_email}
@@ -102,29 +102,13 @@
 		DELETE FROM member WHERE m_email=#{m_email}
 	</delete>
 	
-	<!-- 작성글 -->
-	<select id="myBoardList" resultType="BoardVo" parameterType="java.util.Map">		
-		SELECT b_no, b_subject, b_regdate, b_hit, num
-		FROM (SELECT b_no, m_email, b_subject, b_regdate, b_hit, rownum AS num
-		FROM (SELECT b_no, m_email, b_subject, b_regdate, b_hit
-		FROM board WHERE m_email=#{m_email} ORDER BY b_no ASC))
-		WHERE num BETWEEN #{start} AND #{end}
-	</select>
-	<!-- 총페이지 -->
-	<select id="myBoardTotalPage" resultType="int" parameterType="String">
-		SELECT CEIL(COUNT(*)/5)
-        FROM (SELECT * FROM board)
-        WHERE m_email=#{m_email}
-	</select>
-	
 	<!-- 찜목록 -->
-	<!-- <resultMap type="MemberVo" id="myClubBar">
-		<result property="m_email" column="m_email"/>
-		<association property="eList" javaType="com.sist.event.dao.EventVO">
-			<result property="cb_no" column="cb_no"/>
-			<result property="cb_hit" column="cb_hit"/>
-			<result property="cb_open" column="cb_open"/>
-		</association>
+	<resultMap type="MemberVo" id="myClubBar">
+		<result property="cartvo.cb_no" column="cb_no"/>
+		<result property="cartvo.m_email" column="m_email"/>
+		<result property="clubbarvo.cb_name" column="cb_name"/>
+		<result property="clubbarvo.cb_hit" column="cb_hit"/>
+		<result property="clubbarvo.cb_open" column="cb_open"/>
 	</resultMap>
 	<select id="myClubBarList" resultMap="myClubBar" parameterType="java.util.Map">		
 		SELECT m_email, cb_no, cb_name, cb_hit, cb_open, num
@@ -133,24 +117,52 @@
         FROM member m, clubbar cb, cart c 
 		WHERE m.m_email=c.m_email AND c.cb_no=cb.cb_no 
 		AND m.m_email=#{m_email} ORDER BY c.cb_no ASC))
-		WHERE num BETWEEN #{start} AND #{end};
+		WHERE num BETWEEN #{start} AND #{end}
 	</select>
-	찜 총페이지
+	<!-- 찜 총페이지 -->
 	<select id="myClubBarTotalPage" resultType="int" parameterType="String">
+		SELECT CEIL(COUNT(*)/5)
+        FROM (SELECT * FROM cart)
+        WHERE m_email=#{m_email}
+	</select>
+	
+	<!-- 작성글 -->
+	<select id="myBoardList" resultType="BoardVo" parameterType="java.util.Map">		
+		SELECT b_no, b_subject, b_regdate, b_hit, b_grade, num
+		FROM (SELECT b_no, m_email, b_subject, b_regdate, b_hit, b_grade, rownum AS num
+		FROM (SELECT b_no, m_email, b_subject, b_regdate, b_hit, b_grade
+		FROM board WHERE m_email=#{m_email} ORDER BY b_no ASC))
+		WHERE num BETWEEN #{bstart} AND #{bend}
+	</select>
+	<!-- 작성글 총페이지 -->
+	<select id="myBoardTotalPage" resultType="int" parameterType="String">
 		SELECT CEIL(COUNT(*)/5)
         FROM (SELECT * FROM board)
         WHERE m_email=#{m_email}
-	</select> -->
+	</select>
+	
+	<!-- 작성댓글 -->
+	<select id="myCommentList" resultType="BoardCommentVO" parameterType="java.util.Map">		
+		SELECT bc_no, bc_content, bc_regdate, b_no, num
+		FROM (SELECT bc_no, m_email, bc_content, bc_regdate, b_no, rownum AS num
+		FROM (SELECT bc_no, m_email, bc_content, bc_regdate, b_no
+		FROM board_comment WHERE m_email=#{m_email} ORDER BY bc_no ASC))
+		WHERE num BETWEEN #{cstart} AND #{cend}
+	</select>
+	<!-- 작성댓글 총페이지 -->
+	<select id="myCommentTotalPage" resultType="int" parameterType="String">
+		SELECT CEIL(COUNT(*)/5)
+        FROM (SELECT * FROM board_comment)
+        WHERE m_email=#{m_email}
+	</select>
 	
 	<!-- 참여이벤트 -->
-	<resultMap type="MemberVo" id="voMapping">
-		<result property="m_email" column="m_email"/>
-		<association property="evo" javaType="com.sist.event.dao.EventVO">
-			<result property="e_no" column="e_no"/>
-			<result property="e_name" column="e_name"/>
-		</association>
+	<resultMap type="MemberVo" id="myEvent">
+		<result property="eventcartvo.e_no" column="e_no"/>
+		<result property="eventcartvo.m_email" column="m_email"/>
+		<result property="eventvo.e_name" column="e_name"/>
 	</resultMap>
-	<select id="myEventList" resultMap="voMapping" parameterType="java.util.Map">		
+	<select id="myEventList" resultMap="myEvent" parameterType="java.util.Map">		
 		SELECT m_email, e_no, e_name, num
 		FROM (SELECT m_email, e_no, e_name, rownum AS num
 		FROM (SELECT m.m_email, e.e_no, e.e_name
@@ -162,7 +174,7 @@
 	<!-- 총페이지 -->
 	<select id="myEventTotalPage" resultType="int" parameterType="String">
 		SELECT CEIL(COUNT(*)/5)
-        FROM (SELECT * FROM board)
+        FROM (SELECT * FROM event_cart)
         WHERE m_email=#{m_email}
 	</select>
 	<!-- 등록된 이벤트  불러오기 -->

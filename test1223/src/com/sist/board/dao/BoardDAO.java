@@ -154,4 +154,81 @@ public class BoardDAO {
 		
 		return vo;
 	}
+	//이미지 카운트 가져오기
+	public static int boardImgCnt(int b_no) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("boardImgCnt",b_no);
+		}catch(Exception e) {
+			System.out.println("boardImgCnt : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return cnt;
+	}
+	//수정
+	public static void boardUpdate(BoardVO vo) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("boardUpdate",vo);
+		}catch(Exception e) {
+			System.out.println("boardUpdate : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	//검색
+	public static List<BoardVO> boardSearch(Map map) {
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		String select = (String)map.get("select");
+		SqlSession session = ssf.openSession();
+		try {
+			if(select.equals("b_subject"))
+				list = session.selectList("boardSubjectSearch",map);
+			else 
+				list = session.selectList("boardNickSearch",map);
+		}catch(Exception e) {
+			System.out.println("boardSearch : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return list;
+	}
+	
+	//검색
+	public static int searchSubjectPage(Map map) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("searchSubjectPage",map);
+		}catch(Exception e) {
+			System.out.println("searchSubjectPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return cnt;
+	}
+	public static int searchNickPage(Map map) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("searchNickPage",map);
+		}catch(Exception e) {
+			System.out.println("searchNickPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return cnt;
+	}
+
 }

@@ -8,9 +8,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 상세보기 시작 -->
 	<select id="jumpoCheck" resultType="SearchVo" parameterType="java.util.Map">
 
-		SELECT cb_name, a_addr1, cb_grade, cb_hit, num
-		FROM ( SELECT cb_name, a_addr1, cb_grade, cb_hit, rownum as num
-		FROM ( SELECT cb_name, a_addr1, cb_grade, cb_hit
+		SELECT cb_name, a_addr1, cb_grade, cb_hit, cb_no
+		FROM ( SELECT cb_name, a_addr1, cb_grade, cb_hit, cb_no, rownum as num
+		FROM ( SELECT cb_name, a_addr1, cb_grade, cb_hit, cb_no
 		FROM clubBar WHERE a_addr1 LIKE '%'||#{addr_name}||'%' OR cb_name LIKE
 		'%'||#{search_name}||'%'))
 		WHERE num BETWEEN #{start} AND #{end}
@@ -23,14 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE a_addr1 LIKE '%'||#{addr_name}||'%' )
 	</select>
 
-
 	 <select id="jumpoCheck2" resultType="BoardVO" parameterType="java.util.Map">
-
-		SELECT b_subject, m_nick, b_regdate, b_hit, num
-		FROM (SELECT b_subject, m_nick,b_regdate, b_hit, rownum as num 
-		FROM (SELECT b.b_subject, m.m_nick, b.b_regdate, b.b_hit
-		FROM board b, member m where  b_subject LIKE '%'||#{search_name}||'%' AND b.m_email=m.m_email ORDER BY b.b_no DESC)) 
-		WHERE num BETWEEN #{start} AND #{end}
+		SELECT b_no,b_subject, m_nick, b_regdate,b_grade, b_hit, num
+		FROM (SELECT b_no,b_subject, m_nick,b_regdate,b_grade, b_hit, rownum as num 
+		FROM (SELECT b_no,b.b_subject, m.m_nick, b.b_regdate,b_grade, b.b_hit
+		FROM board b, member m where b_subject LIKE '%'||#{search_name}||'%' AND b.m_email=m.m_email ORDER BY b.b_no DESC)) 
+		WHERE num BETWEEN #{start2} AND #{end2}
 	</select>
 	
 	<select id="searchTotalPage2" resultType="int" parameterType="String">		

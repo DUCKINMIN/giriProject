@@ -14,6 +14,22 @@ public class ClubBarVO {
 	private int cb_weekHit;
 	private int cb_grade;
 	private int cb_img_cnt;
+	private double rating;
+	private int jjim;
+	
+	
+	public double getRating() {
+		return rating;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	public int getJjim() {
+		return jjim;
+	}
+	public void setJjim(int jjim) {
+		this.jjim = jjim;
+	}
 
 	public int getCb_img_cnt() {
 		return cb_img_cnt;
