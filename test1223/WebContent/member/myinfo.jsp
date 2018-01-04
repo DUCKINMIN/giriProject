@@ -7,6 +7,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>MYINFO</title>
+
 <style type="text/css">
 	.result_div{
 		height: 70px;
@@ -55,8 +56,7 @@ $(function(){
 	});
 	
 	var phonetest =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/; // 핸드폰번호 정규식
-	var pwdtest = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}/; //비밀번호 정규식
-	
+
 	var nickcount = 1;
 	$("#updateBtn").click(function(){
 		$('#nickcon').html("");
@@ -148,11 +148,6 @@ $(function(){
 			$("#changepwd").focus();
 			return;
 		}
-		if (pwdtest.test(changepwd)==false) {
-			$("#pwdcon").html("<font color=red>비밀번호는 최소8자,문자,숫자,특수문자가 하나이상 포함되어야 합니다</font>");	
-			$("#changepwd").focus();
-			return;
-		}
 		if (checkpwd.trim()=="") {
 			$("#pwdcon").html("<font color=red>변경할 비밀번호를 한번더 입력해주세요</font>");	
 			$("#checkpwd").focus();
@@ -185,8 +180,8 @@ $(function(){
 			$(".telcheck").hide(500);
 			$("#tel").focus();
 		} else if(number.trim().length < 11 || phonetest.test(number)==false){
-			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");
-			$(".telcheck").hide(500);			
+			$(".telcheck").hide(500);	
+			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");		
 			$("#tel").focus();
 		} else if(number.trim().length == 11 && phonetest.test(number)==true){
 			$(".telcheck").show(500);
@@ -318,17 +313,13 @@ function readURL(input) {
 					<input type='file' id="profile" name="profile" onchange="javascript:$('#change').value=this.value" style="display:none;" accept='image/*'/>
 					</label>
 				</div>
-				</div>
-		<div class="result_div">
-			<input type="text" class="result_input form-control" value="${vo.m_email }" readonly/>
-			<input type="hidden" value="${vo.m_email }" name="email">
-			<input type="hidden" value="${vo.m_grade }" name="grade" id="grade">
 		</div>
 		<div class="text-center">
 			<label>이메일</label>
 		</div>
 		<div class="result_div">
-			<input type="text" class="result_input form-control" value="${vo.m_email }" readonly/>
+			<input type="text" class="result_input form-control" value="${vo.m_email }" name="email" readonly/>
+			<input type="hidden" value="${vo.m_grade }" name="grade" id="grade">
 		</div>
 		<div class="text-center">
 			<label>이름</label>
