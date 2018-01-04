@@ -352,7 +352,27 @@ public class MemberModel {
 	//이벤트 설정
 		@RequestMapping("member_event.do")
 		public String member_event(HttpServletRequest req,HttpServletResponse res) {
+			HttpSession session = req.getSession();
+			String m_email = (String) session.getAttribute("m_email");
 			
+			String page=req.getParameter("page");
+			if(page==null)
+				page="1";
+			int curpage = Integer.parseInt(page);
+			int rowSize = 3;
+			int start = (rowSize*curpage)-(rowSize-1);
+			int end = rowSize * curpage;
+
+			Map map = new HashMap<>();
+			map.put("m_email", m_email);
+			map.put("start", start);
+			map.put("end", end);
+			
+			int totalpage = MemberDao.myEventCallTotalPage(m_email);
+			List<EventVO> list=MemberDao.EventCallData(map);
+			req.setAttribute("curpage", curpage);
+			req.setAttribute("totalpage", totalpage);
+			req.setAttribute("list", list);
 			req.setAttribute("main_jsp", "../member/mypage.jsp");
 			req.setAttribute("member_jsp", "../member/eventManage.jsp");
 			return "main/main.jsp";

@@ -63,12 +63,12 @@ $(function(){
 	<div class="container" >
 		<div class="row">
 		<%-- <c:set var="i" value="0"/> --%>
-		<c:forEach var="i" begin="1" end="3">
-		  <div id="manageBox" class="col-sm-6 col-md-4"  >
+		<c:forEach var="vo" items="${list }">
+		  <div id="manageBox" value="${vo.no }" class="col-sm-6 col-md-4"  >
 		    <div class="thumbnail" data-toggle="modal" <%-- data-target="#myModal_${i}" --%> >
-		      <img src="event/eventImage/1.jpg" alt="이벤트" style="width:100%; height:300px; ">
+		      <img src="event/eventImage/${vo.e_no }.jpg" alt="이벤트" style="width:100%; height:300px; ">
 		      <div class="caption">
-		        <h2 style="color:white; margin-left:10px;">이벤트 이름</h2>
+		        <h2 style="color:white; margin-left:10px;">${vo.e_name }</h2>
 		      </div>
 		      <div  id="manage" align="center" style="display:none;">
 		      	<a href="member/eventUpdate.jsp"><input class="btn btn-info" type=button  value="수정"></a>
@@ -87,9 +87,9 @@ $(function(){
 	     <table id="table_content" width="700">
 	     	<tr>
 	     		<td align=right>
-	     		<a href="#">이전</a>&nbsp;
-	     		<a href="#">다음</a>&nbsp;&nbsp;
-	     		[1] page / [2] pages
+	     		<a href="member_event.do?page=${curpage>1?curpage-1:curpage }">이전</a>&nbsp;
+	     		<a href="member_event.do?page=${curpage<totalpage?curpage+1:curpage }">다음</a>&nbsp;&nbsp;
+	     		[${curpage }] page / [${totalpage }] pages
 	     		</td>
 	     	</tr>
 	     </table>

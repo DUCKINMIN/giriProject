@@ -178,24 +178,20 @@
         WHERE m_email=#{m_email}
 	</select>
 	<!-- 등록된 이벤트  불러오기 -->
-	<!-- <resultMap type="EventVO" id="eventRegistCallData">
-  	<result property="e_no" column="e_no"/>
-  	<result property="cb_no" column="cb_no"/>
-  	<result property="e_name" column="e_name"/>
-  	<result property="e_regdate" column="e_regdate"/>
-  	<result property="e_enddate" column="e_enddate"/>
-  	<result property="e_content" column="e_content"/>
-  	<result property="cb.cb_name" column="cb_name"/>
-  	<result property="cb.a_addr1" column="a_addr1"/>
-  	<result property="cb.a_addr2" column="a_addr2"/>
-  </resultMap> -->
-  <!-- <select id="eventCall" parameterType="java.util.Map" resultMap="eventRegistCallData">
-  	SELECT c.cb_no,e.e_no,e.e_name,e.num
-  	FROM clubbar c,(SELECT e_no,e_name,rownum as num
-  	FROM (SELECT e_no,e_name
-  	FROM event ORDER BY e_enddate ASC )) e
-  	WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
-  </select> -->
+	<select id="EventCallData" resultType="EventVO" parameterType="java.util.Map">
+		SELECT e_no,e_name,num
+		FROM (select e_no,e_name,rownum as num
+		FROM (select e_no,e_name
+		FROM event e,member m, clubbar c
+		WHERE m.m_email=#{m_email} AND m.m_email=c.m_email AND c.cb_no=e.cb_no 
+		ORDER BY e_enddate asc))
+		WHERE num BETWEEN #{start} and #{end}
+	</select>
+	<select id="myEventCallTotalPage" resultType="int" parameterType="String">
+		SELECT CEIL(COUNT(*)/3)
+		FROM event e,member m, clubbar c
+		WHERE m.m_email=#{m_email} AND m.m_email=c.m_email AND c.cb_no=e.cb_no 
+	</select>
 </mapper>
 
 

@@ -167,6 +167,7 @@
 									<span aria-hidden="true" style="color:white">X</span><span class="sr-only">Close</span>
 								</button>
 								<h3 class="modal-title" id="myModalLabel">³¢¸®³¢¸® ¼Ò°³</h3>
+							
 							</div>
 							<div class="modal-body">
 								<img src="image/couple.png">

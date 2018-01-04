@@ -306,7 +306,32 @@ public class MemberDao {
 		}
 		return totalpage;
 	}
-	
+	//이벤트 관리 페이지 이벤트 불어오기
+	public static List<EventVO> EventCallData(Map map){
+		List<EventVO> list = new ArrayList<EventVO>();
+		SqlSession session = ssf.openSession();
+		try {
+			list = session.selectList("EventCallData",map);
+		} catch (Exception e) {
+			System.out.println("EventCallData : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return list;
+	}
+	//불러오기 이벤트 총 페이지
+	public static int myEventCallTotalPage(String m_email) {
+		SqlSession session = ssf.openSession();
+		int totalpage=0;
+		try {
+			totalpage = session.selectOne("myEventCallTotalPage", m_email);
+		} catch (Exception e) {
+			System.out.println("myEventCallTotalPage : "+e.getMessage());
+		} finally {
+			if(session!=null) session.close();
+		}
+		return totalpage;
+	}
 	
 	
 	
