@@ -169,7 +169,7 @@
 				};
 
 		
-		//대댓글에 댓글달기
+		//대댓글에 댓글달기 => 대대댓글
 		$(".re_reply_btn").click(function() {
 			var re_btn_id = $(this).attr("id");
 			re_btn_id = re_btn_id.split("_");
@@ -177,14 +177,18 @@
 			$("#re_re_nick_" + re_btn_id[2]).text("");
 			$("#re_re_nick_" + re_btn_id[2]).text("@" + $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
 			$("#re_re_xBtn_" + re_btn_id[2]).html("<img src='cb_detail/image/xBtn.png' style='width: 10px'>");
+			$(".re_content_update_" + re_btn_id[2]).append("<input type='hidden' name='cbc_pcno' value='" + re_btn_id[4] + "'>");
+			$(".re_content_update_" + re_btn_id[2]).append("<input type='hidden' name='cbc_pcnick' value='"+ 
+									"@" + $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   " +"'>");
 			$("#re_content_" + re_btn_id[2]).focus();
 		});
-		
+		//<textarea class="form-control" rows="2" id="re_content_${i.index }" name="cbc_content"></textarea>
 		$(".re_re_xBtn").click(function() {
 			var x_btn_id = $(this).attr("id");
 			x_btn_id = x_btn_id.split("_"); //인덱스 3으로 아이디분류
 			$("#re_re_xBtn_" + x_btn_id[3]).html("");
 			$("#re_re_nick_" + x_btn_id[3]).text("");
+			$(".re_content_update_" + re_btn_id[2]).html("<textarea class='form-control' rows='2' id='re_content_${i.index }' name='cbc_content'></textarea>");
 		});
 		
 		//<span class="update_rating update_rating_${i.index }" id="update_rating_insert">
@@ -420,7 +424,7 @@
 					<%-- <c:forEach var="j" begin="1" end="3"> --%>
 					<c:forEach var="cvo" items="${rc_list }" varStatus="j">
 						<!-- 대댓글 리스트 -->
-						<c:if test="${cvo.cbc_root==cbc_vo.cbc_no }">
+						<c:if test="${cvo.cbc_group_id==cbc_vo.cbc_group_id }">
 							<table class="reply_list" id="replylist_${i.index }_${j.index}">
 								<!-- 사용자 정보 & 내용 -->
 								<tr>
@@ -451,7 +455,7 @@
 											<span class="click_ok re_up_btn" id="re_up_btn_${i.index }_${j.index}">수 정</span>&nbsp;&nbsp;
 											<span class="click_ok re_del_btn" id="re_del_btn_${i.index }_${j.index}">삭 제</span>&nbsp;&nbsp;
 										</c:if>
-										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }">댓&nbsp;&nbsp;&nbsp;글</button>
+										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }_${cvo.cbc_no}">댓&nbsp;&nbsp;&nbsp;글</button>
 									</td>
 								</tr>
 							</table>
@@ -532,7 +536,7 @@
 										<span id="re_re_nick_${i.index }" ></span>
 										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
 									</div>
-									<div class="re_content_insert">
+									<div class="re_content_update_${i.index }">
 										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="cbc_content"></textarea>
 									</div>
 								</td>
