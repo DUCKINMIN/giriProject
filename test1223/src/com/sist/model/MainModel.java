@@ -1,13 +1,13 @@
 package com.sist.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sist.board.dao.BoardVO;
+import com.sist.clubbar.dao.*;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.SearchDao;
@@ -118,4 +118,26 @@ public class MainModel {
 		req.setAttribute("vo2", vo2);
 		return "main2/ajaxtext.jsp";
 	}
+	
+	//실시간 조회수 다솜
+		@RequestMapping("rank.do")
+		public String cbr_rank(HttpServletRequest req, HttpServletResponse res) {
+			// 포맷변경 ( 년월일 시)
+			String cbr_time = null;
+			Date date = new Date();
+			SimpleDateFormat sdformat = new SimpleDateFormat("yy-MM-dd HH");
+			// Java 시간 더하기
+			Calendar cal = Calendar.getInstance();
+
+			cal.setTime(date);
+			cal.add(Calendar.HOUR, -1);
+
+			cbr_time = sdformat.format(cal.getTime());
+			//System.out.println("1시간 전 : " + cbr_time);
+			
+			List<ClubBarRankVO> list = ClubBarDAO.cbrList(cbr_time);
+		
+			req.setAttribute("list", list);
+			return "timeranking/timerank.jsp";
+		}
 }
