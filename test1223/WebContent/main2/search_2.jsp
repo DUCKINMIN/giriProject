@@ -21,32 +21,56 @@
 					<table class="table">
 						<tr class="table_title1">
 
-							<th width=40% class="text-center">제목</th>
-							<th width=20% class="text-center">이름</th>
-							<th width=20% class="text-center">작성일</th>
-							<th width=20% class="text-center table_count">조회수</th>
+							<th width=40% class="text-center">이벤트명</th>
+							<th width=20% class="text-center">제목</th>
+							<th width=20% class="text-center">시작일</th>
+							<th width=20% class="text-center table_count">종료일</th>
 
 						</tr>
 						<!-- for(FreeBoardVO vo:list) 아래랑 같음 -->
-						<c:forEach var="item" begin="1" end="5" step="1">
 
-							<tr class="table_content">
-								<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;제목</a>
-									&nbsp; <%-- <c:if test="${vo.count!=0 }">
-								(${vo.count })
-							</c:if> --%></td>
-								<td width=20% class="text-center">이름</td>
-								<td width=20% class="text-center">작성일</td>
-								<td width=20% class="text-center table_count">조회수</td>
-							</tr>
-						</c:forEach>
-					</table>
-					<table class="table">
-						<tr>
-							<td class="text-right"><a href="#" class="btn">이전</a>&nbsp;
-								pages<a href="#" class="btn">다음</a>&nbsp;&nbsp;</td>
+
+						<tr class="table_content">
+							<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;제목</a>
+								&nbsp;</td>
+							<td width=20% class="text-center">이름</td>
+							<td width=20% class="text-center">작성일</td>
+							<td width=20% class="text-center table_count">조회수</td>
 						</tr>
+
 					</table>
+
+
+
+
+
+
+
+					<div>
+
+						<c:if test="${search_name == ''|| list2.size()==0}">
+							<p style="text-align: center; font-size: 20pt;">검색결과가 없습니다.</p>
+						</c:if>
+						<c:if test="${search_name != '' && list2.size() !=0}">
+
+							<a
+								href="mainsearch.do?p1=${curpage1 }&p2=${curpage2>1?curpage2-1:curpage2}&p3=${curpage3}&search_name=${search_name }">
+								<</a>&nbsp;
+
+						<c:forEach var="i" begin="1" end="${totalpage2<1?1:totalpage2 }">
+								<c:if test="${curpage2==i }">
+									<font size="4pt"><b>${i }</b></font>
+								</c:if>
+								<c:if test="${curpage2!=i }">
+									<a
+										href="mainsearch.do?p1=${curpage1}&p2=${i }&p3=${curpage3}&search_name=${search_name }"}>${i }</a>
+								</c:if>
+							</c:forEach>
+						&nbsp; <a
+								href="mainsearch.do?p1=${curpage1 }&p2=${curpage2<totalpage2?curpage2+1:curpage2 }&p3=${curpage3}&search_name=${search_name }">
+								>&nbsp;&nbsp; </a>
+						</c:if>
+					</div>
 
 				</div>
 
