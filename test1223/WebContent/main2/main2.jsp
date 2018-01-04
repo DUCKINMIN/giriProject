@@ -25,7 +25,7 @@
 <style type="text/css">
 .row {
 	margin: 0px auto;
-	width: 60%;
+	width: 59%;
 	height: 360px;
 	text-align: center;
 }
@@ -228,7 +228,7 @@
 		text-align: center;
 	}
 	.black_box {
-		width: 100%;
+		width: 95%;
 	}
 	.like img, .hit img {
 		width: 15px;

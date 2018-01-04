@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,13 +46,18 @@
 					
 					<div>
 						<a href="mainsearch.do?page=${curpage }&p2=${curpage2>1?curpage2-1:curpage2 }&search_name=${search_name }">
-							<img src="main2/img/befor.png" style="cursor:pointer"></a>&nbsp;
+							<</a>&nbsp;
 						 
 						<c:forEach  var="i" begin="1" end="${totalpage2<1?1:totalpage2 }">
-						<a href = "mainsearch.do?p2=${i}&search_name=${search_name }" }>${i }</a>
+							<c:if test="${curpage2==i }">
+								<font size="4pt"><b>${i }</b></font>
+							</c:if>
+							<c:if test="${curpage2!=i }">
+						 		<a href = "mainsearch.do?page=${curpage}&p2=${i }&search_name=${search_name }"}>${i }</a>
+							</c:if>
 						</c:forEach>&nbsp; 
 						<a href="mainsearch.do?page=${curpage }&p2=${curpage2<totalpage2?curpage2+1:curpage2 }&search_name=${search_name }">
-						<img src="main2/img/next.png"style="cursor:pointer"></a>&nbsp;&nbsp;
+						>&nbsp;&nbsp;
 					</div>
 
 
