@@ -6,7 +6,7 @@
 	<typeAliases>
 		<typeAlias type="com.sist.board.dao.BoardVO" alias="BoardVO"/>
 		<typeAlias type="com.sist.board.dao.BoardCommentVO" alias="BoardCommentVO"/>
-		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/>
+		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/><!--duckin  -->
 		<typeAlias type="com.sist.weekbest.WeekBestVO" alias="WeekBestVO"/>
 		<typeAlias type="com.sist.dao.SearchVo" alias="SearchVo"/>
 		<typeAlias type="com.sist.member.dao.MemberVo" alias="MemberVo"/><!-- 09 -->

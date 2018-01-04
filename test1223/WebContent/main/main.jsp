@@ -59,7 +59,6 @@ a {
 	margin-right: 10px;
 }
 
-}
 #logo_img {
 	width: 180px;
 	padding: 20px;
@@ -103,6 +102,7 @@ a {
 	padding-top: 40px;
 	color: rgb(170, 170, 170);
 	margin: 0px auto;
+	margin-top: 50px;
 }
 
 #footer span {
@@ -177,14 +177,14 @@ html, body {
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" id="nav">
-					<li class="nav_main"><a href="main.jsp?mode=1"><strong>HOT3</strong></a></li>
-					<li class="nav_main"><a href="main.jsp?mode=2"><strong>ÀÌº¥Æ®</strong></a></li>
+					<li class="nav_main"><a href="hot3.do"><strong>HOT3</strong></a></li>
+					<li class="nav_main"><a href="event.do"><strong>ÀÌº¥Æ®</strong></a></li>
 					<li class="dropdown nav_main"><a href="#"
 						class="dropdown-toggle" data-toggle="dropdown"><strong>Ä¿¹Â´ÏÆ¼<b
 								class="caret"></b></strong> </a>
 						<ul class="dropdown-menu">
-							<li><a id="dropdown_sub" href="music/main.jsp?mode=6"><h5>½äÀü</h5></a></li>
-							<li><a id="dropdown_sub" href="music/main.jsp?mode=12"><h5>°í¹Î»ó´ã</h5></a></li>
+							<li><a id="dropdown_sub" href="board_list.do"><h5>½äÀü</h5></a></li>
+							<li><a id="dropdown_sub" href="board_list.do?grade=1"><h5>°í¹Î»ó´ã</h5></a></li>
 						</ul></li>
 				</ul>
 				<!-- 09 -->
@@ -205,7 +205,7 @@ html, body {
 							<a href="mypage.do"><font color="white">${sessionScope.m_nick }</font></a>
 						</div>
 						<div style="margin-top: 25px">
-							<font color="white">·Î±×¾Æ¿ô</font>
+							<a href="logout.do"><font color="white">·Î±×¾Æ¿ô</font></a>
 						</div>
 					</div>
 					<div class="navbar-right" id="navbar-main">
@@ -218,10 +218,9 @@ html, body {
 		</div>
 		</nav>
 		<div style="height: 102px"></div>
-
 		<div class="include_wrap">
-			<jsp:include page="${main_jsp }"></jsp:include>
-
+			<jsp:include page="${main_jsp}"></jsp:include>
+			<div style="height: 102px"></div>
 			<div id="footer" class="text-center">
 				<div id="footer_1">
 					<strong>COMPANY&nbsp;&nbsp;&nbsp;</strong> <span>·¹Ã÷³¢¸´ÄÄÆÛ´Ï</span>
@@ -244,9 +243,7 @@ html, body {
 					<strong>ADDRESS&nbsp;&nbsp;&nbsp;</strong> <span>¼­¿ïÆ¯º°½Ã ¼­´ë¹®±¸
 						ºÏ¾ÆÇöµ¿ 125-44 4Ãþ</span>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 

@@ -65,13 +65,23 @@
 
 					<div>
 						<a href="mainsearch.do?page=${curpage>1?curpage-1:curpage }&p2=${curpage2 }&search_name=${search_name }">
-							<img src="main2/img/befor.png" id="before" style="cursor:pointer"></a>&nbsp;
+							<!-- <img src="main2/img/befor.png" id="before" style="cursor:pointer"> --><</a>&nbsp;
 						 
 						<c:forEach  var="i" begin="1" end="${totalpage<1?1:totalpage }">
-						<a href = "mainsearch.do?page=${i}&p2=${curpage2 }&search_name=${search_name }" }>${i }</a>
+						
+						
+							<c:if test="${curpage==i }">
+								<font size="4pt"><b>${i }</b></font>
+							</c:if>
+							<c:if test="${curpage!=i }">
+						 		<a href = "mainsearch.do?page=${i}&p2=${curpage2 }&search_name=${search_name }"}>${i }</a>
+							</c:if>
+						
+					
+						
 						</c:forEach>&nbsp; 
 						<a href="mainsearch.do?page=${curpage<totalpage?curpage+1:curpage }&p2=${curpage2 }&search_name=${search_name }">
-						<img src="main2/img/next.png" id="next" style="cursor:pointer"></a>&nbsp;&nbsp;
+						<!-- <img src="main2/img/next.png" id="next" style="cursor:pointer"> -->></a>&nbsp;&nbsp;
 					</div>
 
 

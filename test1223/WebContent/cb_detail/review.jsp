@@ -10,7 +10,8 @@
 <title>Insert title here</title>
 <script src="path/to/js/star-rating.min.js" type="text/javascript"></script>
 <style>
-.reply_btn, .reply_insert_btn, .re_reply_btn {
+.reply_btn, .reply_insert_btn, .re_reply_btn,
+ .re_update_btn, .re_noupdate_btn {
 	color: #262626;
 	background: #fff;
 	border: 1px solid #999;
@@ -37,7 +38,9 @@
 .review_insert, .review_update {
 	margin-bottom: 10px;
 }
-
+.review_update {
+	border-top: 1px solid #ddd;
+}
 #reply_pro {
 	
 	background-size: 100%;
@@ -69,6 +72,10 @@
 
 .reply_btn, .reply_insert_btn {
 	margin: 4px 0px;
+}
+
+.re_re_xBtn {
+	cursor: pointer;
 }
 .review {
 	margin-bottom: 50px;
@@ -127,16 +134,57 @@
 				}
 		});
 		
+			var starRating_up = function(i){
+				  var $star = $("#update_rating_insert" + i),
+				      $result = $star.find("output>strong");
+				  $(document)
+				    .on("focusin", "#update_rating_insert" + i + ">.input", function(){
+				    $(this).addClass("focus");
+				  })
+				    .on("focusout", "#update_rating_insert" + i + ">.input", function(){
+				    var $this = $(this);
+				    setTimeout(function(){
+				      if($this.find(":focus").length === 0){
+				        $this.removeClass("focus");
+				      }
+				    }, 100);
+				  })
+				    .on("change", "#update_rating_insert" + i + " :radio", function(){
+				    $result.text($(this).next().text());
+				  })
+				    .on("mouseover", "#update_rating_insert" + i + " label", function(){
+				    $result.text($(this).text());
+				  })
+				    .on("mouseleave", "#update_rating_insert" + i + ">.input", function(){
+				    var $checked = $star.find(":checked");
+				    if($checked.length === 0){
+				      $result.text("0");
+				    } else {
+				      $result.text($checked.next().text());
+				    }
+				  });
+				};
+
+		
 		//대댓글에 댓글달기
 		$(".re_reply_btn").click(function() {
 			var re_btn_id = $(this).attr("id");
 			re_btn_id = re_btn_id.split("_");
 			$("#re_content_" + re_btn_id[2]).val("");
-			$("#re_content_" + re_btn_id[2]).val(
-					 "@"+ $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
+			$("#re_re_pname_" + re_btn_id[2]).text("");
+			$("#re_re_xBtn_" + re_btn_id[2]).html("<img src='cb_detail/image/xBtn.png' style='width: 10px'>");
+			$("#re_re_pname_" + re_btn_id[2]).text("@" + $("#re_name_" + re_btn_id[2] + "_" + re_btn_id[3]).text() + "   ");
 			$("#re_content_" + re_btn_id[2]).focus();
 		});
 		
+		$(".re_re_xBtn").click(function() {
+			var x_btn_id = $(this).attr("id");
+			x_btn_id = x_btn_id.split("_"); //인덱스 3으로 아이디분류
+			$("#re_re_xBtn_" + x_btn_id[3]).html("");
+			$("#re_re_pname_" + x_btn_id[3]).text("");
+		});
+		
+		//<span class="update_rating update_rating_${i.index }" id="update_rating_insert">
 		//수정버튼 눌렀을 때
 		var u = 0;
 		$(".review_update").hide();
@@ -146,17 +194,20 @@
 			if(u == 0) {
 				u = 1;
 				$("#input_" + up_id[1]).addClass("input");
-				$(this).text("취 소");
 				$("#review_up_" + up_id[1]).show();
 				$("#reviewlist_" + up_id[1]).hide();
-			} else {
-				u = 0;
-				$(this).text("수 정");
-				$("#review_up_" + up_id[1]).hide();
-				$("#input_" + up_id[1]).removeClass("input");
-				$("#reviewlist_" + up_id[1]).show();
+				starRating_up(up_id[1]);
 			}
 			
+		});
+		
+		$(".re_noupdate_btn").click(function() {
+			var up_id = $(this).attr("id");
+			up_id = up_id.split("_");
+			u = 0;
+			$("#review_up_" + up_id[2]).hide();
+			$("#input_" + up_id[2]).removeClass("input");
+			$("#reviewlist_" + up_id[2]).show();
 		});
 	});
 </script>
@@ -277,7 +328,7 @@
 				
 				<!-- --------------------------------------------------------------------- 수정 -->
 				<div class="review_update" id="review_up_${i.index }">
-					<form action="cbc_new_insert.do" method="post">
+					<form action="cbc_update.do" method="post">
 						<table>
 							<!-- 사용자 정보 & 리뷰 내용 -->
 							<tr>
@@ -287,12 +338,13 @@
 										<!-- 사용자 닉네임 -->
 										<input type="hidden" name="m_email" value="${sessionScope.m_email }">
 										<input type="hidden" name="cb_no" value="${vo.cb_no }">
+										<input type="hidden" name="cbc_no" value="${cbc_vo.cbc_no }">
 										<input type="hidden" name="review" value="1">
 										 ${sessionScope.m_nick }
 									</div>
 								</td>
 								<td width="90%">
-									<textarea class="form-control" rows="5" cols="100%" name="cbc_content"></textarea>
+									<textarea class="form-control" rows="5" cols="100%" name="cbc_content">${cbc_vo.cbc_content }</textarea>
 								</td>
 								
 								<!-- 별점 & 버튼 -->
@@ -301,27 +353,27 @@
 							<tr>
 							<td>
 								<div class="list_star">
-									<!-- 별점주기 -->
-									<!-- class="update_rating" => 별점기능 활성화 -->
-									<span class="update_rating" id="update_rating_insert">
-											<!-- class="input" -->
+									<!-- 별점주기  id="update_rating_insert"-->
+									<span class="update_rating update_rating_${i.index }" id="update_rating_insert${i.index }">
+											<!-- class="input"  => 별점기능 활성화-->
 										  <span id="input_${i.index }">
 										    <c:forEach var="k" begin="1" end="10">
-												  		<input type="radio" name="update_rating" id="u${k }" value="${k/2}">
-												  		<label for="u${k }" style="width: ${k*10}px; z-index:${11-k}">${k/2}</label>
+												  		<input type="radio" name="update_rating_${cbc_vo.cbc_no}" id="u${i.index }${k }" value="${k/2}"
+												  		<c:if test="${(cbc_vo.cbc_rating*2) == k}">checked="checked"</c:if>>
+												  		<label for="u${i.index }${k }" style="width: ${k*10}px; z-index:${11-k}">${k/2}</label>
 										 	</c:forEach>
 										 </span>
 										 <div class="text-center">
-										 	<output for="update_rating"><strong>0</strong></output>
+										 	<output for="update_rating_${cbc_vo.cbc_no}"><strong id="strong_${i.index }">${cbc_vo.cbc_rating }</strong></output>
 										 </div>
 							 		</span>
 								</div>
 							</td>
 							<td class="text-right">
 								<div class="star_insert">
-								<input type="button" class="btn re_reply_btn" id="no_up_${i.index }"
-										value="취&nbsp;&nbsp;&nbsp;&nbsp;소" />
-									<input type="submit" class="btn re_reply_btn" id="up_${i.index }"
+								<input type="button" class="btn re_noupdate_btn" id="no_up_${i.index }"
+										value="취&nbsp;&nbsp;&nbsp;&nbsp;소"/>
+									<input type="submit" class="btn re_update_btn" id="up_${i.index }"
 										value="수&nbsp;&nbsp;&nbsp;&nbsp;정" />
 								</div>
 			
@@ -380,30 +432,42 @@
 			               &nbsp;&nbsp;&nbsp;<a href="#">></a>
 			            </center>
          			</div>
-					<!-- 대댓글 등록 -->
-					<table class="reply_insert">
-						<!-- 사용자 정보 & 내용 -->
-						<tr>
-							<td widht="3%" class="reply_tab"></td>
-							<td rowspan="2" width="100px"
-								class="text-center user_info reply_user">
-								<div id="reply_pro"  style="background-image: url('cb_detail/image/pro.png')"></div>
-								<div class="reply_name"><!-- 사용자 닉네임 -->리뷰닉네임</div>
-							</td>
-							<td width="87%" class="text-left reply_content_td">
-								<div class="re_content_insert">
-									<textarea class="form-control" rows="2" id="re_content_${i.index }"></textarea>
-								</div>
-							</td>
-						</tr>
-
-						<!-- 별점 & 댓글 버튼 -->
-						<tr>
-							<td colspan="2"></td>
-							<td width="87%" class="text-right"><input type="button"
-								class="btn reply_insert_btn" value="등&nbsp;&nbsp;&nbsp;록" /></td>
-						</tr>
-					</table>
+					<!-- 대댓글 등록---------------------------------------------------------------------------------------------- -->
+					<form action="re_reply_insert.do" method="post">
+						<table class="reply_insert">
+							<!-- 사용자 정보 & 내용 -->
+							<tr>
+								<td widht="3%" class="reply_tab"></td>
+								<td rowspan="2" width="100px"
+									class="text-center user_info reply_user">
+									<div id="reply_pro"  style="background-image: url('member/profile/${sessionScope.m_profile }')"></div>
+									<div class="reply_name"><!-- 사용자 닉네임 -->
+										<input type="hidden" name="m_email" value="${sessionScope.m_email }">
+										<input type="hidden" name="cb_no" value="${vo.cb_no }">
+										<input type="hidden" name="review" value="1">
+										${sessionScope.m_nick }
+									</div>
+									
+								</td>
+								<td width="87%" class="text-left reply_content_td">
+									<div class="re_re_pname">
+										<span id="re_re_pname_${i.index }"></span>
+										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
+									</div>
+									<div class="re_content_insert">
+										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="cbc_content"></textarea>
+									</div>
+								</td>
+							</tr>
+	
+							<!-- 별점 & 댓글 버튼 -->
+							<tr>
+								<td colspan="2"></td>
+								<td width="87%" class="text-right"><input type="button"
+									class="btn reply_insert_btn" value="등&nbsp;&nbsp;&nbsp;록" /></td>
+							</tr>
+						</table>
+					</form>
 				</div>
 			</c:forEach>
 			

@@ -127,11 +127,11 @@
 							</div>
 		      				<tr>
 		      					<th class="text-center" width="20%">가게이름</th>
-		      					<td width="80%">옥타곤</td>
+		      					<td width="80%">${vo.cb.cb_name }</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">주소</th>
-		      					<td width="80%">서울 마포구 신촌로 신촌로 블라블라</td>
+		      					<td width="80%">${vo.cb.a_addr1 } ${vo.cb.a_addr2 }</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">일시</th>
@@ -182,7 +182,7 @@
 	   
 	   <%--페이지 번호 --%>
 	  
-	  <div id="board_page" style="float:left; width: 75%; margin-top:10px;">
+	  <div id="board_page" style="float:left; width: 75%; margin:30px 0px 30px 0px">
             <center>
                <a href="event.do?page=${curpage>1?curpage-1:curpage }"><</a>&nbsp;&nbsp;&nbsp;
               	<c:forEach var="i" begin="1" end="${totalpage}" >
@@ -194,9 +194,9 @@
          </div>  
 	     
 	  	<%--이벤트 등록 버튼 --%>
-	  	<c:if test="${grade==1 }">
+	  	<c:if test="${grade==1 || grade==2 }">
 		<div class="text-center" style="float:left; width: 20%; 
-				 margin-bottom:40px;"> 
+				 margin-top:20px;"> 
 		   	<button type="button" class="btn btn-lg btn-info" 
 		   			style="background-color:rgb(162,0,0); border:1px solid rgb(162,0,0);">
 		   		<a href="eventRegist.do" style="text-decoration:none;

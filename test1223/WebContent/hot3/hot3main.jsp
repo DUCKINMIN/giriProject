@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-	/* String hot3grade = request.getParameter("hot3grade"); */
-	String jsp = "../hot3/hot3list.jsp";
-	String jsp2 = "../hot3/cbInsert.jsp";
-	
-/* 	if(hot3grade == null || hot3grade.equals("1"))
-		jsp += "?hot3grade="+hot3grade; */
-%>
-<%-- <c:set var="hot3grade" value="<%= hot3grade %>"/> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -67,6 +58,7 @@
 
 .hot3grade {
 	color: #262626;
+	cursor: pointer;
 }
 
 a:hover, a:focus {
@@ -106,26 +98,179 @@ a:hover, a:focus {
 	}
 }
 </style>
+
+<style type="text/css">
+.hot3list {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.hot3content {
+	padding-top: 50px;
+	margin-bottom: 30px;
+	background-color: rgba(38, 38, 38, 0.6);
+	z-index: 1;
+}
+
+.hot3content:hover {
+	cursor: pointer;
+}
+
+.hot3cb_name, .hot3cb_content {
+	color: white;
+	margin: 0px auto;
+	padding: 10px 10px;
+	text-align: center;
+	font-size: 34px;
+}
+
+.hot3cb_content {
+	width: 40%;
+	font-size: 22px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.hot3cb_hit {
+	color: white;
+	padding: 5px 10px;
+	text-align: right;
+	font-size: 26px;
+}
+
+#pages>span {
+	cursor: pointer;
+}
+
+@media screen and (max-width: 750px) {
+	.hot3content {
+		padding-top: 20px;
+		margin-bottom: 10px;
+	}
+	.hot3content:hover {
+		cursor: pointer;
+	}
+	.hot3cb_name, .hot3cb_content {
+		font-size: 24px;
+	}
+	.hot3cb_content {
+		width: 60%;
+		font-size: 12px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.hot3cb_hit {
+		text-align: right;
+		font-size: 12px;
+	}
+}
+</style>
+
 <script type="text/javascript">
-	$(document).ready(function() {
-		$(".hot3chk").on("click", function() {
+	$(function() {
+		var cb_grade = "";
+		var a_addr1 = "";
+		var order = "";
+		var cb_name = "";
+		
+		showlist(cb_grade, a_addr1, order, cb_name);
+
+		$(".hot3srch").click(function() {
+			cb_name = $.trim($("#hot3searchText").val()).replace(/\s\s+/g, ' ');
+			
+			if(cb_name == "") {
+				$("#hot3searchText").focus();
+			} else {
+				showlist(cb_grade, a_addr1, order, cb_name);
+				$("#hot3searchText").val("");
+			}
+		})
+		
+		$(".hot3chk").click(function() {
+			a_addr1 = "";
+			cb_name = "";
+			cb_grade = "";
 			var bc = $(this).css("background-color");
-			/* alert(bc); */
+
 			if (bc == "rgb(38, 38, 38)") {
-				$(this).css("background", "rgb(162,0,0)");
+				$(this).css("background", "rgb(162, 0, 0)");
 				$(this).css("transform", "scale(1.1)");
+				
+				if($(this).hasClass("hot3a") == true)
+					a_addr1 = $(this).attr("name");
+				if($(this).hasClass("hot3g") == true)
+					cb_grade = $(this).attr("name");
+
+				for (var i = 0; i < 3; i++) {
+					var a = $("#a_addr1_" + i);
+
+					if (a.css("background-color") == "rgb(162, 0, 0)") {
+						a_addr1 += "," + a.attr("name");
+					}
+				}
+
+				for (var i = 0; i < 4; i++) {
+					var g = $("#cb_grade_" + i);
+
+					if (g.css("background-color") == "rgb(162, 0, 0)") {
+						cb_grade += "," + g.attr("name");
+					}
+				}
 			} else {
 				$(this).css("background", "rgb(38, 38, 38)");
 				$(this).css("transform", "scale(1)");
+				
+				for (var i = 0; i < 3; i++) {
+					var a = $("#a_addr1_" + i);
+
+					if ($(this).attr("name") != a.attr("name")) {
+						if (a.css("background-color") == "rgb(162, 0, 0)") {
+							a_addr1 += a.attr("name") + ",";
+						}
+					}
+				}
+
+				for (var i = 0; i < 4; i++) {
+					var g = $("#cb_grade_" + i);
+
+					if ($(this).attr("name") != g.attr("name")) {
+						if (g.css("background-color") == "rgb(162, 0, 0)") {
+							cb_grade += g.attr("name") + ",";
+						}
+					}
+				}
 			}
+
+			showlist(cb_grade, a_addr1, order, cb_name);
 		});
-		
- 		$(".hot3grade").on("click", function() {
+
+		$(".hot3grade").on("click", function() {
 			$(".hot3grade").css("font-weight", "normal");
 			var grade = $(this).attr("id");
 			$(this).css("font-weight", "bold");
-		}); 
+			order = $(this).attr("id");
+			showlist(cb_grade, a_addr1, order, cb_name);
+		});
 	});
+	
+	var showlist = function showlist(g, a, o, n) {
+		$.ajax({
+			type : "POST",
+			url : "hot3search.do",
+			data : {
+				"cb_grade" : g,
+				"a_addr1" : a,
+				"order" : o,
+				"cb_name" : n
+			},
+			success : function(res) {
+				$("#list_info").html(res);
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -136,44 +281,44 @@ a:hover, a:focus {
 			<table class="table hot3table text-center">
 				<tr>
 					<th class="text-center hot3th">
-						<img src="../hot3/image/hot3addr.png" class="hot3srchimg">
+						<img src="hot3/image/hot3addr.png" class="hot3srchimg">
 					</th>
 					<td class="text-center hot3td">
-						<input type="button" value="홍대" class="btn hot3chk" name="hongik">
+						<input type="submit" value="홍대" id="a_addr1_0" class="btn hot3chk hot3a" name="마포구,서대문구">
 					</td>
 					<td class="text-center hot3td">
-						<input type="button" value="이태원" class="btn hot3chk" name="itaewon">
+						<input type="submit" value="이태원" id="a_addr1_1" class="btn hot3chk hot3a" name="용산구,중구">
 					</td>
 					<td class="text-center hot3td">
-						<input type="button" value="강남" class="btn hot3chk" name="gangnam">
+						<input type="submit" value="강남" id="a_addr1_2" class="btn hot3chk hot3a" name="강남구,서초구">
 					</td>
 					<td width=20%></td>
 				</tr>
 				
 				<tr>
 					<th class="text-center hot3th">
-						<img src="../hot3/image/hot3cbgrade.png" class="hot3srchimg">
+						<img src="hot3/image/hot3cbgrade.png" class="hot3srchimg">
 					</th>
 					<td class="text-center hot3td">
-						<input type="button" value="클럽" class="btn hot3chk" name="club">
+						<input type="button" value="클럽" id="cb_grade_0" class="btn hot3chk hot3g" name="0">
 					</td>
 					<td class="text-center hot3td">
-						<input type="button" value="감성주점" class="btn hot3chk" name="gamsung">
+						<input type="button" value="감성주점" id="cb_grade_2" class="btn hot3chk hot3g" name="2">
 					</td>
 					<td class="text-center hot3td">
-						<input type="button" value="헌팅술집" class="btn hot3chk" name="hunting">
+						<input type="button" value="헌팅술집" id="cb_grade_3" class="btn hot3chk hot3g" name="3">
 					</td>
 					<td class="text-center hot3td">
-						<input type="button" value="나이트" class="btn hot3chk" name="night">
+						<input type="button" value="나이트" id="cb_grade_1" class="btn hot3chk hot3g" name="1">
 					</td>
 				</tr>
 				
 				<tr>
 					<th class="text-center hot3th">
-						<img src="../hot3/image/hot3namesrch.png" class="hot3srchimg">
+						<img src="hot3/image/hot3namesrch.png" class="hot3srchimg">
 					</th>
 					<td colspan=3 class="text-center">
-						<input type="text" style="margin-top: 10px" name="hot3search" id="hot3searchText">
+						<input type="text" style="margin-top: 10px" placeholder="가게명을 입력하세요." id="hot3searchText" class="form-control">
 					</td>
 					<td>
 						<input type="button" value="검색" class="btn hot3srch" name="hot3search">
@@ -183,25 +328,12 @@ a:hover, a:focus {
 		</div>
 		<br>
 		
-		<a href="#" class="btn hot3insert" name="hot3insert">점포등록</a>
- 		<!-- <input type="button" value="조회순▼" class="hot3grade btn" id="hit" />&nbsp; 
-		<input type="button" value="별점순▼" class="hot3grade btn" id="rating"/>&nbsp;
-		<input type="button" value="최신순▼" class="hot3grade btn" id="new"/><br><br> -->
-
-		<a href="#" class="hot3grade" id="hit" style="ont-weight: bold">조회순▼</a>&nbsp;
-		<a href="#" class="hot3grade" id="rating">별점순▼</a>&nbsp;
-		<a href="#" class="hot3grade" id="new">최신순▼</a>
+		<a href="hot3insert.do" class="btn hot3insert" name="hot3insert">점포등록</a>
 		
-		<jsp:include page="<%= jsp %>"></jsp:include>
+		<span class="hot3grade" id="hit" style="font-weight:bold">조회순▼</span>&nbsp;
+		<span class="hot3grade" id="rating">별점순▼</span>&nbsp;
+		<span class="hot3grade" id="jjim">찜순▼</span>&nbsp;
 		
-		<div id="board_page">
-			<center>
-				<a href="#"></a>&nbsp;&nbsp;&nbsp;
-				<c:forEach var="i" begin="1" end="10">
-					<a href="#">${i}</a>&nbsp;
-                  </c:forEach>
-				&nbsp;&nbsp;&nbsp;<a href="#">></a>
-			</center>
-		</div> 
+		<div id="list_info"></div>
 	</div>
 </body>

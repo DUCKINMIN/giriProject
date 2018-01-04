@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -47,6 +48,17 @@
 	font-size: 26px;
 }
 
+.hot3readmore {
+	width: 100%;
+	text-align: center;
+	background: #ddd;
+	color: #262626;
+	font-size: 18px;
+	padding: 10px;
+	cursor: pointer;
+	transition: 2s;
+}
+
 @media screen and (max-width: 750px) {
 	.hot3content {
 		padding-top: 20px;
@@ -71,20 +83,47 @@
 	}
 }
 </style>
+<script type="text/javascript">
+$(function () {
+	var limit = 5;
+	var max = ${fn:length(list)};
+	
+	readmore(limit, max);
+	
+	$(".hot3readmore").click(function (){
+		limit += 5;
+
+		readmore(limit, max);
+	});
+});
+
+var readmore = function readmore(limit, max) {
+	for(var i=0; i < limit; i++) {
+		$("#hot3"+i).css("display", "block");
+	}
+	
+	if(limit > max) {
+		$(".hot3readmore").css("display", "none");
+	}
+}
+</script>
 </head>
 <body>
-		<c:forEach var="vo" begin="0" end="4">
-			<div class="hot3list"
-				style="background-image: url('../hot3/image/hot3list.jpg')">
-				<div class="hot3content" onclick="location.href='../main/hot3main.jsp'">
-					<p class="hot3cb_name">옥타곤</p>
-					<p class="hot3cb_content">강남 클럽 4위라고 무시하면 안되는거 아시죠^^ 옥타곤에서 크게 놀아봐요</p>
+		<input type="hidden" value="5" id="limit">
+		<c:forEach var="vo" items="${list}" varStatus="status">
+			<div class="hot3list" id="hot3${status.index}"
+				style="background-image: url('hot3/cb_img/cb_img_${vo.cb_no}.jpg'); display: none;">
+				<div class="hot3content" onclick="location.href='cb_detail.do?cb_no=${vo.cb_no}'">
+					<p class="hot3cb_name">${vo.cb_name}</p>
+					<p class="hot3cb_content">${vo.cb_content}</p>
 					<p class="hot3cb_hit">
-						<img src="../hot3/image/hot3hit.png">&nbsp;1203&nbsp;&nbsp;
-						<img src="../hot3/image/hot3cart.png">&nbsp;921
+						<img src="hot3/image/hot3star.png">&nbsp;${vo.rating}&nbsp;&nbsp;
+						<img src="hot3/image/hot3hit.png">&nbsp;${vo.cb_hit}&nbsp;&nbsp;
+						<img src="hot3/image/hot3cart.png">&nbsp;${vo.jjim}
 					</p>
 				</div>
 			</div>
 		</c:forEach>
+		<p class="hot3readmore">더보기</p>
 </body>
 </html>

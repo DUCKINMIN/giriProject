@@ -48,4 +48,69 @@ public class ClubBarCommentDAO {
 		
 		return list;
 	}
+	
+	//´ñ±Û ¼öÁ¤
+	public static void cbCommentUpdate(ClubBarCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("cbCommentUpdate", vo);
+		} catch (Exception e) {
+			System.out.println("cbCommentUpdate : " + e.getMessage());
+		}
+		
+	}
+	
+	//´ë´ñ±Û µî·Ï
+	public static ClubBarCommentVO cbcGetParentInfo(int cbc_no) {
+		ClubBarCommentVO vo = new ClubBarCommentVO();
+		SqlSession session = ssf.openSession();
+		
+		try {
+			vo = session.selectOne("cbcGetParentInfo", cbc_no);
+		} catch (Exception e) {
+			System.out.println("cbcGetParentInfo : " + e.getMessage());
+		} finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return vo;
+	}
+	public static void cbcStepIncrement(ClubBarCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("cbcStepIncrement", vo);
+		} catch (Exception e) {
+			System.out.println("cbcStepIncrement : " + e.getMessage());
+		} finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	public static void cbcReplyInsert(ClubBarCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.insert("cbcReplyInsert", vo);
+		} catch (Exception e) {
+			System.out.println("cbcReplyInsert : " + e.getMessage());
+		} finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	public static void cbcDepthIncrement(int cbc_no) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("cbcDepthIncrement", cbc_no);
+		} catch (Exception e) {
+			System.out.println("cbcDepthIncrement : " + e.getMessage());
+		} finally {
+			if(session!=null)
+				session.close();
+		}
+	}
 }

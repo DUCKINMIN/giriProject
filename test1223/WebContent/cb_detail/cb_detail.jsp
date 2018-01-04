@@ -317,7 +317,7 @@ $(function() {
 		$('.like_img').attr("src",src=="cb_detail/image/no_like.png"? "cb_detail/image/like.png" : "cb_detail/image/no_like.png");
 	});
 	
-	// star rating  re_update
+	// star rating
 	var starRating = function(){
 	  var $star = $("#cbc_rating_insert"),
 	      $result = $star.find("output>strong");
@@ -352,7 +352,7 @@ $(function() {
 	
 	
 	// 수정하기 별점
-	var starRating_up = function(){
+/* 	var starRating_up = function(){
 	  var $star = $("#update_rating_insert"),
 	      $result = $star.find("output>strong");
 	  $(document)
@@ -382,7 +382,7 @@ $(function() {
 	    }
 	  });
 	};
-	starRating_up();
+	starRating_up(); */
 	
 	
 	//id에 p+(평점*10하기)

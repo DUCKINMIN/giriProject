@@ -34,7 +34,10 @@ public class MainModel {
 			addr_name = "강남";
 		} else if (search_name.equals("이태원")) {
 			addr_name = "용산";
+		} else if (search_name=="") {
+			System.out.println("null");
 		} else {
+
 			addr_name = search_name;
 		}
 		///////////////////////////////////////////////////
@@ -57,7 +60,7 @@ public class MainModel {
 		totalpage = SearchDao.TotalPage(addr_name);
 		/////////////////////////////////////////////////////////////////////////////////////////
 		String p2 = req.getParameter("p2");
-		System.out.println("지금페이지 : " + p2);
+
 		if (p2 == null)
 			p2 = "1";
 		int curpage2 = Integer.parseInt(p2);

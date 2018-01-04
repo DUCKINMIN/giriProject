@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="jumpocheck" resultType="WeekBestVO" parameterType="String">
-		SELECT cb1.cb_name, s.avghit, s.roundrating,
+		SELECT cb1.cb_name, s.avghit, s.roundrating,cb1.cb_no, 
 		(SELECT COUNT(*) as jjim
 		FROM cart ct WHERE ct.cb_no = s.cb_no) as jjim
 		FROM clubBar cb1, (SELECT cb.cb_no, AVG(cb.cb_hit) as avghit,
