@@ -23,7 +23,8 @@ public class EventDAO {
 		
 		try {
 			list=session.selectList("eventListData",map);
-			//System.out.println(list.get(1).getE_enddate());
+
+			System.out.println(list.get(1).getCb().getCb_name());
 		}catch(Exception ex) {
 			System.out.println("eventListData"+ex.getMessage());
 		}finally {
