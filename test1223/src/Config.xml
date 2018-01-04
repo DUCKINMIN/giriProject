@@ -14,6 +14,7 @@
 		<typeAlias type="com.sist.clubbar.dao.ClubBarVO" alias="ClubBarVO"/><!-- yeseul -->
 		<typeAlias type="com.sist.clubbar.dao.MotelVO" alias="MotelVO"/><!-- yeseul -->
 		<typeAlias type="com.sist.clubbar.dao.ClubBarCommentVO" alias="ClubBarCommentVO"/><!-- yeseul -->
+		<typeAlias type="com.sist.clubbar.dao.CartVO" alias="CartVO"/><!-- yeseul -->
 		<typeAlias type="com.sist.clubbar.dao.ClubBarRankVO" alias="ClubBarRankVO"/><!-- dasom -->
 		
 	</typeAliases>

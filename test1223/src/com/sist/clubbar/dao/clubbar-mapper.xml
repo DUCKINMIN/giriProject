@@ -115,6 +115,20 @@
  		WHERE cbc_no = #{cbc_no}
  	</update>
  	
+ 	<!-- 찜 저장 -->
+ 	<select id="cartCount" resultType="int" parameterType="CartVO">
+ 		SELECT COUNT(*) FROM cart 
+ 		WHERE m_email=#{m_email} AND cb_no = #{cb_no}
+ 	</select>
+ 	<insert id="cartInsert" parameterType="CartVO">
+ 		INSERT INTO cart 
+ 		VALUES(#{m_email}, #{cb_no})
+ 	</insert>
+ 	<!-- 찜 취소 -->
+ 	<delete id="cartDelete" parameterType="CartVO">
+ 		DELETE FROM cart WHERE m_email=#{m_email} AND cb_no=#{cb_no}
+ 	</delete>
+ 	
  	<!-- 창석 -->
 <!--  	SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, rtable.rating, jtable.jjim
 FROM clubBar cb

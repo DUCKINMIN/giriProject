@@ -72,6 +72,16 @@ public class ClubBarModel {
 		if(review==null)
 			review="0";
 		
+		//이메일 받기
+		HttpSession session = req.getSession();
+		String m_email = (String)session.getAttribute("m_email");
+		
+		//찜카운트
+		CartVO cartVo = new CartVO();
+		cartVo.setCb_no(cb_no);
+		cartVo.setM_email(m_email);
+		vo.setJjim(ClubBarDAO.cartCount(cartVo));
+		
 		req.setAttribute("review", review);
 		req.setAttribute("rc_list", rc_list);
 		req.setAttribute("mList", mList);
@@ -80,6 +90,34 @@ public class ClubBarModel {
 		req.setAttribute("cbc_list", cbc_list);
 		req.setAttribute("main_jsp", "../cb_detail/cb_detail.jsp");
 		return "main/main.jsp";
+	}
+	
+	@RequestMapping("cart_insert.do")
+	public String cart_insert(HttpServletRequest req, HttpServletResponse res){
+		HttpSession session = req.getSession();
+		String m_email = (String)session.getAttribute("m_email");
+		String cb_no = req.getParameter("cb_no");
+
+		CartVO vo = new CartVO();
+		vo.setCb_no(Integer.parseInt(cb_no));
+		vo.setM_email(m_email);
+		ClubBarDAO.cartInsert(vo);
+		
+		return "cb_detail.do?cb_no=" + cb_no;
+	}
+	
+	@RequestMapping("cart_delete.do")
+	public String cart_delete(HttpServletRequest req, HttpServletResponse res){
+		HttpSession session = req.getSession();
+		String m_email = (String)session.getAttribute("m_email");
+		String cb_no = req.getParameter("cb_no");
+
+		CartVO vo = new CartVO();
+		vo.setCb_no(Integer.parseInt(cb_no));
+		vo.setM_email(m_email);
+		ClubBarDAO.cartDelete(vo);
+		
+		return "cb_detail.do?cb_no=" + cb_no;
 	}
 	
 	@RequestMapping("cbc_new_insert.do") 

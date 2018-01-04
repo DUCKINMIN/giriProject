@@ -57,6 +57,50 @@ public class ClubBarDAO {
 		}
 	}
 	
+	//Âò¼ö
+	public static int cartCount(CartVO vo) {
+		int cnt = 0;
+		SqlSession session = ssf.openSession();
+		try {
+			cnt = session.selectOne("cartCount", vo);
+		}catch(Exception e) {
+			System.out.println("cartCount : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		
+		return cnt;
+	}
+	
+	//ÂòÀúÀå
+	public static void cartInsert(CartVO vo) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.insert("cartInsert", vo);
+		} catch (Exception e) {
+			System.out.println("cartInsert : " + e.getMessage());
+		} finally {
+			if (session != null)
+				session.close();
+		}
+
+	}
+	
+	//Âò Ãë¼Ò
+	public static void cartDelete(CartVO vo) {
+		SqlSession session = ssf.openSession();
+		try {
+			session.delete("cartDelete", vo);
+			session.commit();
+		}catch(Exception e){
+			System.out.println("cartDelete : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
 	public static Map clubbarJjimRating(int cb_no) {
 		Map map = new HashMap();
 		SqlSession session = ssf.openSession();

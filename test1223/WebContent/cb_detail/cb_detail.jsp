@@ -312,11 +312,12 @@ $(function() {
 			}, 300);
 	}
 	
-	$(".like_img").click(function() {
+	/* $(".like_img").click(function() {
 		var src = $(this).attr("src");
 		$('.like_img').attr("src",src=="cb_detail/image/no_like.png"? "cb_detail/image/like.png" : "cb_detail/image/no_like.png");
 	});
-	
+	 */
+	 
 	// star rating
 	var starRating = function(){
 	  var $star = $("#cbc_rating_insert"),
@@ -348,42 +349,7 @@ $(function() {
 	    }
 	  });
 	};
-	starRating();
-	
-	
-	// 수정하기 별점
-/* 	var starRating_up = function(){
-	  var $star = $("#update_rating_insert"),
-	      $result = $star.find("output>strong");
-	  $(document)
-	    .on("focusin", "#update_rating_insert>.input", function(){
-	    $(this).addClass("focus");
-	  })
-	    .on("focusout", "#update_rating_insert>.input", function(){
-	    var $this = $(this);
-	    setTimeout(function(){
-	      if($this.find(":focus").length === 0){
-	        $this.removeClass("focus");
-	      }
-	    }, 100);
-	  })
-	    .on("change", "#update_rating_insert :radio", function(){
-	    $result.text($(this).next().text());
-	  })
-	    .on("mouseover", "#update_rating_insert label", function(){
-	    $result.text($(this).text());
-	  })
-	    .on("mouseleave", "#update_rating_insert>.input", function(){
-	    var $checked = $star.find(":checked");
-	    if($checked.length === 0){
-	      $result.text("0");
-	    } else {
-	      $result.text($checked.next().text());
-	    }
-	  });
-	};
-	starRating_up(); */
-	
+	starRating();	
 	
 	//id에 p+(평점*10하기)
 	$("#p" + (${cb_map['RATING'] }*10)).prop("checked", true);
@@ -470,11 +436,20 @@ $(function() {
 					<!-- 가게 이름 -->
 					<span>${vo.cb_name }</span>
 				</div>
-				<div class="cb_like">
-					<!-- 찜 아이콘 -->
-					<a href="#"><img class="like_img"
-						src="cb_detail/image/no_like.png" /></a>
-				</div>
+				<c:if test="${vo.jjim==0 }">
+					<div class="cb_like">
+						<!-- 찜 아이콘 -->
+						<a href="cart_insert.do?cb_no=${vo.cb_no }"><img class="like_img"
+							src="cb_detail/image/no_like.png" /></a>
+					</div>
+				</c:if>
+				<c:if test="${vo.jjim!=0 }">
+					<div class="cb_like">
+						<!-- 찜 아이콘 -->
+						<a href="cart_delete.do?cb_no=${vo.cb_no }"><img class="like_img"
+							src="cb_detail/image/like.png" /></a>
+					</div>
+				</c:if>
 				<div data-width="100%" data-height="350px"
 					data-transition="crossfade" class="fotorama" data-nav="thumbs"
 					data-loop="true" data-autoplay="2000" data-fit="scaledown">
