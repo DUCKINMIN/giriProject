@@ -59,6 +59,13 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	
+	<!-- 대댓글 수정 -->
+	<update id="cbcReplyUpdate" parameterType="ClubBarCommentVO">
+		UPDATE clubbar_comment SET
+		cbc_content = #{cbc_content}
+		WHERE cbc_no = #{cbc_no}
+	</update>
+	
 	<!-- 댓글 삭제 -->
 	
 	<!-- 대댓글 추가 -->
@@ -92,18 +99,41 @@
 		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root NOT IN (0) ORDER BY cbc_group_id DESC, cbc_group_step ASC))
 		WHERE num BETWEEN #{start} AND #{end} 
  	</select>
+ 	
+ 	<!-- 창석 -->
+<!--  	SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, rtable.rating, jtable.jjim
+FROM clubBar cb
+LEFT OUTER JOIN
+     (SELECT cb.cb_no, ROUND(AVG(cbc.cbc_rating),1) AS rating
+      FROM clubBar cb, clubBar_comment cbc
+      WHERE cbc.cb_no = cb.cb_no
+      AND cbc.cbc_root = 0
+      GROUP BY cb.cb_no) rtable
+ON cb.cb_no = rtable.cb_no
+LEFT OUTER JOIN
+     (SELECT cb.cb_no, COUNT(ct.cb_no) AS jjim
+      FROM clubBar cb, cart ct
+      WHERE cb.cb_no = ct.cb_no
+      GROUP BY cb.cb_no) jtable
+ON cb.cb_no = jtable.cb_no
+ORDER BY rating DESC; -->
 		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
-				SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
-	  			  FROM clubBar cb,
-     	   			   (SELECT cb.cb_no, NVL(ROUND(AVG(cbc.cbc_rating),1),0) AS rating, COUNT(ct.cb_no) AS jjim
-      					FROM clubBar cb
-      					LEFT OUTER JOIN clubBar_comment cbc
-      					ON cbc.cb_no = cb.cb_no
-      					LEFT OUTER JOIN cart ct
-      					ON cb.cb_no = ct.cb_no
-      					GROUP BY cb.cb_no) sub
+				SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, rtable.rating, jtable.jjim
+				FROM clubBar cb
+				LEFT OUTER JOIN
+     				(SELECT cb.cb_no, ROUND(AVG(cbc.cbc_rating),1) AS rating
+      				 FROM clubBar cb, clubBar_comment cbc
+      				 WHERE cbc.cb_no = cb.cb_no
+      				 AND cbc.cbc_root = 0
+      				 GROUP BY cb.cb_no) rtable
+				ON cb.cb_no = rtable.cb_no
+				LEFT OUTER JOIN
+     				(SELECT cb.cb_no, COUNT(ct.cb_no) AS jjim
+     				 FROM clubBar cb, cart ct
+     				 WHERE cb.cb_no = ct.cb_no
+     				 GROUP BY cb.cb_no) jtable
+				ON cb.cb_no = jtable.cb_no
 	  			  <where>
-				  	cb.cb_no = sub.cb_no
 					<if test='cb_name != ""'>
 						AND cb.cb_name LIKE '%' || #{cb_name} || '%'
 					</if>

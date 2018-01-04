@@ -117,6 +117,18 @@ public class MemberModel {
 			}
 		}
 	}
+	// 로그아웃
+	@RequestMapping("logout.do")
+	public String loginOut(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session = req.getSession();
+		session.removeAttribute("m_email");
+		session.removeAttribute("m_pwd");
+		session.removeAttribute("m_nick");
+		session.removeAttribute("m_profile");
+		session.removeAttribute("m_grade");
+		return "index.jsp";
+	}
+		
 	// 이메일 찾기
 	@RequestMapping("emailFind.do")
 	public String emailFind(HttpServletRequest req, HttpServletResponse res) {		
@@ -307,16 +319,19 @@ public class MemberModel {
 		List<MemberVo> list = MemberDao.myClubBarList(map);
 		List<BoardVO> blist = MemberDao.myBoardList(bmap);
 		List<BoardCommentVO> clist = MemberDao.myCommentList(cmap);		
-
+		
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);
+		req.setAttribute("zsize", list.size());
 		req.setAttribute("bcurpage", bcurpage);
 		req.setAttribute("btotalpage", btotalpage);
 		req.setAttribute("blist", blist);
+		req.setAttribute("bsize", blist.size());
 		req.setAttribute("ccurpage", ccurpage);
 		req.setAttribute("ctotalpage", ctotalpage);
 		req.setAttribute("clist", clist);
+		req.setAttribute("csize", clist.size());
 		req.setAttribute("main_jsp", "../member/mypage.jsp");
 		req.setAttribute("member_jsp", "../member/myzzim.jsp");
 		return "main/main.jsp";
@@ -342,10 +357,10 @@ public class MemberModel {
 		int totalpage = MemberDao.myEventTotalPage(m_email);
 		List<MemberVo> list = MemberDao.myEventList(map);		
 		
+		req.setAttribute("size", list.size());
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);
-		
 		req.setAttribute("main_jsp", "../member/mypage.jsp");
 		req.setAttribute("member_jsp", "../member/myevent.jsp");
 		return "main/main.jsp";

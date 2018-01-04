@@ -159,7 +159,18 @@ html, body {
 	}
 }
 </style>
-
+<script type="text/javascript">
+$(function(){
+	$("#logout").click(function(){
+		var answer = confirm ("로그아웃 하시겠습니까?");
+		if (answer) {
+			location="logout.do";
+		} else {
+			return;
+		}
+	});
+});
+</script>
 </head>
 <body>
 	<div class="main_wrap">
@@ -205,7 +216,7 @@ html, body {
 							<a href="mypage.do"><font color="white">${sessionScope.m_nick }</font></a>
 						</div>
 						<div style="margin-top: 25px">
-							<a href="logout.do"><font color="white">로그아웃</font></a>
+							<a href="#" id="logout"><font color="white">로그아웃</font></a>
 						</div>
 					</div>
 					<div class="navbar-right" id="navbar-main">
