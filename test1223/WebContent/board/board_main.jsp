@@ -151,22 +151,7 @@ a {
 
 		}); */
 
-		/* 	    $('.board_modeBtn').click(function(){
-		 var id = $(this).attr("id");
-		 if(id=="board_ssulBtn"){
-		 grade="0";
-		 $('#board_ssulBtn').css("background", "rgb(162,0,0)");
-		 $('#board_ssulBtn').css("color", "rgb(255, 255, 255)");
-		 $('.board_modeBtn').not('#board_ssulBtn').css("background", "rgb(255, 255, 255)");
-		 $('.board_modeBtn').not('#board_ssulBtn').css("color", "rgb(1, 1, 1)"); 
-		 }else{
-		 grade="1";
-		 $('#board_counselBtn').css("background", "rgb(162,0,0)");
-		 $('#board_counselBtn').css("color", "rgb(255, 255, 255)");
-		 $('.board_modeBtn').not('#board_counselBtn').css("background", "rgb(255, 255, 255)");
-		 $('.board_modeBtn').not('#board_counselBtn').css("color", "rgb(1, 1, 1)"); 
-		 } */
-		/* 	    	 $.ajax({
+		/*$.ajax({
 		 type:"POST",
 		 url:"ssullist.do",
 		 data:{"grade":grade,"page":1}, //데이터 여러개일 때 => "day":day,"page":1 
@@ -243,7 +228,6 @@ ul.tabs li.active {
 	<div class="container">
 		<h2>커뮤니티</h2>
 		<div style="height: 20px"></div>
-		
 		<ul class="tabs"><form id="frm0" method="POST" action="board_list.do">
 			<li class="btn board_btn board_modeBtn" rel="tab1"
 				id="board_ssulBtn">썰전

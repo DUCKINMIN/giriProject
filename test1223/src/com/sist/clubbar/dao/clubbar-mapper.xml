@@ -66,6 +66,7 @@
 		SELECT cbc_group_id, cbc_group_step, cbc_group_tab FROM clubbar_comment
 		WHERE cbc_no = #{cbc_no}
 	</select>
+<<<<<<< HEAD
 	<update id="cbcStepIncrement" parameterType="ClubBarCommentVO">
 		UPDATE clubbar_comment SET
 		cbc_group_step = cbc_group_step+1
@@ -85,5 +86,45 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	<!-- 대댓글 목록출력 -->
+=======
+>>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
 	
+	<!-- 대댓글 목록출력 -->
+		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
+		SELECT cb_no, cb_name, cb_content, cb_hit, rating, jjim, num
+		FROM(SELECT cb_no, cb_name, cb_content, cb_hit, rating, jjim, rownum AS num
+     		 FROM(SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
+	  			  FROM clubBar cb,
+     	   			   (SELECT cb.cb_no, NVL(ROUND(AVG(cbc.cbc_rating),1),0) AS rating, COUNT(ct.cb_no) AS jjim
+      					FROM clubBar cb
+      					LEFT OUTER JOIN clubBar_comment cbc
+      					ON cbc.cb_no = cb.cb_no
+      					LEFT OUTER JOIN cart ct
+      					ON cb.cb_no = ct.cb_no
+      					GROUP BY cb.cb_no) sub
+	  			  <where>
+				  	cb.cb_no = sub.cb_no
+					<if test='cb_name != ""'>
+						AND cb.cb_name LIKE '%' || #{cb_name} || '%'
+					</if>
+					<if test='a_addr1 != ""'>
+						AND REGEXP_LIKE(cb.a_addr1, #{a_addr1})
+					</if>
+					<if test='cb_grade != ""'>
+						AND cb.cb_grade IN (${cb_grade})
+					</if>
+  			  	 </where>
+	  			 <choose>
+				 	<when test='order == "rating"'>
+						ORDER BY rating
+					</when>
+					<when test='order == "jjim"'>
+						ORDER BY jjim
+					</when>
+					<otherwise>
+						ORDER BY cb_hit
+					</otherwise>
+	  			 </choose>
+	  			  DESC, cb_name ASC))
+	</select>
 </mapper>

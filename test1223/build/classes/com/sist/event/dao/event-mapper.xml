@@ -3,12 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.sist.event.dao.event-mapper">
-  	<select id="eventListData" resultType="EventVO" parameterType="java.util.Map">
-  		SELECT e_no,e_name,TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
-  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
-  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event ORDER BY e_enddate ASC ))
-  		WHERE num BETWEEN #{start} AND #{end}
+  <resultMap type="EventVO" id="eventData">
+  	<result property="e_no" column="e_no"/>
+  	<result property="cb_no" column="cb_no"/>
+  	<result property="e_name" column="e_name"/>
+  	<result property="e_regdate" column="e_regdate"/>
+  	<result property="e_enddate" column="e_enddate"/>
+  	<result property="e_content" column="e_content"/>
+  	<result property="cb.cb_name" column="cb_name"/>
+  	<result property="cb.a_addr1" column="a_addr1"/>
+  	<result property="cb.a_addr2" column="a_addr2"/>
+  </resultMap>
+  	<select id="eventListData" resultMap="eventData" parameterType="java.util.Map">
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,TO_CHAR(e.e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e.e_enddate,'YYYY-MM-DD') e_enddate,e.e_content,e.num 
+  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
+  		FROM event ORDER BY e_enddate ASC )) e
+  		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventTotalPage" resultType="int">
   		SELECT CEIL(COUNT(*)/9) FROM event
@@ -22,23 +33,45 @@
   		SELECT MAX(e_no) FROM event
   	</select>
   	<!-- 진행중 검색  -->
-  	<select id="eventOngoingData" parameterType="java.util.Map" resultType="EventVO">
-  		SELECT e_no,e_name,TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
-  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
-  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC ))
-  		WHERE num BETWEEN #{start} AND #{end}
+  	<resultMap type="EventVO" id="eventOngoingData">
+  	<result property="e_no" column="e_no"/>
+  	<result property="cb_no" column="cb_no"/>
+  	<result property="e_name" column="e_name"/>
+  	<result property="e_regdate" column="e_regdate"/>
+  	<result property="e_enddate" column="e_enddate"/>
+  	<result property="e_content" column="e_content"/>
+  	<result property="cb.cb_name" column="cb_name"/>
+  	<result property="cb.a_addr1" column="a_addr1"/>
+  	<result property="cb.a_addr2" column="a_addr2"/>
+  </resultMap>
+  	<select id="eventOngoingData" parameterType="java.util.Map" resultMap="eventOngoingData">
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,TO_CHAR(e.e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e.e_enddate,'YYYY-MM-DD') e_enddate,e.e_content,e.num 
+  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
+  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC )) e
+  		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventOngoingPage" resultType="int">
   		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 종료 검색 -->
-  	<select id="eventEndData" parameterType="java.util.Map" resultType="EventVO">
-  		SELECT e_no,e_name,TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate,e_content,num 
-  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
-  		FROM (SELECT e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC ))
-  		WHERE num BETWEEN #{start} AND #{end}
+  	<resultMap type="EventVO" id="eventEndData">
+  	<result property="e_no" column="e_no"/>
+  	<result property="cb_no" column="cb_no"/>
+  	<result property="e_name" column="e_name"/>
+  	<result property="e_regdate" column="e_regdate"/>
+  	<result property="e_enddate" column="e_enddate"/>
+  	<result property="e_content" column="e_content"/>
+  	<result property="cb.cb_name" column="cb_name"/>
+  	<result property="cb.a_addr1" column="a_addr1"/>
+  	<result property="cb.a_addr2" column="a_addr2"/>
+  </resultMap>
+  	<select id="eventEndData" parameterType="java.util.Map" resultMap="eventEndData">
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,TO_CHAR(e.e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e.e_enddate,'YYYY-MM-DD') e_enddate,e.e_content,e.num 
+  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
+  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
+  		FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC  )) e
+  		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventEndPage" resultType="int">
   		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')

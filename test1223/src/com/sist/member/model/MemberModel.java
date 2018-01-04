@@ -349,4 +349,12 @@ public class MemberModel {
 		req.setAttribute("member_jsp", "../member/myevent.jsp");
 		return "main/main.jsp";
 	}
+	//이벤트 설정
+		@RequestMapping("member_event.do")
+		public String member_event(HttpServletRequest req,HttpServletResponse res) {
+			
+			req.setAttribute("main_jsp", "../member/mypage.jsp");
+			req.setAttribute("member_jsp", "../member/eventManage.jsp");
+			return "main/main.jsp";
+		}
 }

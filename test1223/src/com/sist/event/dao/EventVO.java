@@ -1,5 +1,7 @@
 package com.sist.event.dao;
 
+import com.sist.clubbar.dao.ClubBarVO;
+
 public class EventVO {
 	private int e_no;
 	private int cb_no;
@@ -11,7 +13,17 @@ public class EventVO {
 	private int e_manpre;
 	private int e_girlpre;
 	private int e_interest;
-
+	private ClubBarVO cb=new ClubBarVO();
+	
+	
+	
+	
+	public ClubBarVO getCb() {
+		return cb;
+	}
+	public void setCb(ClubBarVO cb) {
+		this.cb = cb;
+	}
 	public int getE_no() {
 		return e_no;
 	}

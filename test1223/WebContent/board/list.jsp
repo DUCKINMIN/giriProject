@@ -106,17 +106,22 @@
 <body>
 	<div>
 		<!-- 게시판 검색 -->
-		<div id="search">
-			<select id="board_searchSel">
-				<option>글제목</option>
-				<option>작성자</option>
-			</select> <input type="text" id="board_search" /> <input type="button"
-				class="btn boardBtn" value="검색">
+		<div id="search"><form id="searchFrm" method="POST" action="board_search.do">
+			<select id="board_searchSel" name="select">
+				<option value="b_subject">글제목</option>
+				<option value="m_nick">작성자</option>
+			</select> 
+			<input type="text" id="board_search" name="strSearch"/>
+			<input type="submit" class="btn boardBtn" value="검색">
+			<input type="hidden" name="grade" value="${grade }">
+			
 				<div style="float:right">
 				<a href="board_insert.do?grade=${grade}"><input type="button" class="btn boardBtn" value="글쓰기"
 					id="board_insertBtn"></a>
 			</div>
+			</form>
 		</div>
+		
 	</div>
 	<div class="row">
 		<div style="height: 40px"></div>
@@ -152,7 +157,7 @@
 			<div id="board_page">
 				<center>
 					<a href="board_list.do?page=${curpage>1?curpage-1:curpage }&grade=${grade}"><</a>&nbsp;&nbsp;&nbsp;
-					<c:forEach var="i" begin="1" end="${totalpage<1?1:totalpage }">
+					<c:forEach var="i" begin="1" end="${totalpage }">
 						<a href="board_list.do?page=${i}&grade=${grade}">${i }</a>&nbsp;
 							</c:forEach>
 					&nbsp;&nbsp;&nbsp;<a

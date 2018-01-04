@@ -127,11 +127,11 @@
 							</div>
 		      				<tr>
 		      					<th class="text-center" width="20%">가게이름</th>
-		      					<td width="80%">옥타곤</td>
+		      					<td width="80%">${vo.cb.cb_name }</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">주소</th>
-		      					<td width="80%">서울 마포구 신촌로 신촌로 블라블라</td>
+		      					<td width="80%">${vo.cb.a_addr1 } ${vo.cb.a_addr2 }</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">일시</th>

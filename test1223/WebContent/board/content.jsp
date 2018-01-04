@@ -106,7 +106,7 @@
 			</div> -->
 			<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true"
-				data-backdrop="static" data-keyboard="false">
+				data-backdrop="static" data-keyboard="fals`e">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -123,9 +123,14 @@
 					</div>
 				</div>
 			</div>
-
+			<c:if test="${strSearch==null }">
 			<a href="board_list.do?page=${page }&grade=${vo.b_grade}"><input
 				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
+			</c:if>
+			<c:if test="${strSearch!=null }">
+			<a href="board_search.do?page=${page }&grade=${vo.b_grade}&strSearch=${strSearch}&select=${select}"><input
+				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
+			</c:if>
 		</div>
 	</div>
 	<!-- 리뷰 -->
