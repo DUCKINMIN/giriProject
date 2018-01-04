@@ -2,6 +2,8 @@ package com.sist.board.dao;
 
 import java.util.Date;
 
+import com.sist.member.dao.MemberVo;
+
 /*
  * BC_NO         NOT NULL NUMBER       
 M_EMAIL                VARCHAR2(40) 
@@ -25,14 +27,27 @@ public class BoardCommentVO {
 	private int bc_group_tab;
 	private int bc_root;
 	private int depth;
+	private String dbday;//정확한 시간
+	private MemberVo mvo = new MemberVo();
+	private int num;
 	
-	private BoardVO bvo = new BoardVO();
-	
-	public BoardVO getBvo() {
-		return bvo;
+	public int getNum() {
+		return num;
 	}
-	public void setBvo(BoardVO bvo) {
-		this.bvo = bvo;
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public MemberVo getMvo() {
+		return mvo;
+	}
+	public void setMvo(MemberVo mvo) {
+		this.mvo = mvo;
+	}
+	public String getDbday() {
+		return dbday;
+	}
+	public void setDbday(String dbday) {
+		this.dbday = dbday;
 	}
 	public int getBc_no() {
 		return bc_no;

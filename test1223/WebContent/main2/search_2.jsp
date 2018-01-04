@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,22 +23,22 @@
 						<tr class="table_title1">
 
 							<th width=40% class="text-center">이벤트명</th>
-							<th width=20% class="text-center">제목</th>
+							<th width=20% class="text-center">가게명</th>
 							<th width=20% class="text-center">시작일</th>
 							<th width=20% class="text-center table_count">종료일</th>
-
 						</tr>
 						<!-- for(FreeBoardVO vo:list) 아래랑 같음 -->
-
-
-						<tr class="table_content">
-							<td width=40% class="text-left"><a href="#">&nbsp;&nbsp;제목</a>
-								&nbsp;</td>
-							<td width=20% class="text-center">이름</td>
-							<td width=20% class="text-center">작성일</td>
-							<td width=20% class="text-center table_count">조회수</td>
-						</tr>
-
+						<c:if test="${search_name != '' && list.size() !=0}">
+							<c:forEach var="vo" items="${list2 }">
+								<tr class="table_content">
+									<td width=40% class="text-left"><a href="#">
+											&nbsp;&nbsp;${vo.e_name }</a></td>
+									<td width=20% class="text-center">${vo.cb.cb_name}</td>
+									<td width=20% class="text-center">${vo.e_regdate }</td>
+									<td width=20% class="text-center">${vo.e_enddate }</td>
+								</tr>
+							</c:forEach>
+						</c:if>
 					</table>
 
 

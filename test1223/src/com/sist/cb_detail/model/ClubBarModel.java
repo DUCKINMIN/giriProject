@@ -67,9 +67,6 @@ public class ClubBarModel {
 		
 		List<ClubBarCommentVO> rc_list = ClubBarCommentDAO.cbcReplyList(rc_cbc_map);
 
-		for(ClubBarCommentVO c : rc_list) {
-			System.out.println(c.getCbc_content());
-		}
 		//리뷰등록시 리뷰쪽으로 스크롤옮기기 위해
 		String review = req.getParameter("review");
 		if(review==null)
@@ -141,7 +138,25 @@ public class ClubBarModel {
 		return "cb_detail.do?cb_no=" + cb_no + "&review=1";
 	}
 
+	@RequestMapping("re_reply_update.do")
+	public String cbc_reply_update(HttpServletRequest req, HttpServletResponse res) {
+		try {
+			req.setCharacterEncoding("EUC-KR");
+		} catch (Exception e) { }
+		
+		String cb_no = req.getParameter("cb_no");
+		String cbc_no = req.getParameter("cbc_no");
+		String cbc_content = req.getParameter("cbc_content");
+		
+		ClubBarCommentVO vo = new ClubBarCommentVO();
+		vo.setCbc_no(Integer.parseInt(cbc_no));
+		vo.setCbc_content(cbc_content);
+		
+		ClubBarCommentDAO.cbcReplyUpdate(vo);
 
+		return "cb_detail.do?cb_no=" + cb_no + "&review=1";
+	}
+	
 	
 	@RequestMapping("re_reply_insert.do")
 	public String cbcReReplyInsert(HttpServletRequest req, HttpServletResponse res) {
@@ -149,14 +164,24 @@ public class ClubBarModel {
 			req.setCharacterEncoding("EUC-KR");
 		} catch (Exception e) { }
 		
-
+		//대대댓글
+		
 		String cb_no = req.getParameter("cb_no");
 		String cbc_pno = req.getParameter("cbc_pno");
+		String cbc_pcno = req.getParameter("cbc_pcno");
 		String cbc_content = req.getParameter("cbc_content");
 		HttpSession session = req.getSession();
 		String m_email = (String)session.getAttribute("m_email");
 		String m_nick = (String)session.getAttribute("m_nick");
+		String cbc_pcnick = req.getParameter("cbc_pcnick");
 		
+		//대대댓글인 경우 => 부모를 설정
+		if(cbc_pcno != null) {
+			cbc_pno = cbc_pcno;
+			cbc_pcnick += cbc_content;
+			cbc_content = cbc_pcnick;
+		}
+			
 		//부모댓글 정보 읽기
 		ClubBarCommentVO pvo = ClubBarCommentDAO.cbcGetParentInfo(Integer.parseInt(cbc_pno));
 		

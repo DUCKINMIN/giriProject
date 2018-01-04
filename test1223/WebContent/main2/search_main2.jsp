@@ -37,9 +37,8 @@
 
 .sidenav {
 	margin-top: 95px;
-	background-color: #f1f1f1;
 	height: 450px;
-	width: 16%;
+	width: 17%;
 	border-radius: 8px;
 }
 
@@ -112,10 +111,11 @@
 	}
 	.sidenav {
 		margin: 0px auto;
-		height: 300px;
-		padding: 15px;
+		height: 400px;
+		
 		width: 95%;
 		margin-top: 45px;
+		margin-bottom: 45px;
 		border-radius: 8px;
 	}
 	.row {
@@ -174,6 +174,24 @@
 		$("#main2btn").click(function() {
 			$("#main2fmt").submit();
 		});
+		$.ajax({
+			type : "post",
+			url : "rank.do",
+			success : function(res) {
+				//alert(res);
+				$('#rank').html(res);
+			}
+		});
+		playAlert = setInterval(function() {
+			$.ajax({
+				type : "post",
+				url : "rank.do",
+				success : function(res) {
+					//alert(res);
+					$('#rank').html(res);
+				}
+			});
+		}, 3000);
 	});
 </script>
 
@@ -208,25 +226,19 @@
 
 	<div class="container-fluid">
 
-		<div class="content time_side">
-			<div class="col-sm-3 sidenav">
-				<h4>실시간 핫3</h4>
-				<div class="input-group">
-					<span class="input-group-btn">
-						<h1>사진</h1>
-					</span>
-				</div>
-			</div>
-		</div>
+
+		<div class="col-sm-3 sidenav" id="rank"></div>
+
 
 		<div class="row_class">
 			<div class="search_result">
-				<p>"${search_name }" 의 검색결과 </p>
+				<p>"${search_name }" 의 검색결과</p>
 			</div>
 			<!-- 인크루드 1개 -->
 			<jsp:include page="../main2/search_1.jsp"></jsp:include>
 			<jsp:include page="../main2/search_2.jsp"></jsp:include>
 			<jsp:include page="../main2/search_3.jsp"></jsp:include>
 		</div>
+	</div>
 </body>
 </html>

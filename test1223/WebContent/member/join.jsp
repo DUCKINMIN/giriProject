@@ -60,6 +60,10 @@
 </style>
 <script type="text/javascript">
 $(function(){	
+	var emailtest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; // 이메일 정규식
+	var phonetest =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/; // 핸드폰번호 정규식
+	var pwdtest = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}/; //비밀번호 정규식
+	
 	var checkno;
 	var emailcount;
 	var nickcount = 1;
@@ -101,6 +105,10 @@ $(function(){
 			return;
 		} else if(pwd.trim()==""){	//비번
 			$('#pwdcon').html("<font color=red>비밀번호를 입력해주세요</font>");
+			$('#pwd').focus();
+			return;
+		} else if(pwdtest.test(pwd)==false){
+			$('#pwdcon').html("<font color=red>비밀번호는 최소8자,문자,숫자,특수문자가 하나이상 포함되어야 합니다</font>");
 			$('#pwd').focus();
 			return;
 		} else if(pwd!=pwdcheck){
@@ -167,10 +175,10 @@ $(function(){
 		if (number.trim()=="") {
 			$('#telcon').html("<font color=red>핸드폰번호를 입력해주세요</font>");
 			$(".telcheck").hide(500);
-		} else if(number.trim().length < 11){
+		} else if(number.trim().length < 11 || phonetest.test(number)==false){
 			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");
 			$(".telcheck").hide(500);			
-		} else if(number.trim().length == 11){
+		} else if(number.trim().length == 11 && phonetest.test(number)==true){
 			$(".telcheck").show(500);
 			$('#telcon').html("<font color=blue>인증번호를 전송했습니다 인증번호를 입력해주세요</font>");
 			
@@ -201,23 +209,26 @@ $(function(){
 		if(email.trim()==""){
 			$('#emailcon').html("<font color=red>이메일을 입력해주세요</font>");	
 			$("#email").focus();
-			return;
-		}
-		$.ajax({
-			type : "post",
-			url : "emailCheck.do", 
-			data : {"email" : email},
-			success : function(data) {
-				emailcount = data.trim();
-				if (emailcount == 0) {
-					$('#emailcon').html("<font color=blue>"+email+"은(는) 사용 가능한 아이디입니다</font>");
-				} else {
-					$('#emailcon').html("<font color=red>"+email+"은(는) 이미 사용중인 아이디입니다</font>");
-					$('#email').val("");
-					$('#email').focus();
+		} else if(emailtest.test(email) == false){
+			$('#emailcon').html("<font color=red>이메일 형식이 올바르지 않습니다</font>");	
+			$("#email").focus();
+		} else {
+			$.ajax({
+				type : "post",
+				url : "emailCheck.do", 
+				data : {"email" : email},
+				success : function(data) {
+					emailcount = data.trim();
+					if (emailcount == 0) {
+						$('#emailcon').html("<font color=blue>"+email+"은(는) 사용 가능한 아이디입니다</font>");
+					} else {
+						$('#emailcon').html("<font color=red>"+email+"은(는) 이미 사용중인 아이디입니다</font>");
+						$('#email').val("");
+						$('#email').focus();
+					}
 				}
-			}
-		});
+			});
+		}
 	});
 	
 	// 닉네임 중복체크
