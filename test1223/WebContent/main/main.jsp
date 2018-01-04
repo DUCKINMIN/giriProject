@@ -51,7 +51,12 @@ a {
 
 #navbar-main {
 	line-height: 100px;
-	margin-right: 15px;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+
+#navbar-user {
+	margin-right: 10px;
 }
 
 #logo_img {
@@ -133,6 +138,13 @@ html, body {
 		width: 50px;
 		height: 50px;
 	}
+	#navbar-main {
+		margin-top: 10px;
+	}
+	
+	#username{
+		display: none;
+	}
 }
 
 @media ( max-width : 460px) {
@@ -188,12 +200,17 @@ html, body {
 				</c:if>
 				<c:if test="${sessionScope.m_email!=null }">
 					<!-- 로그인시 -->
+					<div class="navbar-right" id="navbar-user">
+						<div style="margin-top: 20px" id="username">
+							<a href="mypage.do"><font color="white">${sessionScope.m_nick }</font></a>
+						</div>
+						<div style="margin-top: 25px">
+							<a href="logout.do"><font color="white">로그아웃</font></a>
+						</div>
+					</div>
 					<div class="navbar-right" id="navbar-main">
-						<a href="mypage.do">
-							<div>
-								<img src="member/profile/${sessionScope.m_profile }"
-									id="user_img" /> <font color="white">${sessionScope.m_nick }</font>
-							</div>
+						<a href="mypage.do"> <img
+							src="member/profile/${sessionScope.m_profile }" id="user_img">
 						</a>
 					</div>
 				</c:if>

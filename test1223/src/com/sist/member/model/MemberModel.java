@@ -265,14 +265,14 @@ public class MemberModel {
 	public String mypage(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		String m_email = (String) session.getAttribute("m_email");
-		String zzimPage = req.getParameter("zzimPage");
-		String boardPage=req.getParameter("boardPage");
-		String commentPage = req.getParameter("commentPage");
+		String zpage = req.getParameter("zpage");
+		String bpage=req.getParameter("bpage");
+		String cpage = req.getParameter("cpage");
 		
-		if(zzimPage==null)
-			zzimPage="1";
+		if(zpage==null)
+			zpage="1";
 		int rowSize = 5;
-		int curpage = Integer.parseInt(zzimPage);
+		int curpage = Integer.parseInt(zpage);
 		int start = (rowSize*curpage)-(rowSize-1);
 		int end = rowSize * curpage;
 		Map map = new HashMap<>();
@@ -280,9 +280,9 @@ public class MemberModel {
 		map.put("start", start);
 		map.put("end", end);
 		
-		if(boardPage==null)
-			boardPage="1";
-		int bcurpage = Integer.parseInt(boardPage);
+		if(bpage==null)
+			bpage="1";
+		int bcurpage = Integer.parseInt(bpage);
 		int bstart = (rowSize*bcurpage)-(rowSize-1);
 		int bend = rowSize * bcurpage;
 		Map bmap = new HashMap<>();
@@ -290,9 +290,9 @@ public class MemberModel {
 		bmap.put("bstart", bstart);
 		bmap.put("bend", bend);
 		
-		if(commentPage==null)
-			commentPage="1";
-		int ccurpage = Integer.parseInt(commentPage);
+		if(cpage==null)
+			cpage="1";
+		int ccurpage = Integer.parseInt(cpage);
 		int cstart = (rowSize*ccurpage)-(rowSize-1);
 		int cend = rowSize * ccurpage;
 		Map cmap = new HashMap<>();
@@ -333,14 +333,15 @@ public class MemberModel {
 		int rowSize = 5;
 		int start = (rowSize*curpage)-(rowSize-1);
 		int end = rowSize * curpage;
-
+		
 		Map map = new HashMap<>();
 		map.put("m_email", m_email);
 		map.put("start", start);
 		map.put("end", end);
 		
 		int totalpage = MemberDao.myEventTotalPage(m_email);
-		List<MemberVo> list = MemberDao.myEventList(map);
+		List<MemberVo> list = MemberDao.myEventList(map);		
+		
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
 		req.setAttribute("list", list);

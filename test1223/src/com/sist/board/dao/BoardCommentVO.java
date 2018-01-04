@@ -26,6 +26,14 @@ public class BoardCommentVO {
 	private int bc_root;
 	private int depth;
 	
+	private BoardVO bvo = new BoardVO();
+	
+	public BoardVO getBvo() {
+		return bvo;
+	}
+	public void setBvo(BoardVO bvo) {
+		this.bvo = bvo;
+	}
 	public int getBc_no() {
 		return bc_no;
 	}
