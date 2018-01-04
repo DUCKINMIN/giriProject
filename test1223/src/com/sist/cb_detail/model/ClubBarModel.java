@@ -1,19 +1,13 @@
 package com.sist.cb_detail.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sist.clubbar.dao.ClubBarCommentDAO;
-import com.sist.clubbar.dao.ClubBarCommentVO;
-import com.sist.clubbar.dao.ClubBarDAO;
-import com.sist.clubbar.dao.ClubBarVO;
-import com.sist.clubbar.dao.MotelDAO;
-import com.sist.clubbar.dao.MotelVO;
+import com.sist.clubbar.dao.*;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 
@@ -29,6 +23,20 @@ public class ClubBarModel {
 		List<MotelVO> mList = MotelDAO.motelData(cb_no);
 		Map map = ClubBarDAO.clubbarJjimRating(cb_no);
 		
+		//다솜
+		//시간별 count 가져오기
+		ClubBarRankVO rvo = new ClubBarRankVO();
+		Calendar calendar = Calendar.getInstance();
+        java.util.Date date = calendar.getTime();
+        String cbr_time = (new SimpleDateFormat("yy-MM-dd HH").format(date));
+		rvo.setCb_no(cb_no);
+		rvo.setCbr_time(cbr_time);
+		int cnt = ClubBarDAO.cbrTimeCount(rvo); //count
+		if(cnt==0) {
+			ClubBarDAO.cbrTimeInsert(rvo); //row추가
+		}
+		//시간별 조회수 업데이트
+		ClubBarDAO.cbrHitUpdate(rvo);
 		//댓글 리스트 보내기
 		String rPage = req.getParameter("rpage");
 		if(rPage==null)
