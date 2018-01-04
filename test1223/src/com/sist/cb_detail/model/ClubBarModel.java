@@ -116,7 +116,7 @@ public class ClubBarModel {
 
 		return "cb_detail.do?cb_no=" + cb_no;
 	}
-<<<<<<< HEAD
+
 	
 	@RequestMapping("re_reply_insert.do")
 	public String cbcReReplyInsert(HttpServletRequest req, HttpServletResponse res) {
@@ -128,7 +128,8 @@ public class ClubBarModel {
 		req.setAttribute("review", review);
 
 		return "cb_detail.do?cb_no=" + cb_no;
-=======
+	}
+
 	@RequestMapping("hot3.do")
 	public String main_page(HttpServletRequest req, HttpServletResponse res) {
 		req.setAttribute("main_jsp", "../hot3/hot3main.jsp");
@@ -181,6 +182,6 @@ public class ClubBarModel {
 		req.setAttribute("list", list);
 		
 		return "hot3/hot3list.jsp";
->>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
+
 	}
 }
