@@ -113,7 +113,7 @@ var readmore = function readmore(limit, max) {
 		<c:forEach var="vo" items="${list}" varStatus="status">
 			<div class="hot3list" id="hot3${status.index}"
 				style="background-image: url('hot3/cb_img/cb_img_${vo.cb_no}.jpg'); display: none;">
-				<div class="hot3content" onclick="location.href='../main/hot3main.jsp'">
+				<div class="hot3content" onclick="location.href='cb_detail.do?cb_no=${vo.cb_no}'">
 					<p class="hot3cb_name">${vo.cb_name}</p>
 					<p class="hot3cb_content">${vo.cb_content}</p>
 					<p class="hot3cb_hit">
