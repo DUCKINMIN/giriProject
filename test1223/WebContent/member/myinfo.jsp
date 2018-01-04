@@ -54,6 +54,9 @@ $(function(){
 		"color": "white", "background-color": "#262626"
 	});
 	
+	var phonetest =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/; // 핸드폰번호 정규식
+	var pwdtest = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}/; //비밀번호 정규식
+	
 	var nickcount = 1;
 	$("#updateBtn").click(function(){
 		$('#nickcon').html("");
@@ -145,6 +148,11 @@ $(function(){
 			$("#changepwd").focus();
 			return;
 		}
+		if (pwdtest.test(changepwd)==false) {
+			$("#pwdcon").html("<font color=red>비밀번호는 최소8자,문자,숫자,특수문자가 하나이상 포함되어야 합니다</font>");	
+			$("#changepwd").focus();
+			return;
+		}
 		if (checkpwd.trim()=="") {
 			$("#pwdcon").html("<font color=red>변경할 비밀번호를 한번더 입력해주세요</font>");	
 			$("#checkpwd").focus();
@@ -176,11 +184,11 @@ $(function(){
 			$('#telcon').html("<font color=red>핸드폰번호를 입력해주세요</font>");
 			$(".telcheck").hide(500);
 			$("#tel").focus();
-		} else if(number.trim().length < 11){
+		} else if(number.trim().length < 11 || phonetest.test(number)==false){
 			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");
 			$(".telcheck").hide(500);			
 			$("#tel").focus();
-		} else if(number.trim().length == 11){
+		} else if(number.trim().length == 11 && phonetest.test(number)==true){
 			$(".telcheck").show(500);
 			$('#telcon').html("<font color=blue>인증번호를 전송했습니다 인증번호를 입력해주세요</font>");
 			$("#telcheck").focus();
