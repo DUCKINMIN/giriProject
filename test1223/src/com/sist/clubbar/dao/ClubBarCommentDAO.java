@@ -113,4 +113,18 @@ public class ClubBarCommentDAO {
 				session.close();
 		}
 	}
+	
+	//자식 댓글 가져오기
+	public static List<ClubBarCommentVO> cbcReplyList(Map map) {
+		List<ClubBarCommentVO> list = new ArrayList<ClubBarCommentVO>();
+		SqlSession session = ssf.openSession();
+		
+		try {
+			list = session.selectList("cbcReplyList", map);
+		} catch (Exception e) {
+			System.out.println("cbcReplyList : " + e.getMessage());
+		}
+		
+		return list;
+	}
 }

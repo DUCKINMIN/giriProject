@@ -34,10 +34,10 @@
 	
 	<!-- 댓글 가져오기 -->
 	<select id="cbCommentList" resultType="ClubBarCommentVO" parameterType="java.util.Map">
-		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, cbc_rating, m_nick, cbc_group_tab, num
-		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, rownum as num
-		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab
-		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email ORDER BY cbc_group_id DESC, cbc_group_step ASC))
+		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, cbc_rating, m_nick, m_email, cbc_group_tab, num
+		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, m_email, rownum as num
+		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, m.m_email
+		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root=0 ORDER BY cbc_group_id DESC, cbc_group_step ASC))
 		WHERE num BETWEEN #{start} AND #{end} 
  	</select>
 	
@@ -69,13 +69,13 @@
 	<update id="cbcStepIncrement" parameterType="ClubBarCommentVO">
 		UPDATE clubbar_comment SET
 		cbc_group_step = cbc_group_step+1
-		WHERE group_id = #{cbc_group_id} AND cbc_group_step > #{cbc_group_step}
+		WHERE cbc_group_id = #{cbc_group_id} AND cbc_group_step > #{cbc_group_step}
 	</update>
 	<insert id="cbcReplyInsert" parameterType="ClubBarCommentVO">
 		<selectKey keyProperty="cbc_no" resultType="int" order="BEFORE">
 			SELECT NVL(MAX(cbc_no)+1, 1) as cbc_no FROM clubbar_comment
 		</selectKey>
-		INSERT INTO clubbar_comment VALUES(#{cbc_no}, #{m_email}, #{m_nick}, SYSDATE, #{cbc_content},
+		INSERT INTO clubbar_comment VALUES(#{cbc_no}, #{m_email}, SYSDATE, #{cbc_content},
 		#{cb_no}, #{cbc_rating}, #{cbc_group_id}, #{cbc_group_step},
 		#{cbc_group_tab}, #{cbc_root}, 0)
 	</insert>
@@ -85,7 +85,13 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	<!-- 대댓글 목록출력 -->
-	
+	<select id="cbcReplyList" resultType="ClubBarCommentVO" parameterType="java.util.Map">
+		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, cbc_rating, m_nick, cbc_group_tab, cbc_root, m_email, num
+		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, cbc_root, m_email, rownum as num
+		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, cbc.cbc_root, m.m_email
+		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root NOT IN (0) ORDER BY cbc_group_id DESC, cbc_group_step ASC))
+		WHERE num BETWEEN #{start} AND #{end} 
+ 	</select>
 		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
 				SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
 	  			  FROM clubBar cb,
