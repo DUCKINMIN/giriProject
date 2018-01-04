@@ -62,7 +62,7 @@
 $(function(){	
 	var emailtest = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; // 이메일 정규식
 	var phonetest =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/; // 핸드폰번호 정규식
-	var pwdtest = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}/; //비밀번호 정규식
+	//var pwdtest = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}/; //비밀번호 정규식
 	
 	var checkno;
 	var emailcount;
@@ -107,11 +107,12 @@ $(function(){
 			$('#pwdcon').html("<font color=red>비밀번호를 입력해주세요</font>");
 			$('#pwd').focus();
 			return;
-		} else if(pwdtest.test(pwd)==false){
-			$('#pwdcon').html("<font color=red>비밀번호는 최소8자,문자,숫자,특수문자가 하나이상 포함되어야 합니다</font>");
+		} /* else if(pwdtest.test(pwd)==false){
+			$('#pwdcon').html("<font color=red>비밀번호는 최소8자,영어,숫자가 하나이상 포함되어야 합니다</font>");
 			$('#pwd').focus();
 			return;
-		} else if(pwd!=pwdcheck){
+		}  */
+			else if(pwd!=pwdcheck){
 			$('#pwdcon').html("<font color=red>비밀번호가 일치하지 않습니다</font>");
 			$("#pwd").focus();
 			return;
