@@ -65,9 +65,7 @@
 	
 	<!-- 대댓글 목록출력 -->
 		<select id="hot3Search" resultType="ClubBarVO" parameterType="java.util.Map">
-		SELECT cb_no, cb_name, cb_content, cb_hit, rating, jjim, num
-		FROM(SELECT cb_no, cb_name, cb_content, cb_hit, rating, jjim, rownum AS num
-     		 FROM(SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
+				SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, sub.rating, sub.jjim
 	  			  FROM clubBar cb,
      	   			   (SELECT cb.cb_no, NVL(ROUND(AVG(cbc.cbc_rating),1),0) AS rating, COUNT(ct.cb_no) AS jjim
       					FROM clubBar cb
@@ -99,6 +97,6 @@
 						ORDER BY cb_hit
 					</otherwise>
 	  			 </choose>
-	  			  DESC, cb_name ASC))
+	  			  DESC, cb_name ASC
 	</select>
 </mapper>

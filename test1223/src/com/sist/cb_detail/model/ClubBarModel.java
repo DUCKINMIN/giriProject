@@ -162,4 +162,11 @@ public class ClubBarModel {
 		
 		return "hot3/hot3list.jsp";
 	}
+	
+	@RequestMapping("hot3insert.do")
+	public String hot3insert(HttpServletRequest req, HttpServletResponse res) {
+		req.setAttribute("main_jsp", "../hot3/hot3insert.jsp");
+		
+		return "main/main.jsp";
+	}
 }

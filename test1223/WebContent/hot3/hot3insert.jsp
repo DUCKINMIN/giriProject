@@ -300,7 +300,7 @@ $(document).ready(function() {
 				</div><br>
 				
 				<div class="text-left">
-					<label>이미지</label>
+					<label>이미지</label>&nbsp;<input type="button" id="uploadAdd" class="btn" value="추가"/>
 				</div>
 				<!-- 첨부파일 -->
             <div class="input-file">
