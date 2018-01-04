@@ -178,7 +178,7 @@
         WHERE m_email=#{m_email}
 	</select>
 	<!-- 등록된 이벤트  불러오기 -->
-	<resultMap type="EventVO" id="eventRegistCallData">
+	<!-- <resultMap type="EventVO" id="eventRegistCallData">
   	<result property="e_no" column="e_no"/>
   	<result property="cb_no" column="cb_no"/>
   	<result property="e_name" column="e_name"/>
@@ -188,7 +188,7 @@
   	<result property="cb.cb_name" column="cb_name"/>
   	<result property="cb.a_addr1" column="a_addr1"/>
   	<result property="cb.a_addr2" column="a_addr2"/>
-  </resultMap>
+  </resultMap> -->
   <!-- <select id="eventCall" parameterType="java.util.Map" resultMap="eventRegistCallData">
   	SELECT c.cb_no,e.e_no,e.e_name,e.num
   	FROM clubbar c,(SELECT e_no,e_name,rownum as num
