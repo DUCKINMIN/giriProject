@@ -61,6 +61,29 @@ public class ClubBarCommentDAO {
 		
 	}
 	
+	//¥Ò±€ ªË¡¶
+	public static void cbcDelete(int cbc_no) {
+		SqlSession session = ssf.openSession();
+		try {
+			ClubBarCommentVO vo = session.selectOne("cbcDeleteData",cbc_no);
+			System.out.println("cbcDelete_vo.getDepth() : " + vo.getDepth());
+			if(vo.getDepth()==0) {
+				session.delete("cbcDelete",cbc_no);
+			}else {
+				session.update("cbcContentUpdate",cbc_no);
+			}
+			session.update("cbcDepthDecrement", vo.getCbc_root());
+			session.commit();
+		} catch (Exception e) {
+			session.rollback();
+			System.out.println("cbcDelete : " + e.getMessage());
+		} finally {
+			if (session != null)
+				session.close();
+		}
+
+	}
+	
 	//¥Î¥Ò±€ µÓ∑œ
 	public static ClubBarCommentVO cbcGetParentInfo(int cbc_no) {
 		ClubBarCommentVO vo = new ClubBarCommentVO();

@@ -66,8 +66,6 @@
 		WHERE cbc_no = #{cbc_no}
 	</update>
 	
-	<!-- 댓글 삭제 -->
-	
 	<!-- 대댓글 추가 -->
 	<select id="cbcGetParentInfo" resultType="ClubBarCommentVO" parameterType="int">
 		SELECT cbc_group_id, cbc_group_step, cbc_group_tab FROM clubbar_comment
@@ -96,9 +94,26 @@
 		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI') as dbday, cbc_rating, m_nick, cbc_group_tab, cbc_root, m_email, cbc_group_id, num
 		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, cbc_root, m_email, cbc_group_id, rownum as num
 		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, cbc.cbc_root, cbc.cbc_group_id, m.m_email
-		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root NOT IN (0) ORDER BY cbc_group_id DESC, cbc_group_step ASC))
+		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root NOT IN (0) ORDER BY cbc_group_id DESC, cbc_no ASC))
 		WHERE num BETWEEN #{start} AND #{end} 
  	</select>
+ 	
+ 	<!-- 댓글 삭제 -->
+ 	<select id="cbcDeleteData" parameterType="int" resultType="ClubBarCommentVO">
+ 		SELECT depth, cbc_root FROM clubbar_comment WHERE cbc_no = #{cbc_no}
+ 	</select>
+ 	<update id="cbcContentUpdate" parameterType="int">
+ 		UPDATE clubbar_comment SET
+ 		cbc_content = '삭제된 댓글입니다.' WHERE cbc_no = #{cbc_no}
+ 	</update>
+ 	<delete id="cbcDelete" parameterType="int">
+ 		DELETE FROM clubbar_comment WHERE cbc_no = #{cbc_no}
+ 	</delete>
+ 	<update id="cbcDepthDecrement" parameterType="int">
+ 		UPDATE clubbar_comment SET
+ 		depth = depth-1
+ 		WHERE cbc_no = #{cbc_no}
+ 	</update>
  	
  	<!-- 창석 -->
 <!--  	SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, rtable.rating, jtable.jjim

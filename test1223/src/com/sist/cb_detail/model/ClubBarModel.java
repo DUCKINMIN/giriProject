@@ -167,13 +167,18 @@ public class ClubBarModel {
 		//대대댓글
 		
 		String cb_no = req.getParameter("cb_no");
+		System.out.println("cb_no : " + cb_no);
 		String cbc_pno = req.getParameter("cbc_pno");
+		System.out.println("cbc_pno : " + cbc_pno);
 		String cbc_pcno = req.getParameter("cbc_pcno");
+		System.out.println("cbc_pcno : " + cbc_pcno);
 		String cbc_content = req.getParameter("cbc_content");
+		System.out.println("cbc_content : " + cbc_content);
 		HttpSession session = req.getSession();
 		String m_email = (String)session.getAttribute("m_email");
 		String m_nick = (String)session.getAttribute("m_nick");
 		String cbc_pcnick = req.getParameter("cbc_pcnick");
+		System.out.println("cbc_pcnick : " + cbc_pcnick);
 		
 		//대대댓글인 경우 => 부모를 설정
 		if(cbc_pcno != null) {
@@ -206,6 +211,19 @@ public class ClubBarModel {
 		String review = req.getParameter("review");
 		req.setAttribute("review", review);
 
+		return "cb_detail.do?cb_no=" + cb_no + "&review=1";
+	}
+	
+	@RequestMapping("cbcDelete_ok.do")
+	public String cbcDeleteOk(HttpServletRequest req, HttpServletResponse res) {
+		
+		String cb_no = req.getParameter("cb_no");
+		System.out.println("cb_no : " + cb_no);
+		String cbc_no = req.getParameter("cbc_no");
+		System.out.println("cbc_no : " + cbc_no);
+		
+		ClubBarCommentDAO.cbcDelete(Integer.parseInt(cbc_no));
+		
 		return "cb_detail.do?cb_no=" + cb_no + "&review=1";
 	}
 

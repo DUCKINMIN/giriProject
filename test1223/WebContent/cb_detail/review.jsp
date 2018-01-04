@@ -95,6 +95,9 @@
 .click_ok {
 	cursor: pointer;
 }
+form {
+	display: inline;
+}
 @media ( max-width : 570px) {
 	.reply_list td:first-child, .reply_insert td:first-child {
 		width: 60px;
@@ -242,6 +245,28 @@
 			$("#reply_up_" + up_id[2] + "_" + up_id[3]).hide();
 			$("#replylist_" + up_id[2] + "_" + up_id[3]).show();
 		}); 
+		
+		/* $(".del_btn2").click(function() {
+			var d_id = $(this).attr("id");
+			d_id = d_id.split("_");//인덱스 1에 저장
+			
+			$("#delFrm2" + d_id[1]).submit();
+		});
+		$(".del_btn1").click(function() {
+			var d_id = $(this).attr("id");
+			d_id = d_id.split("_");//인덱스 1에 저장
+			
+			$("#delFrm1" + d_id[1]).submit();
+		}); */
+		
+		$(".del_btn").click(function() {
+			var d_id = $(this).attr("id");
+			alert("d_id : " + d_id);
+			d_id = d_id.split("_");//인덱스 1에 저장
+				
+			location.href = "cbcDelete_ok.do?cb_no=" + d_id[1] + "&cbc_no=" + d_id[2];
+		});
+		
 	});
 </script>
 
@@ -352,7 +377,12 @@
 								
 								<c:if test="${sessionScope.m_email == cbc_vo.m_email  }">
 									<span class="up_btn click_ok" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
-									<span class="del_btn click_ok" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
+									
+									<form action="cbcDelete_ok.do" method="post" id="delFrm1">
+										<input type="hidden" name="del_cbc_no" value="${cbc_vo.cbc_no}">
+										<input type="hidden" name="cb_no" value="${vo.cb_no}">
+										<span class="del_btn click_ok" id="del_${vo.cb_no}_${cbc_vo.cbc_no }">삭 제</span>&nbsp;&nbsp;
+									</form>
 								</c:if>
 								
 						</span> <button class="btn reply_btn" id="reply_btn_${i.index }">댓&nbsp;&nbsp;&nbsp;글</button></td>
@@ -453,7 +483,9 @@
 										</span> 
 										<c:if test="${sessionScope.m_email == cvo.m_email  }">
 											<span class="click_ok re_up_btn" id="re_up_btn_${i.index }_${j.index}">수 정</span>&nbsp;&nbsp;
-											<span class="click_ok re_del_btn" id="re_del_btn_${i.index }_${j.index}">삭 제</span>&nbsp;&nbsp;
+											
+											<span class="click_ok del_btn" id="del_${vo.cb_no}_${cvo.cbc_no }">삭 제</span>&nbsp;&nbsp;
+												
 										</c:if>
 										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }_${cvo.cbc_no}">댓&nbsp;&nbsp;&nbsp;글</button>
 									</td>
