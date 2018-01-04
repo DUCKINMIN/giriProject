@@ -262,14 +262,48 @@ public class BoardDAO {
 		
 		return totalpage;
 	}
-	
+	//»õ ´ñ±Û
 	public static void commentNewInsert(BoardCommentVO vo) {
 		SqlSession session = ssf.openSession(true);
-		System.out.println("m_email: " + vo.getM_email() + " b_no: " +vo.getB_no()+" bc_content : " + vo.getBc_content());
 		try {
 			session.insert("commentNewInsert",vo);
 		}catch(Exception e) {
 			System.out.println("commentNewInsert : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	//´ñ±Û ¼öÁ¤
+	public static void commentUpdate(BoardCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("commentUpdate",vo);
+		}catch(Exception e) {
+			System.out.println("commentUpdate : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	//´ñ±Û »èÁ¦
+	public static void commentDelete(int bc_no) {
+		SqlSession session = ssf.openSession();
+		
+		try {
+			BoardCommentVO vo = session.selectOne("commentDeleteData",bc_no);
+			if(vo.getDepth()==0) {
+				session.update("commentDelete",bc_no);
+			}else {
+				session.delete("commentContentUpdate",bc_no);
+			}
+			session.update("commentDepthDecrement",vo.getBc_root());
+			session.commit();
+		}catch(Exception e) {
+			session.rollback();
+			System.out.println("commentDelete : " + e.getMessage());
 		}finally {
 			if(session!=null)
 				session.close();

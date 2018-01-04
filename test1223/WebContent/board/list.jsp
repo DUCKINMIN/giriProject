@@ -105,6 +105,7 @@
 
 <body>
 	<div>
+		<div style="height: 40px"></div>
 		<!-- 게시판 검색 -->
 		<div id="search"><form id="searchFrm" method="POST" action="board_search.do">
 			<select id="board_searchSel" name="select">

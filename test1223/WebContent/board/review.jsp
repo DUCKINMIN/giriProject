@@ -194,19 +194,19 @@
 		$(".reply_wrap").hide();
 		$(".reply_btn").click(function() {
 			var btn_id = $(this).attr("id");
+			alert(btn_id);
 			btn_id = btn_id.split("_");
 			if ($(this).html() == "닫&nbsp;&nbsp;&nbsp;기") {
 				$(this).html("댓&nbsp;&nbsp;&nbsp;글");
 				$("#reply_" + btn_id[2]).slideUp("500");
-			} else {
+			} else {;
 				$("#reply_" + btn_id[2]).slideDown("500");
 				$(this).html("닫&nbsp;&nbsp;&nbsp;기");
 			}
 		});
 
 		//대댓글에 댓글달기
-		$(".re_reply_btn")
-				.click(
+		$(".re_reply_btn").click(
 						function() {
 							var re_btn_id = $(this).attr("id");
 							re_btn_id = re_btn_id.split("_");
@@ -247,6 +247,14 @@
 			}
 
 		});
+		//댓글 삭제버튼 눌렀을 때
+		$(".del_btn").click(function() {
+			var del_id = $(this).attr("id");
+			
+			del_id = del_id.split("_");
+			$('#delFrm_'+del_id[1]).submit();
+			alert('#delFrm_'+del_id[1]);
+		});
 
 		$(".re_noupdate_btn").click(function() {
 			var up_id = $(this).attr("id");
@@ -258,7 +266,6 @@
 		});
 	});
 </script>
-
 </head>
 <body>
 	<div class="review">
@@ -276,6 +283,8 @@
 									value="${sessionScope.m_email }">
 								<input type="hidden" name="b_no" value="${vo.b_no }">
 								<input type="hidden" name="review" value="1">
+								<input type="hidden" name="grade" value="${vo.b_grade }">
+								<input type="hidden" name="page" value="${page}">
 								${sessionScope.m_nick }
 							</div>
 						</td>
@@ -336,7 +345,13 @@
 								${bc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp; <c:if
 									test="${sessionScope.m_email == bc_vo.m_email  }">
 									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
+									<form action="board_comment_delete.do" method="post" id="delFrm_${i.index }">
 									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
+									<input type="hidden" name="b_no" value="${bc_vo.b_no }"> 
+									<input type="hidden" name="bc_no" value="${bc_vo.bc_no }">
+									<input type="hidden" name="grade" value="${vo.b_grade }">
+									<input type="hidden" name="page" value="${page}">
+									</form>
 								</c:if>
 
 						</span>
@@ -346,7 +361,7 @@
 
 				<!-- --------------------------------------------------------------------- 수정 -->
 				<div class="review_update" id="review_up_${i.index }">
-					<form action="cbc_update.do" method="post">
+					<form action="board_comment_update.do" method="post">
 						<table>
 							<!-- 사용자 정보 & 리뷰 내용 -->
 							<tr>
@@ -358,12 +373,14 @@
 											value="${sessionScope.m_email }"> <input
 											type="hidden" name="b_no" value="${bc_vo.b_no }"> <input
 											type="hidden" name="bc_no" value="${bc_vo.bc_no }">
+											<input type="hidden" name="grade" value="${vo.b_grade }">
+											<input type="hidden" name="page" value="${page}">
 										<input type="hidden" name="review" value="1">
 										${sessionScope.m_nick }
 									</div>
 								</td>
 								<td width="90%"><textarea class="form-control" rows="5"
-										cols="100%" name="cbc_content">${bc_vo.bc_content }</textarea>
+										cols="100%" name="bc_content">${bc_vo.bc_content }</textarea>
 								</td>
 
 								<!-- 별점 & 버튼 -->

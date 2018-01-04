@@ -7,6 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<script type="text/javascript">
+ $(function(){
+	 if(${review}=="1"){
+	      $('html, body').animate({
+	         scrollTop: $('.review_wrap').offset().top
+	         }, 300);
+	   }
+}); 
+</script>
 </head>
 <style>
 #board_contentPro {
@@ -68,7 +77,7 @@
 <body>
 	<!-- 게시판 상세보기 -->
 	<div class="content_wrap">
-		<div style="height: 20px"></div>
+		<div style="height: 40px"></div>
 		<div id="board_contentPro" class="board_pro"></div>
 		<div id="board_user">
 			<p id="board_name">${vo.m_nick }</p>
@@ -123,14 +132,10 @@
 					</div>
 				</div>
 			</div>
-			<c:if test="${strSearch==null }">
+
 			<a href="board_list.do?page=${page }&grade=${vo.b_grade}"><input
 				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
-			</c:if>
-			<c:if test="${strSearch!=null }">
-			<a href="board_search.do?page=${page }&grade=${vo.b_grade}&strSearch=${strSearch}&select=${select}"><input
-				class="btn board_btn board_contentBtn" type="button" value="목록"></a>
-			</c:if>
+
 		</div>
 	</div>
 	<!-- 리뷰 -->

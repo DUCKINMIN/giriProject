@@ -130,7 +130,7 @@
 	</select>
 	<!-- 댓글 총페이지 구하기-->
 	<select id="commentTotalPage" resultType="int" parameterType="int">
-		SELECT CEIL(COUNT(*)/10) FROM board WHERE b_no=#{b_no}
+		SELECT CEIL(COUNT(*)/10) FROM board_comment WHERE b_no=#{b_no}
 	</select>
 	<!-- 댓글 추가 -->
 	<insert id="commentNewInsert" parameterType="BoardCommentVO">
@@ -141,4 +141,32 @@
 			#{bc_no}, #{b_no}, #{m_email}, #{bc_content}, (SELECT NVL(MAX(bc_group_id)+1,1) FROM board_comment)
 		)
 	</insert>
+	<!-- 댓글 수정 -->
+	<update id="commentUpdate" parameterType="BoardCommentVO">
+		UPDATE board_comment SET
+		bc_content = #{bc_content}
+		WHERE bc_no=#{bc_no}
+	</update>
+	<!-- 댓글 삭제 -->
+	<!-- 댓글 삭제 -->
+	<select id="commentDeleteData" resultType="BoardCommentVO" parameterType="int">
+		SELECT depth, bc_root FROM board_comment
+		WHERE bc_no=#{bc_no}
+	</select>
+	<!-- depth!=0 => 관리자가 삭제한 게시물 -->
+	<update id="commentContentUpdate" parameterType="int">
+		UPDATE board_comment SET
+		bc_content = '삭제한 댓글입니다'
+		WHERE bc_no=#{bc_no}
+	</update>
+	<!-- depth==0 => 삭제 -->
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM board_comment
+		WHERE bc_no=#{bc_no}
+	</delete>
+	<update id="commentDepthDecrement" parameterType="int">
+		UPDATE board_comment SET
+		depth = depth-1
+		WHERE bc_no=#{bc_no}
+	</update>
 </mapper>

@@ -6,8 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
-</head>
 <style>
+form{
+	display: inline;
+}
 a {
 	color: black;
 }
@@ -83,88 +85,6 @@ a {
 	font-size: 15px;
 }
 
-@media ( max-width : 993px) {
-	.board-th {
-		width: 20%;
-		font-size: 13px;
-	}
-	.board-td {
-		width: 20%;
-		font-size: 13px;
-	}
-	.board_Tsub {
-		width: 25%;
-	}
-	.board_Tno {
-		width: 15%;
-	}
-	.board_btn, #board_searchSel {
-		width: 50px;
-		font-size: 15px;
-	}
-	#board_page {
-		width: 100%;
-	}
-	.container>h2 {
-		border-bottom: 2px solid #bbb;
-	}
-}
-</style>
-<!-- 게시판 모드 css -->
-<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
-<script type="text/javascript">
-	$(function() {
-		 	  var grade = ${grade};
-		 var id = $(this).attr("id");
-		 if(grade=="0"){
-		 $('#board_ssulBtn').css("background", "rgb(162,0,0)");
-		 $('#board_ssulBtn').css("color", "rgb(255, 255, 255)");
-		 }
-		 else{
-		 $('#board_counselBtn').css("background", "rgb(162,0,0)");
-		 $('#board_counselBtn').css("color", "rgb(255, 255, 255)");
-		 } 
-
-		$(".tab_content").hide();
-		$(".tab_content:first").show();
-		
-		$("ul.tabs li").click(function() {
-			var id = $(this).attr("id");
-			$(".tab_content").hide()
-			var activeTab = $(this).attr("rel");
-			
-			$("#" + activeTab).fadeIn();
-			if(id=="board_counselBtn")
-				$('#frm1').submit();
-			else
-				$('#frm0').submit();
-			
-		});
-		/*  $.ajax({
-			type:"POST",
-			url:"ssullist.do",
-			data:{"grade":grade,"page":1}, //데이터 여러개일 때 => "day":day,"page":1 
-			//json방식(객체형식)
-			success:function(response){
-				$('#grade').html(response);
-			}
-
-		}); */
-
-		/*$.ajax({
-		 type:"POST",
-		 url:"ssullist.do",
-		 data:{"grade":grade,"page":1}, //데이터 여러개일 때 => "day":day,"page":1 
-		 //json방식(객체형식)
-		 success:function(response){
-		 $('#grade').html(response);
-		 }
-
-		 }); 
-		 });*/
-	});
-</script>
-<style>
 ul.tabs {
     margin: 0;
     padding: 0;
@@ -223,7 +143,73 @@ ul.tabs li.active {
     width: 249px;
     margin: 0 auto;
 }
+
+@media ( max-width : 993px) {
+	.board-th {
+		width: 20%;
+		font-size: 13px;
+	}
+	.board-td {
+		width: 20%;
+		font-size: 13px;
+	}
+	.board_Tsub {
+		width: 25%;
+	}
+	.board_Tno {
+		width: 15%;
+	}
+	.board_btn, #board_searchSel {
+		width: 50px;
+		font-size: 15px;
+	}
+	#board_page {
+		width: 100%;
+	}
+	.container>h2 {
+		border-bottom: 2px solid #bbb;
+	}
+}
 </style>
+<!-- 게시판 모드 css -->
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+	$(function() {
+		 var grade = ${grade};
+		 var id = $(this).attr("id");
+		 if(grade=="0"){
+		 $('#board_ssulBtn').css("background", "rgb(162,0,0)");
+		 $('#board_ssulBtn').css("color", "rgb(255, 255, 255)");
+		 }
+		 else{
+		 $('#board_counselBtn').css("background", "rgb(162,0,0)");
+		 $('#board_counselBtn').css("color", "rgb(255, 255, 255)");
+		 } 
+
+		$('.board_modeBtn').click(function(){
+			var id = $(this).attr("id");
+			if(id=='board_ssulBtn'){
+				$('#frm0').submit();
+			}else{
+				$('#frm1').submit();
+			}
+		});
+		
+		/*  $.ajax({
+			type:"POST",
+			url:"ssullist.do",
+			data:{"grade":grade,"page":1}, //데이터 여러개일 때 => "day":day,"page":1 
+			//json방식(객체형식)
+			success:function(response){
+				$('#grade').html(response);
+			}
+
+		}); */
+ 
+		
+	});
+</script>
+</head>
 <body>
 	<div class="container">
 		<h2>커뮤니티</h2>
@@ -239,16 +225,10 @@ ul.tabs li.active {
 				<input type="hidden" name="grade" value="1">
 				</li></form>
 		</ul>
-		<div style="height: 10px"></div>
+		<div style="height:10px"></div>
 		<!-- include -->
-		<div class="tab_container">
-			<div class="container tab_content" id="tab1">
-				<jsp:include page="${sub_jsp }"></jsp:include>
-			</div>
-
-			<div class="container tab_content" id="tab2">
-				<jsp:include page="${sub_jsp }"></jsp:include>
-			</div>
+		<div id ="grade">
+				 <jsp:include page="${sub_jsp }"></jsp:include>
 		</div>
 	</div>
 

@@ -63,7 +63,7 @@ public class BoardModel {
 		int b_no = Integer.parseInt(no);
 		Map map = new HashMap();
 		map.put("b_no", b_no);
-		map.put("grade", igrade);
+		map.put("grade", grade);
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
 		///////////////////////////////////////////////////////
@@ -273,7 +273,9 @@ public class BoardModel {
 		String m_email = req.getParameter("m_email");
 		int b_no = Integer.parseInt(req.getParameter("b_no"));
 		String bc_content = req.getParameter("bc_content");
-		
+		String grade = req.getParameter("grade");
+		String page = req.getParameter("page");
+
 		BoardCommentVO vo = new BoardCommentVO();
 		vo.setM_email(m_email);
 		vo.setB_no(b_no);
@@ -281,7 +283,48 @@ public class BoardModel {
 		BoardDAO.commentNewInsert(vo);
 		
 		req.setAttribute("no", b_no);
-		return "board_content.do?no="+b_no;
+		req.setAttribute("grade", grade);
+		req.setAttribute("page", page);
+		return "board/comment_ok.jsp";
 	}
+	
+	//댓글 입력
+		@RequestMapping("board_comment_update.do")
+		public String board_comment_update(HttpServletRequest req, HttpServletResponse res) throws Exception{
+			req.setCharacterEncoding("EUC-KR");
+			String m_email = req.getParameter("m_email");
+			int b_no = Integer.parseInt(req.getParameter("b_no"));
+			int bc_no = Integer.parseInt(req.getParameter("bc_no"));
+			String bc_content = req.getParameter("bc_content");
+			String grade = req.getParameter("grade");
+			String page = req.getParameter("page");
+
+			BoardCommentVO vo = new BoardCommentVO();
+			vo.setM_email(m_email);
+			vo.setB_no(b_no);
+			vo.setBc_content(bc_content);
+			vo.setBc_no(bc_no);
+			BoardDAO.commentUpdate(vo);
+			
+			req.setAttribute("no", b_no);
+			req.setAttribute("grade", grade);
+			req.setAttribute("page", page);
+			return "board/comment_ok.jsp";
+		}
+		
+		@RequestMapping("board_comment_delete.do")
+		public String board_comment_delete(HttpServletRequest req, HttpServletResponse res) {
+			int b_no = Integer.parseInt(req.getParameter("b_no"));
+			int bc_no = Integer.parseInt(req.getParameter("bc_no"));
+			String grade = req.getParameter("grade");
+			String page = req.getParameter("page");
+			
+			BoardDAO.commentDelete(bc_no);
+			
+			req.setAttribute("no", b_no);
+			req.setAttribute("grade", grade);
+			req.setAttribute("page", page);
+			return "board/comment_ok.jsp";
+		}
 	
 }
