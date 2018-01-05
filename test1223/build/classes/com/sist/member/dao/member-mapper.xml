@@ -186,9 +186,9 @@
 	</select>
 	<!-- 이벤트 관리 호출 -->
 	<select id="EventCallData" resultType="EventVO" parameterType="java.util.Map">
-		SELECT e_no,e_name,num
-		FROM (select e_no,e_name,rownum as num
-		FROM (select e_no,e_name
+		SELECT e_no,e_name,num,cb_no
+		FROM (select e_no,e_name,cb_no, rownum as num
+		FROM (select e.e_no,e.e_name,e.cb_no
 		FROM event e,member m, clubbar c
 		WHERE m.m_email=#{m_email} AND m.m_email=c.m_email AND c.cb_no=e.cb_no 
 		ORDER BY e_enddate asc))

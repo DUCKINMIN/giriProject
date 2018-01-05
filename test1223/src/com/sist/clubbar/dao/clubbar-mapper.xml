@@ -192,6 +192,49 @@ ORDER BY rating DESC; -->
 	  			  DESC, cb_name ASC
 	</select>
 	
+		<insert id="addrInsert" parameterType="ClubBarVO"> 
+	INSERT INTO address
+	VALUES (#{a_addr1},#{a_addr2}) 
+	</insert>
+
+	<insert id="hot3cbInsert" parameterType="ClubBarVO"> 
+	INSERT INTO clubBar(cb_no,cb_name,m_email,cb_crn,cb_tel,a_addr1,a_addr2,cb_content,cb_open,cb_grade,cb_img_cnt)
+	VALUES(#{cb_no},#{cb_name},#{m_email},#{cb_crn},#{cb_tel},#{a_addr1},#{a_addr2},#{cb_content},#{cb_open},#{cb_grade},#{cb_img_cnt})
+	</insert>
+
+	<select id="cbNoMax" resultType="int"> 
+	SELECT MAX(cb_no) FROM clubBar
+	</select>
+
+	<select id="getCbImgCnt" resultType="int"> 
+	SELECT cb_img_cnt FROM
+	clubBar WHERE cb_no = #{cb_no} 
+	</select>
+
+	<delete id="hot3cbDelete" parameterType="int"> 
+	DELETE FROM clubBar WHERE
+	cb_no = #{cb_no} 
+	</delete>
+
+	<!-- <select id="getUpdateCol" parameterType="int" resultType="ClubBarVO">
+		SELECT cb_name, cb_tel, a_addr1, a_addr2, cb_content, cb_open, NVL(cb_img_cnt,0)
+		FROM clubBar
+		WHERE cb_no = #{cb_no} 
+	</select> -->
+
+	<select id="getMyCb" parameterType="java.lang.String" resultType="ClubBarVO">
+		SELECT cb_no, cb_name, cb_tel, a_addr1, a_addr2, cb_content, cb_open, NVL(cb_img_cnt,0) AS cb_img_cnt
+		FROM clubBar
+		WHERE m_email = #{m_email}
+	</select>
+
+	<update id="hot3cbUpdate" parameterType="ClubBarVO"> 
+	UPDATE clubBar 
+	SET cb_name = #{cb_name}, cb_tel = #{cb_tel}, a_addr1 = #{a_addr1}, 
+	a_addr2 = #{a_addr2}, cb_content = #{cb_content}, cb_open = #{cb_open},
+	cb_img_cnt = #{cb_img_cnt} WHERE cb_no = #{cb_no} 
+	</update>
+	
 		<!-- count (다솜) -->
 	<select id="cbrTimeCount" parameterType="ClubBarRankVO" resultType="int">
 		SELECT COUNT(*) FROM clubbar_rank

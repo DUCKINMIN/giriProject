@@ -157,12 +157,33 @@
 			<div style="height: 40px"></div>
 			<div id="board_page">
 				<center>
-					<a href="board_list.do?page=${curpage>1?curpage-1:curpage }&grade=${grade}"><</a>&nbsp;&nbsp;&nbsp;
-					<c:forEach var="i" begin="1" end="${totalpage }">
-						<a href="board_list.do?page=${i}&grade=${grade}">${i }</a>&nbsp;
-							</c:forEach>
-					&nbsp;&nbsp;&nbsp;<a
-						href="board_list.do?page=${curpage<totalpage?curpage+1:curpage }&grade=${grade}">></a>
+					<c:choose>
+					<c:when test="${curpage>block }">
+						<a
+							href="board_list.do?page=${fromPage-1 }&grade=${grade }"><
+							&nbsp;</a>
+					</c:when>
+					<c:otherwise>
+						<span><&nbsp;</span>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="i" begin="${fromPage }" end="${toPage }">
+					<c:if test="${i==curpage }">
+				         <b style="font-size:18px">${i }</b> &nbsp;
+				        </c:if>
+					<c:if test="${i!=curpage }">
+						<a href="board_list.do?page=${i }&grade=${grade }">${i }&nbsp;</a>
+					</c:if>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${toPage<allpage }">
+						<a
+							href="board_list.do?page=${toPage+1 }&grade=${grade }">></a>
+					</c:when>
+					<c:otherwise>
+						<span>></span>
+					</c:otherwise>
+				</c:choose>
 				</center>
 			</div>
 		</div>

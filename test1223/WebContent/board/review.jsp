@@ -194,7 +194,6 @@
 		$(".reply_wrap").hide();
 		$(".reply_btn").click(function() {
 			var btn_id = $(this).attr("id");
-			alert(btn_id);
 			btn_id = btn_id.split("_");
 			if ($(this).html() == "닫&nbsp;&nbsp;&nbsp;기") {
 				$(this).html("댓&nbsp;&nbsp;&nbsp;글");
@@ -225,7 +224,7 @@
 			x_btn_id = x_btn_id.split("_"); //인덱스 3으로 아이디분류
 			$("#re_re_xBtn_" + x_btn_id[3]).html("");
 			$("#re_re_nick_" + x_btn_id[3]).text("");
-			$(".re_content_update_" + re_btn_id[2]).html("<textarea class='form-control' rows='2' id='re_content_${i.index }' name='cbc_content'></textarea>");
+			$(".re_content_update_" + re_btn_id[2]).html("<textarea class='form-control' rows='2' id='re_content_${i.index }' name='bc_content'></textarea>");
 		});
 		
 		//<span class="update_rating update_rating_${i.index }" id="update_rating_insert">
@@ -278,7 +277,7 @@
 			
 			del_id = del_id.split("_");
 			$('#delFrm_'+del_id[1]).submit();
-			alert('#delFrm_'+del_id[1]);
+			alert("댓글이 삭제되었습니다");
 		});
 
 		/* $(".re_noupdate_btn").click(function() {
@@ -370,12 +369,13 @@
 								${bc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp; <c:if
 									test="${sessionScope.m_email == bc_vo.m_email  }">
 									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
-									<form action="board_comment_delete.do" method="post" id="delFrm_${i.index }">
-									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
+									<form action="board_comment_delete.do" method="post" id="delFrm_${bc_vo.bc_no }">
+									<span class="del_btn" id="del_${bc_vo.bc_no }">삭 제</span>&nbsp;&nbsp;
 									<input type="hidden" name="b_no" value="${bc_vo.b_no }"> 
 									<input type="hidden" name="bc_no" value="${bc_vo.bc_no }">
 									<input type="hidden" name="grade" value="${vo.b_grade }">
 									<input type="hidden" name="page" value="${page}">
+									<input type="hidden" name="rpage" value="${curpage }">
 									</form>
 								</c:if>
 
@@ -400,6 +400,7 @@
 											type="hidden" name="bc_no" value="${bc_vo.bc_no }">
 											<input type="hidden" name="grade" value="${vo.b_grade }">
 											<input type="hidden" name="page" value="${page}">
+											<input type="hidden" name="rpage" value="${curpage}">
 										<input type="hidden" name="review" value="1">
 										${sessionScope.m_nick }
 									</div>
@@ -412,13 +413,7 @@
 							</tr>
 
 							<tr>
-								<td>
-									<div class="list_star">
-										<!-- 별점주기  id="update_rating_insert"-->
-
-									</div>
-								</td>
-								<td class="text-right">
+								<td class="text-right" colspan="2">
 									<div class="star_insert">
 										<input type="button" class="btn re_noupdate_btn"
 											id="no_up_${i.index }" value="취&nbsp;&nbsp;&nbsp;&nbsp;소" />
@@ -467,13 +462,19 @@
 									<td colspan="2"></td>
 									<td width="87%" class="text-right">
 										<span>
-											<!-- 리뷰등록날짜 --><!-- 2017-12-15 -->${cvo.dbday }&nbsp;&nbsp;&nbsp;
+											${cvo.dbday }&nbsp;&nbsp;&nbsp;
 										</span> 
+										
 										<c:if test="${sessionScope.m_email == cvo.m_email  }">
 											<span class="click_ok re_up_btn" id="re_up_btn_${i.index }_${j.index}">수 정</span>&nbsp;&nbsp;
-											
-											<span class="click_ok del_btn" id="del_${vo.b_no}_${cvo.bc_no }">삭 제</span>&nbsp;&nbsp;
-												
+											<form action="board_comment_delete.do" method="post" id="delFrm_${cvo.bc_no }">
+											<span class="click_ok del_btn" id="del_${cvo.bc_no }">삭 제</span>&nbsp;&nbsp;
+											<input type="hidden" name="b_no" value="${bc_vo.b_no }"> 
+											<input type="hidden" name="bc_no" value="${cvo.bc_no }">
+											<input type="hidden" name="grade" value="${vo.b_grade }">
+											<input type="hidden" name="page" value="${page}">
+											<input type="hidden" name="rpage" value="${curpage}">
+											</form>
 										</c:if>
 										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }_${cvo.bc_no}">댓&nbsp;&nbsp;&nbsp;글</button>
 									</td>
@@ -482,7 +483,7 @@
 						</c:if>
 						<!-- 대댓글 수정-------------------------------------------------------------------------------------------------- -->
 						<div class="reply_update" id="reply_up_${i.index }_${j.index}">
-							<form action="cocomment_update.do" method="post">
+							<form action="board_comment_update.do" method="post">
 								<table class="reply_insert">
 									<!-- 사용자 정보 & 내용 -->
 									<tr>
@@ -495,6 +496,9 @@
 												<input type="hidden" name="b_no" value="${vo.b_no }">
 												<input type="hidden" name="bc_no" value="${cvo.bc_no }">
 												<input type="hidden" name="review" value="1">
+												<input type="hidden" name="grade" value="${vo.b_grade }">
+												<input type="hidden" name="page" value="${page}">
+												<input type="hidden" name="rpage" value="${curpage }">
 												${sessionScope.m_nick }
 											</div>
 											
@@ -523,7 +527,7 @@
 						</div>
 						<!--대댓글수정 --------------------------------------------------------------------------------------------------------- -->
 					</c:forEach>
-
+<%-- 
 					<div id="reply_page">
 						<center>
 							<a href="#"><</a>&nbsp;&nbsp;&nbsp;
@@ -532,7 +536,7 @@
 			               </c:forEach>
 							&nbsp;&nbsp;&nbsp;<a href="#">></a>
 						</center>
-					</div>
+					</div> --%>
 					<!-- 대댓글 등록---------------------------------------------------------------------------------------------- -->
 					<form action="board_cocoment_insert.do" method="post">
 						<table class="reply_insert">
@@ -551,6 +555,7 @@
 											type="hidden" name="bc_root" value="${bc_vo.bc_no }">
 										<input type="hidden" name="review" value="1">
 										<input type="hidden" name="grade" value="${vo.b_grade }">
+										<input type="hidden" name="rpage" value="${curpage }">
 											<input type="hidden" name="page" value="${page}">
 									</div>
 
@@ -561,7 +566,7 @@
 										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
 									</div>
 									<div class="re_content_update_${i.index }">
-										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="cbc_content"></textarea>
+										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="bc_content"></textarea>
 									</div>
 								</td>
 							</tr>
@@ -580,11 +585,38 @@
 		</div>
 		<div id="board_page">
 			<center>
-				<a href="#"><</a>&nbsp;&nbsp;&nbsp;
+				<%-- <a href="#"><</a>&nbsp;&nbsp;&nbsp;
 				<c:forEach var="i" begin="1" end="${totalpage }">
 					<a href="#">${i }</a>&nbsp;
                 </c:forEach>
-				&nbsp;&nbsp;&nbsp;<a href="#">></a>
+				&nbsp;&nbsp;&nbsp;<a href="#">></a> --%>
+				<c:choose>
+					<c:when test="${curpage>block }">
+						<a
+							href="board_content.do?no=${vo.b_no }&rpage=${fromPage-1 }&grade=${grade }&page=${page }&review=1"><
+							&nbsp;</a>
+					</c:when>
+					<c:otherwise>
+						<span><&nbsp;</span>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="i" begin="${fromPage }" end="${toPage }">
+					<c:if test="${i==curpage }">
+				         <b style="font-size:18px">${i }</b> &nbsp;
+				        </c:if>
+					<c:if test="${i!=curpage }">
+						<a href="board_content.do?no=${vo.b_no }&rpage=${i }&grade=${grade }&page=${page }&review=1">${i }&nbsp;</a>
+					</c:if>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${toPage<allpage }">
+						<a
+							href="board_content.do?no=${vo.b_no }&rpage=${toPage+1 }&grade=${grade }&page=${page }&review=1">></a>
+					</c:when>
+					<c:otherwise>
+						<span>></span>
+					</c:otherwise>
+				</c:choose>
 			</center>
 		</div>
 	</div>

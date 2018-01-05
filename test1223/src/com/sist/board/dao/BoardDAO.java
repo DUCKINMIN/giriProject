@@ -172,7 +172,7 @@ public class BoardDAO {
 	public static void boardUpdate(BoardVO vo) {
 		SqlSession session = ssf.openSession(true);
 		try {
-			session.update("boardUpdate",vo);
+			session.update("boardUpdateData",vo);
 		}catch(Exception e) {
 			System.out.println("boardUpdate : " + e.getMessage());
 		}finally {
@@ -247,7 +247,7 @@ public class BoardDAO {
 		return list;
 		
 	}
-	
+	//´ñ±Û ÃÑÆäÀÌÁö ¼ö
 	public static int commentTotalPage(int b_no) {
 		int totalpage = 0;
 		SqlSession session = ssf.openSession();
@@ -311,12 +311,12 @@ public class BoardDAO {
 	}
 	
 	//´ë´ñ ¸ñ·Ï
-	public static List<BoardCommentVO> coCommentListData(Map map) {
+	public static List<BoardCommentVO> coCommentListData(int b_no) {
 		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
 		SqlSession session = ssf.openSession();
 		
 		try {
-			list = session.selectList("coCommentListData",map);
+			list = session.selectList("coCommentListData",b_no);
 		}catch(Exception e) {
 			System.out.println("coCommentListData : " + e.getMessage());
 		}finally {

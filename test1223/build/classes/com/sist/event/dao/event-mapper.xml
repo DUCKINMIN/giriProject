@@ -15,7 +15,7 @@
   	<result property="cb.a_addr2" column="a_addr2"/>
   </resultMap>
   	<select id="eventListData" resultMap="eventData" parameterType="java.util.Map">
-  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,TO_CHAR(e.e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e.e_enddate,'YYYY-MM-DD') e_enddate,e.e_content,e.num 
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.num 
   		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
   		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
   		FROM event ORDER BY e_enddate ASC )) e
@@ -51,14 +51,14 @@
   	<result property="cb.a_addr2" column="a_addr2"/>
   </resultMap>
   	<select id="eventOngoingData" parameterType="java.util.Map" resultMap="eventOngoingData">
-  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,TO_CHAR(e.e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e.e_enddate,'YYYY-MM-DD') e_enddate,e.e_content,e.num 
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.num 
   		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
   		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC )) e
+  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_DATE(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC )) e
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventOngoingPage" resultType="int">
-  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>=]]>TO_DATE(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 종료 검색 -->
   	<resultMap type="EventVO" id="eventEndData">
@@ -73,14 +73,14 @@
   	<result property="cb.a_addr2" column="a_addr2"/>
   </resultMap>
   	<select id="eventEndData" parameterType="java.util.Map" resultMap="eventEndData">
-  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,TO_CHAR(e.e_regdate,'YYYY-MM-DD') e_regdate,TO_CHAR(e.e_enddate,'YYYY-MM-DD') e_enddate,e.e_content,e.num 
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.num 
   		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
   		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC  )) e
+  		FROM event WHERE e_enddate<![CDATA[<]]>TO_DATE(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC  )) e
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventEndPage" resultType="int">
-  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<]]>TO_DATE(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 점주 체크 -->
   	<select id="ownerCheck" resultType="int" parameterType="String">

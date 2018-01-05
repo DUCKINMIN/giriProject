@@ -1,6 +1,8 @@
 package com.sist.event.model;
 import java.util.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -117,8 +119,9 @@ public class EventModel {
 			//DefaultFileRenamePolicy() : 파일명이 동일할때 파일명을 자동으로 변경
 			//a.jpg => a1.jpg => a2.jpg
 			String name=mr.getParameter("name");
-			String startdate=mr.getParameter("startDate");
-			String enddate=mr.getParameter("endDate");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			Date e_regdate=sdf.parse(mr.getParameter("startDate"));
+			Date e_enddate=sdf.parse(mr.getParameter("closeDate"));
 			String content=mr.getParameter("content");
 			content=content.replaceAll("\n", "<br>");
 			String filename=mr.getOriginalFileName("upload");
@@ -140,8 +143,8 @@ public class EventModel {
 			vo.setCb_no(cb_no);
 			vo.setE_no(eno);
 			vo.setE_name(name);
-			vo.setE_regdate(startdate);
-			vo.setE_enddate(enddate);
+			vo.setE_regdate(e_regdate);
+			vo.setE_enddate(e_enddate);
 			vo.setE_content(content);
 	
 			//DAO연결

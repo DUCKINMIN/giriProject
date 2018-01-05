@@ -173,7 +173,6 @@
 		$('#upload01').on('change', function() {
 			var file = $('#upload01').val();
 			file = file.trim();
-			alert(file);
 			if(file!="")
 				$('#fileDiv').show();
 			else

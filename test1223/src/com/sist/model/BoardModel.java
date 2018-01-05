@@ -10,6 +10,7 @@ import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.oreilly.servlet.MultipartRequest;
 import com.sist.board.dao.*;
+import com.sist.clubbar.dao.ClubBarCommentDAO;
 
 
 @Controller
@@ -25,9 +26,27 @@ public class BoardModel {
 			grade="0";
 		}
 		int igrade = Integer.parseInt(grade);
-		System.out.println("board_list.do grade : " + igrade);
-
+		//페이징
+		String Page = req.getParameter("page");
+		if(Page==null||Page=="")
+			Page="1";
+		int curpage = Integer.parseInt(Page);
 		int rowSize = 10;
+		int start = (curpage*rowSize)-(rowSize-1);
+		int end = curpage*rowSize;
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("grade", igrade);
+		
+		int totalpage = BoardDAO.boardTotalPage(igrade);
+		int block = 10;
+		int fromPage = ((curpage-1)/block*block)+1;
+		int toPage = ((curpage-1)/block*block) + block;
+		int allpage = BoardDAO.boardTotalPage(igrade);
+		if(toPage > allpage)
+			toPage = allpage;
+		/*int rowSize = 10;
 		int curpage = Integer.parseInt(page);
 		int start = (rowSize*curpage)-(rowSize-1);
 		int end = (rowSize*curpage);
@@ -35,15 +54,19 @@ public class BoardModel {
 		map.put("start", start);
 		map.put("end", end);
 		map.put("grade", igrade);
-		int totalpage = BoardDAO.boardTotalPage(igrade);
+		int totalpage = BoardDAO.boardTotalPage(igrade);*/
 		int boardCount = BoardDAO.boardListCount(igrade);
-		
 		List<BoardVO> list = BoardDAO.boardList(map);
 	
 		//list.jsp 로 값 전송(req.setAttribute())
 		req.setAttribute("cnt", boardCount);
 		req.setAttribute("curpage", curpage);
-		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("block", block);
+		req.setAttribute("allpage", allpage); 
+		req.setAttribute("fromPage", fromPage);
+	    req.setAttribute("toPage", toPage);
+	    req.setAttribute("totalpage", totalpage);
+		
 		req.setAttribute("list", list); 
 		req.setAttribute("grade", grade);
 		req.setAttribute("main_jsp", "../board/board_main.jsp");
@@ -60,7 +83,6 @@ public class BoardModel {
 			page="1";
 		
 		int igrade = Integer.parseInt(grade);
-		int curpage = Integer.parseInt(page);
 		int b_no = Integer.parseInt(no);
 		Map map = new HashMap();
 		map.put("b_no", b_no);
@@ -68,29 +90,49 @@ public class BoardModel {
 		BoardDAO.boardHitIncrement(map);//조회수 증가
 		BoardVO vo = BoardDAO.boardContentData(b_no); //상세보기
 		///////////////////////////////////////////////////////
-		
-		int rowSize = 5;
-		String cpage = req.getParameter("cpage");
-		if(cpage==null)
-			cpage = "1";
-		int icpage = Integer.parseInt(cpage);
-		int totalpage = BoardDAO.commentTotalPage(b_no);
-		int start = (rowSize*icpage)-(rowSize-1);
-		int end = (rowSize*icpage);
-		Map cmap = new HashMap();//댓글 맵
-		cmap.put("b_no", no);
-		cmap.put("start", start);
-		cmap.put("end", end);
-		List<BoardCommentVO> clist = BoardDAO.commentListData(cmap);
-		List<BoardCommentVO> cclist = BoardDAO.coCommentListData(cmap);
 
+		//페이징
+		String rPage = req.getParameter("rpage");
+		if(rPage==null||rPage=="")
+			rPage="1";
+		int rcurpage = Integer.parseInt(rPage);
+		int rowSize = 5;
+		int rstart = (rcurpage*rowSize)-(rowSize-1);
+		int rend = rcurpage*rowSize;
+		Map cmap = new HashMap();
+		cmap.put("start", rstart);
+		cmap.put("end", rend);
+		cmap.put("b_no", no);
+		
+		int totalpage = BoardDAO.commentTotalPage(b_no);
+		int block = 10;
+		int fromPage = ((rcurpage-1)/block*block)+1;
+		int toPage = ((rcurpage-1)/block*block) + block;
+		int allpage = BoardDAO.commentTotalPage(b_no);
+		if(toPage > allpage)
+			toPage = allpage;
+		String review = req.getParameter("review");
+		if(review==null)
+			review="0";
+		
+		List<BoardCommentVO> clist = BoardDAO.commentListData(cmap);
+		List<BoardCommentVO> cclist = BoardDAO.coCommentListData(b_no);
+		
+		
 		//int ccpage = BoardDAO.coCommentTotalPage(cmap);
+		//페이징
+		req.setAttribute("curpage", rcurpage);
+		req.setAttribute("block", block);
+		req.setAttribute("allpage", allpage); 
+		req.setAttribute("fromPage", fromPage);
+	    req.setAttribute("toPage", toPage);
+	    req.setAttribute("totalpage", totalpage);
+		req.setAttribute("review", review);
+		
 		req.setAttribute("clist", clist);
 		req.setAttribute("cclist", cclist);
 		req.setAttribute("vo", vo);
-		req.setAttribute("page", curpage);
-		req.setAttribute("totalpage", totalpage);
-		req.setAttribute("ccpage", 1);
+		req.setAttribute("page", page);
 		req.setAttribute("grade", grade);
 		req.setAttribute("main_jsp", "../board/board_main.jsp");
 		req.setAttribute("sub_jsp", "../board/content.jsp");
@@ -293,7 +335,7 @@ public class BoardModel {
 		return "board/comment_ok.jsp";
 	}
 	
-	//댓글 입력
+	//댓글 수정
 		@RequestMapping("board_comment_update.do")
 		public String board_comment_update(HttpServletRequest req, HttpServletResponse res) throws Exception{
 			req.setCharacterEncoding("EUC-KR");
@@ -303,7 +345,7 @@ public class BoardModel {
 			String bc_content = req.getParameter("bc_content");
 			String grade = req.getParameter("grade");
 			String page = req.getParameter("page");
-
+			String rpage = req.getParameter("rpage");
 			BoardCommentVO vo = new BoardCommentVO();
 			vo.setM_email(m_email);
 			vo.setB_no(b_no);
@@ -311,24 +353,27 @@ public class BoardModel {
 			vo.setBc_no(bc_no);
 			BoardDAO.commentUpdate(vo);
 			
+			req.setAttribute("rpage", rpage);
 			req.setAttribute("no", b_no);
 			req.setAttribute("grade", grade);
 			req.setAttribute("page", page);
 			return "board/comment_ok.jsp";
 		}
 		
+		//댓글삭제
 		@RequestMapping("board_comment_delete.do")
 		public String board_comment_delete(HttpServletRequest req, HttpServletResponse res) {
 			int b_no = Integer.parseInt(req.getParameter("b_no"));
 			int bc_no = Integer.parseInt(req.getParameter("bc_no"));
 			String grade = req.getParameter("grade");
 			String page = req.getParameter("page");
-			
+			String rpage = req.getParameter("rpage");
 			BoardDAO.commentDelete(bc_no);
 			
 			req.setAttribute("no", b_no);
 			req.setAttribute("grade", grade);
 			req.setAttribute("page", page);
+			req.setAttribute("rpage", rpage);
 			return "board/comment_ok.jsp";
 		}
 		
@@ -342,18 +387,26 @@ public class BoardModel {
 			}
 			String grade = req.getParameter("grade");
 			String page = req.getParameter("page");
+			String rpage = req.getParameter("rpage");
 			String b_no = req.getParameter("b_no");
-			String bc_root = req.getParameter("bc_root");
-			if (bc_root==null)
-				bc_root="0";
+			String bc_pcno = req.getParameter("bc_pcno");
+			String bc_pcnick = req.getParameter("bc_pcnick");
+			String bc_root = "";
+			if (bc_pcno==null)
+				bc_root = req.getParameter("bc_root");
 			String bc_content = req.getParameter("bc_content");
-			System.out.println(bc_content);
 			HttpSession session = req.getSession();
 			String m_email = (String)session.getAttribute("m_email");
-			System.out.println(m_email);
+			//대대댓글인 경우 => 부모를 설정
+			if(bc_pcno != null) {
+				bc_root = bc_pcno;
+				bc_pcnick += bc_content;
+				bc_content = bc_pcnick;
+			}
 			//DB연동
 			BoardCommentVO pvo = BoardDAO.commentGetParentInfo(Integer.parseInt(bc_root));
 			BoardCommentVO vo = new BoardCommentVO();
+			
 			vo.setB_no(Integer.parseInt(b_no));
 			vo.setM_email(m_email);
 			vo.setBc_content(bc_content);
@@ -373,6 +426,7 @@ public class BoardModel {
 			req.setAttribute("no", b_no);
 			req.setAttribute("grade", grade);
 			req.setAttribute("page", page);
+			req.setAttribute("rpage", rpage);
 			return "board/comment_ok.jsp";
 		}
 	

@@ -1,13 +1,26 @@
 package com.sist.cb_detail.model;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sist.clubbar.dao.*;
+import com.oreilly.servlet.MultipartRequest;
+import com.sist.clubbar.dao.CartVO;
+import com.sist.clubbar.dao.ClubBarCommentDAO;
+import com.sist.clubbar.dao.ClubBarCommentVO;
+import com.sist.clubbar.dao.ClubBarDAO;
+import com.sist.clubbar.dao.ClubBarRankVO;
+import com.sist.clubbar.dao.ClubBarVO;
+import com.sist.clubbar.dao.MotelDAO;
+import com.sist.clubbar.dao.MotelVO;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 
@@ -333,5 +346,165 @@ public class ClubBarModel {
 		req.setAttribute("main_jsp", "../hot3/hot3insert.jsp");
 		
 		return "main/main.jsp";
+	}
+	
+	@RequestMapping("hot3insert_ok.do")
+	public String hot3insert_ok(HttpServletRequest req, HttpServletResponse res) throws Throwable {
+		req.setCharacterEncoding("EUC-KR");
+		String path = req.getServletContext().getRealPath("/hot3/cb_img"); //파일 다운받을 폴더
+		//String path="C:\\git\\giriProject\\test1223\\WebContent\\board\\boardImg";
+		System.out.println(path);
+		int size = 1024*1024*100;
+		String enctype = "EUC-KR";
+		//파일업로드 라이브러리
+		MultipartRequest mr = new MultipartRequest(req, path, size, enctype);
+		
+		int cb_no = ClubBarDAO.cbNoMax()+1;
+		String m_email = mr.getParameter("hot3email");
+		String cb_name = mr.getParameter("hot3name");
+		String cb_crn = mr.getParameter("hot3crn");
+		String cb_tel = mr.getParameter("hot3phone");
+		String a_addr1 = mr.getParameter("hot3addr1");
+		String a_addr2 = mr.getParameter("hot3addr2");
+		String cb_content = mr.getParameter("hot3content");
+		String cb_open = mr.getParameter("hot3open");
+		int cb_img_cnt = Integer.parseInt(mr.getParameter("img_count"));
+		int cb_grade = Integer.parseInt(mr.getParameter("cb_grade"));
+		
+		for(int i = 0; i < cb_img_cnt; i++) {
+			String filename = mr.getParameter("filename"+i);
+			System.out.println("filename"+i+":"+filename);
+			
+			if(filename != null) {
+				File f = new File(path+"\\"+filename);
+				
+				File f2 = new File(path+"\\cb_img_"+cb_no+"_"+(i+1)+".jpg");
+				if(!f.renameTo(f2)) {
+					System.out.println("rename error : " + f);
+				}
+			}
+		}
+		
+		ClubBarVO vo = new ClubBarVO();
+		vo.setCb_no(cb_no);
+		vo.setCb_name(cb_name);
+		vo.setM_email(m_email);
+		vo.setCb_crn(cb_crn);
+		vo.setCb_tel(cb_tel);
+		vo.setA_addr1(a_addr1);
+		vo.setA_addr2(a_addr2);
+		vo.setCb_content(cb_content);
+		vo.setCb_open(cb_open);
+		vo.setCb_grade(cb_grade);
+		vo.setCb_img_cnt(cb_img_cnt);
+		
+		ClubBarDAO.hot3cbInsert(vo);
+		
+		req.setAttribute("cb_no", cb_no);
+		
+		return "hot3/hot3insert_ok.jsp";
+	}
+	
+	@RequestMapping("hot3delete.do")
+	public String hot3delete(HttpServletRequest req, HttpServletResponse res) {
+		String m_email = req.getParameter("email");
+		List<ClubBarVO> mycb = ClubBarDAO.getMyCb(m_email);
+		
+		req.setAttribute("mycb", mycb);
+		req.setAttribute("main_jsp", "../hot3/hot3delete.jsp");
+		
+		return "main/main.jsp";
+	}
+	
+	@RequestMapping("hot3delete_ok.do")
+	public String hot3delete_ok(HttpServletRequest req, HttpServletResponse res) {
+		int cb_no = Integer.parseInt(req.getParameter("cb_no"));
+		int cb_img_cnt = ClubBarDAO.getCbImgCnt(cb_no);
+
+		ClubBarDAO.hot3cbDelete(cb_no);
+		
+		for(int i = 0; i < cb_img_cnt; i++) {
+			String filename = "cb_img_"+cb_no+"_"+(i+1)+".jpg";
+			String path = req.getServletContext().getRealPath("/hot3/cb_img/");
+			path += filename;
+			File f = new File(path);
+			System.out.println("delete path : " + path);
+			if(f.exists()) f.delete();
+		}
+		
+		return "hot3/hot3delete_ok.jsp";
+	}
+	
+	@RequestMapping("hot3update.do")
+	public String hot3update(HttpServletRequest req, HttpServletResponse res) {
+		String m_email = req.getParameter("email");
+		List<ClubBarVO> mycb = ClubBarDAO.getMyCb(m_email);
+		
+		req.setAttribute("mycb", mycb);
+		req.setAttribute("main_jsp", "../hot3/hot3update.jsp");
+		
+		return "main/main.jsp";
+	}
+	
+	@RequestMapping("hot3update_ok.do")
+	public String hot3update_ok(HttpServletRequest req, HttpServletResponse res) throws Throwable {
+		req.setCharacterEncoding("EUC-KR");
+		String path = req.getServletContext().getRealPath("/hot3/cb_img"); //파일 다운받을 폴더
+		//String path="C:\\git\\giriProject\\test1223\\WebContent\\board\\boardImg";
+		System.out.println(path);
+		int size = 1024*1024*100;
+		String enctype = "EUC-KR";
+		//파일업로드 라이브러리
+		MultipartRequest mr = new MultipartRequest(req, path, size, enctype);
+		
+		int cb_no = Integer.parseInt(mr.getParameter("cb_no"));
+		String cb_name = mr.getParameter("hot3name"+cb_no);
+		String cb_tel = mr.getParameter("hot3phone"+cb_no);
+		String a_addr1 = mr.getParameter("hot3addr1"+cb_no);
+		String a_addr2 = mr.getParameter("hot3addr2"+cb_no);
+		String cb_content = mr.getParameter("hot3content"+cb_no);
+		String cb_open = mr.getParameter("hot3open"+cb_no);
+		int cb_img_cnt = Integer.parseInt(mr.getParameter("img_count"));
+		
+		for (int i = 0; i < 4; i++) {
+			path = req.getServletContext().getRealPath("/hot3/cb_img/");
+			String filename = "cb_img_" + cb_no + "_" + (i + 1) + ".jpg";
+			path += filename;
+			File f = new File(path);
+			System.out.println("delete path : " + path);
+			if (f.exists())
+				f.delete();
+		}
+		
+		for(int i = 0; i < cb_img_cnt; i++) {
+			path = req.getServletContext().getRealPath("/hot3/cb_img/");
+			String filename = mr.getParameter("filename"+i);
+			System.out.println("filename"+i+":"+filename);
+			
+			if(filename != null) {
+				File f = new File(path+"\\"+filename);
+				
+				File f2 = new File(path+"\\cb_img_"+cb_no+"_"+(i+1)+".jpg");
+				if(!f.renameTo(f2)) {
+					System.out.println("rename error : " + f);
+				}
+			}
+		}
+		
+		ClubBarVO vo = new ClubBarVO();
+		vo.setCb_no(cb_no);
+		vo.setCb_name(cb_name);
+		vo.setCb_tel(cb_tel);
+		vo.setA_addr1(a_addr1);
+		vo.setA_addr2(a_addr2);
+		vo.setCb_content(cb_content);
+		vo.setCb_open(cb_open);
+		vo.setCb_img_cnt(cb_img_cnt);
+		
+		ClubBarDAO.hot3cbUpdate(vo);
+		
+		req.setAttribute("cb_no", cb_no);
+		
+		return "hot3/hot3update_ok.jsp";
 	}
 }

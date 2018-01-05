@@ -1,13 +1,15 @@
 package com.sist.event.dao;
 
+import java.util.Date;
+
 import com.sist.clubbar.dao.ClubBarVO;
 
 public class EventVO {
 	private int e_no;
 	private int cb_no;
 	private String e_name;
-	private String e_regdate;
-	private String e_enddate;
+	private Date e_regdate;
+	private Date e_enddate;
 	private String e_content;
 	private String e_picture;
 	private int e_manpre;
@@ -18,6 +20,18 @@ public class EventVO {
 	
 	
 	
+	public Date getE_regdate() {
+		return e_regdate;
+	}
+	public void setE_regdate(Date e_regdate) {
+		this.e_regdate = e_regdate;
+	}
+	public Date getE_enddate() {
+		return e_enddate;
+	}
+	public void setE_enddate(Date e_enddate) {
+		this.e_enddate = e_enddate;
+	}
 	public ClubBarVO getCb() {
 		return cb;
 	}
@@ -42,12 +56,7 @@ public class EventVO {
 	public void setE_name(String e_name) {
 		this.e_name = e_name;
 	}
-	public String getE_enddate() {
-		return e_enddate;
-	}
-	public void setE_enddate(String e_enddate) {
-		this.e_enddate = e_enddate;
-	}
+	
 	public String getE_content() {
 		return e_content;
 	}
@@ -78,11 +87,6 @@ public class EventVO {
 	public void setE_interest(int e_interest) {
 		this.e_interest = e_interest;
 	}
-	public String getE_regdate() {
-		return e_regdate;
-	}
-	public void setE_regdate(String e_regdate) {
-		this.e_regdate = e_regdate;
-	}
+	
 	
 	}

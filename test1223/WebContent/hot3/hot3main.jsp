@@ -7,10 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HOT3</title>
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+<!-- <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style type="text/css">
@@ -332,7 +332,11 @@ alert("로그인 후 이용해주세요");
 		</div>
 		<br>
 		
-		<a href="hot3insert.do" class="btn hot3insert" name="hot3insert">점포등록</a>
+		<c:if test="${sessionScope.m_grade == '1' }">
+			<a href="hot3insert.do" class="btn hot3insert" name="hot3insert">점포등록</a>
+			<a href="hot3update.do?email=${sessionScope.m_email}" class="btn hot3insert" name="hot3insert">점포수정</a>
+			<a href="hot3delete.do?email=${sessionScope.m_email}" class="btn hot3insert" name="hot3insert">점포삭제</a>
+		</c:if>
 		
 		<span class="hot3grade" id="hit" style="font-weight:bold">조회순▼</span>&nbsp;
 		<span class="hot3grade" id="rating">별점순▼</span>&nbsp;

@@ -73,6 +73,13 @@
 	width: 50px;
 	font-size: 15px;
 }
+#modal{
+	position: fixed;
+	top:40%;
+	right: 0;
+  	bottom: 0;
+  	left: 0;
+}
 </style>
 <body>
 	<!-- 게시판 상세보기 -->
@@ -115,8 +122,8 @@
 			</div> -->
 			<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true"
-				data-backdrop="static" data-keyboard="fals`e">
-				<div class="modal-dialog">
+				data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog" id="modal">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">
