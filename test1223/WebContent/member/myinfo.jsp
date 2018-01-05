@@ -384,15 +384,15 @@ function readURL(input) {
                 </div>
             	<div class="modal-body">
             		<div class="info_input">
-            			현재 비밀번호 <input type="text" id="curpwd" class="form-control">
+            			현재 비밀번호 <input type="password" id="curpwd" class="form-control" style="font-family: 고딕체">
             		</div>
             		<form method="post" action="pwd_update.do" id="pwdfrm">
 					<div class="info_input">
-            			변경할 비밀번호 <input type="text" id="changepwd" name="changepwd" class="form-control">
+            			변경할 비밀번호 <input type="password" id="changepwd" name="changepwd" class="form-control" style="font-family: 고딕체">
             		</div>
             		</form>
             		<div class="info_input">
-            			비밀번호 확인 <input type="text" id="checkpwd" class="form-control">
+            			비밀번호 확인 <input type="password" id="checkpwd" class="form-control" style="font-family: 고딕체">
             		</div>
             		<div id="pwdcon" class="text-left" style="margin-left: 20px;"></div>
             		<br>

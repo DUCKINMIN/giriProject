@@ -112,7 +112,7 @@ var readmore = function readmore(limit, max) {
 		<input type="hidden" value="5" id="limit">
 		<c:forEach var="vo" items="${list}" varStatus="status">
 			<div class="hot3list" id="hot3${status.index}"
-				style="background-image: url('hot3/cb_img/cb_img_${vo.cb_no}.jpg'); display: none;">
+				style="background-image: url('hot3/cb_img/cb_img_${vo.cb_no}_1.jpg'); display: none;">
 				<div class="hot3content" onclick="location.href='cb_detail.do?cb_no=${vo.cb_no}'">
 					<p class="hot3cb_name">${vo.cb_name}</p>
 					<p class="hot3cb_content">${vo.cb_content}</p>
