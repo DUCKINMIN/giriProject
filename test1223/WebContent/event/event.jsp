@@ -9,7 +9,10 @@
 
 <title>Insert title here</title>
 <script type="text/javascript">
-                                 
+<c:if test="${sessionScope.m_email==null}">
+location.href="index.jsp";
+alert("로그인 후 이용해주세요");
+</c:if>                                
 </script>
 <style type="text/css">
 .tContainer{
@@ -86,6 +89,11 @@
 		<div style="height:30px;"></div>
 			
 		<div class="row">
+		<c:if test="${listSize==0 }">
+			<h2 style="text-align: center;">등록된 이벤트가 없습니다.</h2>
+			<div style="height:30px"></div>
+		</c:if>
+		<c:if test="${listSize!=0 }">
 		<c:set var="i" value="0"/>
 		<c:forEach var="vo" items="${list }">
 		  <div class="col-sm-6 col-md-4"  >
@@ -179,9 +187,9 @@
 		   <c:set var="i" value="${i+1}"/>
 		   
 		  </c:forEach> 
-		   
+		  </c:if>
 	     </div>
-	   
+	    
 	   <%--페이지 번호 --%>
 	  
 	  <div id="board_page" style="float:left; width: 75%; margin:30px 0px 30px 0px">

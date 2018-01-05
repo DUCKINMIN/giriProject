@@ -87,6 +87,7 @@ public class EventModel {
 		int totalpage=EventDAO.eventEndPage();
 		//System.out.println(list.get(0));
 		
+		req.setAttribute("listSize", list.size());
 		req.setAttribute("eCurpage", curpage);
 		req.setAttribute("eTotalpage", totalpage);
 		req.setAttribute("list", list);
