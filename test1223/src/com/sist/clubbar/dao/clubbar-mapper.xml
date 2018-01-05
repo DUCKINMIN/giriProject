@@ -129,6 +129,11 @@
  		DELETE FROM cart WHERE m_email=#{m_email} AND cb_no=#{cb_no}
  	</delete>
  	
+ 	<!-- totalpage -->
+ 	<select id="getTotalPage" resultType="int" parameterType="int">
+ 		SELECT CEIL(COUNT(*)/10) FROM clubbar_comment WHERE cb_no = #{cb_no} AND cbc_root = 0
+ 	</select>
+ 	
  	<!-- 창석 -->
 <!--  	SELECT cb.cb_no, cb.cb_name, cb.cb_content, cb.cb_hit, rtable.rating, jtable.jjim
 FROM clubBar cb

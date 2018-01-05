@@ -161,4 +161,18 @@ public class ClubBarCommentDAO {
 			System.out.println("cbcReplyUpdate : " + e.getMessage());
 		}
 	}
+	
+	//totalpage
+	public static int totalPage(int cb_no) {
+		int total = 0;
+		SqlSession session = ssf.openSession();
+		
+		try {
+			total = session.selectOne("getTotalPage", cb_no);
+			System.out.println("dd"+total);
+		} catch (Exception e) {
+			System.out.println("getTotalPage : " + e.getMessage());
+		}
+		return total;
+	}
 }

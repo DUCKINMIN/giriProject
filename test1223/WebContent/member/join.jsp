@@ -180,17 +180,22 @@ $(function(){
 			$('#telcon').html("<font color=red>핸드폰번호를 정확하게 입력해주세요</font>");
 			$(".telcheck").hide(500);			
 		} else if(number.trim().length == 11 && phonetest.test(number)==true){
-			$(".telcheck").show(500);
-			$('#telcon').html("<font color=blue>인증번호를 전송했습니다 인증번호를 입력해주세요</font>");
-			
+			alert('ddd');
 			$.ajax({
 				type:"post",
 				url:"telCheck.do",
+				data:{"number":number},
 				success:function(data){
 					checkno = data.trim();
-					alert(checkno);
+					if (checkno=='1') {
+						$('#telcon').html("<font color=red>이미 등록된 핸드폰번호입니다 다시입력해주세요</font>");
+						return;
+					} else if(!checkno!='1')  {
+						$(".telcheck").show(500);
+						$('#telcon').html("<font color=blue>인증번호를 전송했습니다 인증번호를 입력해주세요</font>");
+					}	
 				}
-			});
+			});				
 		}
 	});
 	

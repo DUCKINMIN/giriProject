@@ -46,7 +46,13 @@ public class MemberModel {
 	// 인증번호체크
 	@RequestMapping("telCheck.do")
 	public String telCheck(HttpServletRequest req, HttpServletResponse res) {	
-		int checkno = (int)(Math.random() * 89999) + 10000;
+		String m_tel = req.getParameter("number");
+		int count = MemberDao.telCount(m_tel);
+		int checkno = (int)(Math.random() * 89999) + 10000;		
+		if (count == 1) {
+			checkno = 1;
+		}
+		System.out.println(checkno);
 		req.setAttribute("checkno", checkno);
 		return "member/telcheck.jsp";
 	}
@@ -468,10 +474,11 @@ public class MemberModel {
 			vo.setE_regdate(e_regdate);
 			vo.setE_enddate(e_enddate);
 			vo.setE_content(e_content);
+			vo.setE_no(Integer.parseInt(e_no));
 	
 			//DAO연결
 			MemberDao dao=new MemberDao();
-			dao.eventUpdateOk(Integer.parseInt(e_no));
+			dao.eventUpdateOk(vo);
 			}catch(Exception ex) {
 				System.out.println(ex.getMessage());
 			}

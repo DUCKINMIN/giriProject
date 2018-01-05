@@ -261,7 +261,6 @@ form {
 		
 		$(".del_btn").click(function() {
 			var d_id = $(this).attr("id");
-			alert("d_id : " + d_id);
 			d_id = d_id.split("_");//인덱스 1에 저장
 				
 			location.href = "cbcDelete_ok.do?cb_no=" + d_id[1] + "&cbc_no=" + d_id[2];
@@ -581,11 +580,35 @@ form {
 		</div>
 		<div id="board_page">
             <center>
-               <a href="#"><</a>&nbsp;&nbsp;&nbsp;
+               <%-- <a href="#"><</a>&nbsp;&nbsp;&nbsp;
                <c:forEach var="i" begin="1" end="10">
                   <a href="#">${i }</a>&nbsp;
                      </c:forEach>
-               &nbsp;&nbsp;&nbsp;<a href="#">></a>
+               &nbsp;&nbsp;&nbsp;<a href="#">></a> --%>
+                    <c:choose>
+				        <c:when test="${curpage>block }">
+				          <a href="cb_detail.do?cb_no=${vo.cb_no }&rpage=${fromPage-1 }&review=1">< &nbsp;</a>
+				        </c:when>
+				        <c:otherwise>
+				          <span><&nbsp;</span>
+				        </c:otherwise>
+				       </c:choose>
+				       <c:forEach var="i" begin="${fromPage }" end="${toPage }">
+				        <c:if test="${i==curpage }">
+				          ${i }&nbsp;
+				        </c:if>
+				        <c:if test="${i!=curpage }">
+				          <a href="cb_detail.do?cb_no=${vo.cb_no }&rpage=${i }&review=1">${i }&nbsp;</a>
+				        </c:if>
+				       </c:forEach>
+				       <c:choose>
+				       <c:when test="${toPage<allpage }">
+				          <a href="cb_detail.do?cb_no=${vo.cb_no }&rpage=${toPage+1 }&review=1">></a>
+				        </c:when>
+				        <c:otherwise>
+				          <span>></span>
+				        </c:otherwise>
+				      </c:choose>
             </center>
          </div>
 	</div>

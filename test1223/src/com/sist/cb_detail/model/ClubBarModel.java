@@ -65,6 +65,14 @@ public class ClubBarModel {
 		
 		List<ClubBarCommentVO> cbc_list = ClubBarCommentDAO.cbCommentList(cbc_map);
 		
+		int totalpage = ClubBarCommentDAO.totalPage(cb_no);
+		int block = 10;
+		int fromPage = ((curpage-1)/block*block)+1;
+		int toPage = ((curpage-1)/block*block) + block;
+		int allpage = ClubBarCommentDAO.totalPage(cb_no);
+		if(toPage > allpage)
+			toPage = allpage;
+		
 		//대댓글 리스트 보내기
 		Map rc_cbc_map = new HashMap();
 		rc_cbc_map.put("cb_no", cb_no);
@@ -86,6 +94,14 @@ public class ClubBarModel {
 		cartVo.setM_email(m_email);
 		vo.setJjim(ClubBarDAO.cartCount(cartVo));
 		
+		System.out.println("totalpage : " + totalpage);
+		
+		req.setAttribute("curpage", curpage);
+		req.setAttribute("block", block);
+		req.setAttribute("allpage", allpage); 
+		req.setAttribute("fromPage", fromPage);
+	    req.setAttribute("toPage", toPage);
+	    req.setAttribute("totalpage", totalpage);
 		req.setAttribute("review", review);
 		req.setAttribute("rc_list", rc_list);
 		req.setAttribute("mList", mList);
