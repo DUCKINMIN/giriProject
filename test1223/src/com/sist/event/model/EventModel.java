@@ -123,9 +123,7 @@ public class EventModel {
 			content=content.replaceAll("\n", "<br>");
 			String filename=mr.getOriginalFileName("upload");
 			
-			//cb_no값 받아오기(여러개일 경우 포함)
-			List<EventVO> list=new ArrayList<EventVO>();
-			//int cb_no=EventDAO.eventCallClubbarNo(email);
+			
 			
 			File file = new File(path + "\\" + filename);
 			File file2 =  new File(path + "\\" + eno + ".jpg");
@@ -134,11 +132,12 @@ public class EventModel {
 					System.err.println("이름 변경 에러 : " + file);
 	
 				}
-			
+			//cb_no값 받아오기(여러개일 경우 포함)
+			int cb_no=EventDAO.eventCallClubbarNo(email);
 				
-			EventVO vo=new EventVO();
 			//필수
-			//vo.setCb_no(cb_no);
+			EventVO vo=new EventVO();
+			vo.setCb_no(cb_no);
 			vo.setE_no(eno);
 			vo.setE_name(name);
 			vo.setE_regdate(startdate);
@@ -148,6 +147,9 @@ public class EventModel {
 			//DAO연결
 			EventDAO dao=new EventDAO();
 			dao.eventInsertData(vo);
+			
+			
+			
 			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

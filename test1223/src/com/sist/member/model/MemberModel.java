@@ -474,10 +474,11 @@ public class MemberModel {
 			vo.setE_regdate(e_regdate);
 			vo.setE_enddate(e_enddate);
 			vo.setE_content(e_content);
+			vo.setE_no(Integer.parseInt(e_no));
 	
 			//DAO¿¬°á
 			MemberDao dao=new MemberDao();
-			dao.eventUpdateOk(Integer.parseInt(e_no));
+			dao.eventUpdateOk(vo);
 			}catch(Exception ex) {
 				System.out.println(ex.getMessage());
 			}

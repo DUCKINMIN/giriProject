@@ -146,18 +146,18 @@ public class EventDAO {
 	//cb_no 값 불러오기
 	//mapper resultType =>테이블 행
 	//selectOne(), selectList() =>테이블 열
-	public static List<EventVO> eventCallClubbarNo(String m_email) {
-		List<EventVO> list=new ArrayList<EventVO>();
+	public static int eventCallClubbarNo(String m_email) {
+		int cb_no=0;
 		SqlSession session=ssf.openSession();
 		try {
-			list=session.selectList("eventCallClubbarNo",m_email);
+			cb_no=session.selectOne("eventCallClubbarNo",m_email);
 		}catch(Exception ex) {
 			System.out.println("eventCallClubbarNo"+ex.getMessage());
 		}finally {
 			if(session!=null)
 				session.close();
 		}
-		return list;
+		return cb_no;
 	}
 }
 
