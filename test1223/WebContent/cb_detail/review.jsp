@@ -335,7 +335,7 @@ form {
 					<!-- 사용자 정보 & 내용 -->
 					<tr>
 						<td width="10%" class="text-center user_info">
-							<div id="board_pro"  style="background-image: url('cb_detail/image/pro.png')"></div>
+							<div id="board_pro"  style="background-image: url('member/profile/${cbc_vo.m_profile }')"></div>
 							<div class="pro_name">
 								<!-- 사용자 닉네임 -->
 								<!-- 임시로 이메일 -->

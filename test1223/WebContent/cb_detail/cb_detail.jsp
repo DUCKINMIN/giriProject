@@ -454,13 +454,9 @@ $(function() {
 					data-transition="crossfade" class="fotorama" data-nav="thumbs"
 					data-loop="true" data-autoplay="2000" data-fit="scaledown">
 					<!-- 가게 사진 등록한 수 만큼 -->
-					<%-- <c:forEach var="i" begin="1" end="${vo.cb_img_cnt }">
+					<c:forEach var="i" begin="1" end="${vo.cb_img_cnt }">
 						<img src="hot3/cb_img/cb_img_${vo.cb_no }_${i }.jpg">
-					</c:forEach> --%>
-					<img src="cb_detail/image/123.jpg">
-					<img src="cb_detail/image/456.jpg">
-					<img src="cb_detail/image/789.png">
-					<img src="cb_detail/image/1010.jpg">
+					</c:forEach>
 				</div>
 			</div>
 		</div>

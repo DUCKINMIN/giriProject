@@ -34,9 +34,9 @@
 	
 	<!-- 댓글 가져오기 -->
 	<select id="cbCommentList" resultType="ClubBarCommentVO" parameterType="java.util.Map">
-		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI') as dbday, cbc_rating, m_nick, m_email, cbc_group_tab, cbc_group_id, num
-		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, cbc_group_id, m_email, rownum as num
-		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, cbc.cbc_group_id, m.m_email
+		SELECT cbc_no, cbc_content, TO_CHAR(cbc_regdate,'YYYY-MM-DD HH24:MI') as dbday, cbc_rating, m_nick, m_email, cbc_group_tab, cbc_group_id, m_profile, num
+		FROM (SELECT cbc_no, cbc_content, cbc_regdate, cbc_rating, m_nick, cbc_group_tab, cbc_group_id, m_email, m_profile, rownum as num
+		FROM (SELECT cbc.cbc_no, cbc.cbc_content, cbc.cbc_regdate, cbc.cbc_rating, m.m_nick, cbc.cbc_group_tab, cbc.cbc_group_id, m.m_profile, m.m_email
 		FROM clubbar_comment cbc, member m WHERE cb_no=#{cb_no} AND cbc.m_email=m.m_email AND cbc_root=0 ORDER BY cbc_group_id DESC, cbc_group_step ASC))
 		WHERE num BETWEEN #{start} AND #{end} 
  	</select>

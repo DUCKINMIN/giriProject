@@ -6,6 +6,7 @@ public class ClubBarCommentVO {
 	private int cbc_no;
 	private String m_email;
 	private String m_nick;
+	private String m_profile;
 	private Date cbc_regdate;
 	private String cbc_content;
 	private int cb_no;
@@ -17,6 +18,12 @@ public class ClubBarCommentVO {
 	private int depth;
 	private String dbday;
 
+	public String getM_profile() {
+		return m_profile;
+	}
+	public void setM_profile(String m_profile) {
+		this.m_profile = m_profile;
+	}
 	public String getM_nick() {
 		return m_nick;
 	}
