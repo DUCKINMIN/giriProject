@@ -194,7 +194,6 @@
 		$(".reply_wrap").hide();
 		$(".reply_btn").click(function() {
 			var btn_id = $(this).attr("id");
-			alert(btn_id);
 			btn_id = btn_id.split("_");
 			if ($(this).html() == "닫&nbsp;&nbsp;&nbsp;기") {
 				$(this).html("댓&nbsp;&nbsp;&nbsp;글");
@@ -225,7 +224,7 @@
 			x_btn_id = x_btn_id.split("_"); //인덱스 3으로 아이디분류
 			$("#re_re_xBtn_" + x_btn_id[3]).html("");
 			$("#re_re_nick_" + x_btn_id[3]).text("");
-			$(".re_content_update_" + re_btn_id[2]).html("<textarea class='form-control' rows='2' id='re_content_${i.index }' name='cbc_content'></textarea>");
+			$(".re_content_update_" + re_btn_id[2]).html("<textarea class='form-control' rows='2' id='re_content_${i.index }' name='bc_content'></textarea>");
 		});
 		
 		//<span class="update_rating update_rating_${i.index }" id="update_rating_insert">
@@ -370,8 +369,8 @@
 								${bc_vo.dbday }<!-- 2017-12-11 -->&nbsp;&nbsp;&nbsp; <c:if
 									test="${sessionScope.m_email == bc_vo.m_email  }">
 									<span class="up_btn" id="up_${i.index }">수 정</span>&nbsp;&nbsp;
-									<form action="board_comment_delete.do" method="post" id="delFrm_${i.index }">
-									<span class="del_btn" id="del_${i.index }">삭 제</span>&nbsp;&nbsp;
+									<form action="board_comment_delete.do" method="post" id="delFrm_${bc_vo.bc_no }">
+									<span class="del_btn" id="del_${bc_vo.bc_no }">삭 제</span>&nbsp;&nbsp;
 									<input type="hidden" name="b_no" value="${bc_vo.b_no }"> 
 									<input type="hidden" name="bc_no" value="${bc_vo.bc_no }">
 									<input type="hidden" name="grade" value="${vo.b_grade }">
@@ -469,11 +468,16 @@
 										<span>
 											<!-- 리뷰등록날짜 --><!-- 2017-12-15 -->${cvo.dbday }&nbsp;&nbsp;&nbsp;
 										</span> 
+										
 										<c:if test="${sessionScope.m_email == cvo.m_email  }">
 											<span class="click_ok re_up_btn" id="re_up_btn_${i.index }_${j.index}">수 정</span>&nbsp;&nbsp;
-											
-											<span class="click_ok del_btn" id="del_${vo.b_no}_${cvo.bc_no }">삭 제</span>&nbsp;&nbsp;
-												
+											<form action="board_comment_delete.do" method="post" id="delFrm_${cvo.bc_no }">
+											<span class="click_ok del_btn" id="del_${cvo.bc_no }">삭 제</span>&nbsp;&nbsp;
+											<input type="hidden" name="b_no" value="${bc_vo.b_no }"> 
+											<input type="hidden" name="bc_no" value="${cvo.bc_no }">
+											<input type="hidden" name="grade" value="${vo.b_grade }">
+											<input type="hidden" name="page" value="${page}">
+											</form>
 										</c:if>
 										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }_${cvo.bc_no}">댓&nbsp;&nbsp;&nbsp;글</button>
 									</td>
@@ -482,7 +486,7 @@
 						</c:if>
 						<!-- 대댓글 수정-------------------------------------------------------------------------------------------------- -->
 						<div class="reply_update" id="reply_up_${i.index }_${j.index}">
-							<form action="cocomment_update.do" method="post">
+							<form action="board_comment_update.do" method="post">
 								<table class="reply_insert">
 									<!-- 사용자 정보 & 내용 -->
 									<tr>
@@ -495,6 +499,8 @@
 												<input type="hidden" name="b_no" value="${vo.b_no }">
 												<input type="hidden" name="bc_no" value="${cvo.bc_no }">
 												<input type="hidden" name="review" value="1">
+												<input type="hidden" name="grade" value="${vo.b_grade }">
+												<input type="hidden" name="page" value="${page}">
 												${sessionScope.m_nick }
 											</div>
 											
@@ -561,7 +567,7 @@
 										<a id="re_re_xBtn_${i.index }" class="re_re_xBtn"></a>
 									</div>
 									<div class="re_content_update_${i.index }">
-										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="cbc_content"></textarea>
+										<textarea class="form-control" rows="2" id="re_content_${i.index }" name="bc_content"></textarea>
 									</div>
 								</td>
 							</tr>

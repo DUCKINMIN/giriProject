@@ -172,7 +172,7 @@ public class BoardDAO {
 	public static void boardUpdate(BoardVO vo) {
 		SqlSession session = ssf.openSession(true);
 		try {
-			session.update("boardUpdate",vo);
+			session.update("boardUpdateData",vo);
 		}catch(Exception e) {
 			System.out.println("boardUpdate : " + e.getMessage());
 		}finally {

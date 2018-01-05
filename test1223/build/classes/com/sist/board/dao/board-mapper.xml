@@ -59,8 +59,8 @@
 	
 	<!-- 게시물 수정 -->
 	<update id="boardUpdateData" parameterType="BoardVO">
-		UPDATE SET
-		b_subject=#{b_subject}, b_content=#{b_content}, #{b_img_cnt}
+		UPDATE board SET
+		b_subject=#{b_subject}, b_content=#{b_content}, b_img_cnt=#{b_img_cnt}
 		WHERE b_no = #{b_no}
 	</update>
 	<!-- 이미지 cnt -->

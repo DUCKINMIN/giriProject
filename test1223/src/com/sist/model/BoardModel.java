@@ -343,17 +343,24 @@ public class BoardModel {
 			String grade = req.getParameter("grade");
 			String page = req.getParameter("page");
 			String b_no = req.getParameter("b_no");
-			String bc_root = req.getParameter("bc_root");
-			if (bc_root==null)
-				bc_root="0";
+			String bc_pcno = req.getParameter("bc_pcno");
+			String bc_pcnick = req.getParameter("bc_pcnick");
+			String bc_root = "";
+			if (bc_pcno==null)
+				bc_root = req.getParameter("bc_root");
 			String bc_content = req.getParameter("bc_content");
-			System.out.println(bc_content);
 			HttpSession session = req.getSession();
 			String m_email = (String)session.getAttribute("m_email");
-			System.out.println(m_email);
+			//대대댓글인 경우 => 부모를 설정
+			if(bc_pcno != null) {
+				bc_root = bc_pcno;
+				bc_pcnick += bc_content;
+				bc_content = bc_pcnick;
+			}
 			//DB연동
 			BoardCommentVO pvo = BoardDAO.commentGetParentInfo(Integer.parseInt(bc_root));
 			BoardCommentVO vo = new BoardCommentVO();
+			
 			vo.setB_no(Integer.parseInt(b_no));
 			vo.setM_email(m_email);
 			vo.setBc_content(bc_content);
