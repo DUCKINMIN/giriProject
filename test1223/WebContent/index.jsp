@@ -77,7 +77,13 @@
 #myModalLabel{
 	color: white;
 }
-
+#modal{
+	position: fixed;
+	top:20%;
+	right: 0;
+  	bottom: 0;
+  	left: 0;
+}
 /* ¹Ìµð¾îÄõ¸® */
 @media ( max-width : 992px) {
 	#logo {
@@ -138,7 +144,7 @@
 				<!-- 09-->
             	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
             	data-backdrop="static" data-keyboard="false">
-               		<div class="modal-dialog">
+               		<div class="modal-dialog" id="modal">
                   		<div class="modal-content">
                      		<div class="modal-header">
                         		<button type="button" class="close" data-dismiss="modal">
@@ -159,7 +165,7 @@
 				<!-- ¸ð´Þ ÆË¾÷ -->
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
+					<div class="modal-dialog" id="modal">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">

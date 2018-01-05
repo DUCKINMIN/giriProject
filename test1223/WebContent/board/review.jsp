@@ -277,7 +277,7 @@
 			
 			del_id = del_id.split("_");
 			$('#delFrm_'+del_id[1]).submit();
-			alert('#delFrm_'+del_id[1]);
+			alert("댓글이 삭제되었습니다");
 		});
 
 		/* $(".re_noupdate_btn").click(function() {
@@ -375,6 +375,7 @@
 									<input type="hidden" name="bc_no" value="${bc_vo.bc_no }">
 									<input type="hidden" name="grade" value="${vo.b_grade }">
 									<input type="hidden" name="page" value="${page}">
+									<input type="hidden" name="rpage" value="${curpage }">
 									</form>
 								</c:if>
 
@@ -399,6 +400,7 @@
 											type="hidden" name="bc_no" value="${bc_vo.bc_no }">
 											<input type="hidden" name="grade" value="${vo.b_grade }">
 											<input type="hidden" name="page" value="${page}">
+											<input type="hidden" name="rpage" value="${curpage}">
 										<input type="hidden" name="review" value="1">
 										${sessionScope.m_nick }
 									</div>
@@ -411,13 +413,7 @@
 							</tr>
 
 							<tr>
-								<td>
-									<div class="list_star">
-										<!-- 별점주기  id="update_rating_insert"-->
-
-									</div>
-								</td>
-								<td class="text-right">
+								<td class="text-right" colspan="2">
 									<div class="star_insert">
 										<input type="button" class="btn re_noupdate_btn"
 											id="no_up_${i.index }" value="취&nbsp;&nbsp;&nbsp;&nbsp;소" />
@@ -466,7 +462,7 @@
 									<td colspan="2"></td>
 									<td width="87%" class="text-right">
 										<span>
-											<!-- 리뷰등록날짜 --><!-- 2017-12-15 -->${cvo.dbday }&nbsp;&nbsp;&nbsp;
+											${cvo.dbday }&nbsp;&nbsp;&nbsp;
 										</span> 
 										
 										<c:if test="${sessionScope.m_email == cvo.m_email  }">
@@ -477,6 +473,7 @@
 											<input type="hidden" name="bc_no" value="${cvo.bc_no }">
 											<input type="hidden" name="grade" value="${vo.b_grade }">
 											<input type="hidden" name="page" value="${page}">
+											<input type="hidden" name="rpage" value="${curpage}">
 											</form>
 										</c:if>
 										<button class="btn re_reply_btn"  id="re_btn_${i.index }_${j.index }_${cvo.bc_no}">댓&nbsp;&nbsp;&nbsp;글</button>
@@ -501,6 +498,7 @@
 												<input type="hidden" name="review" value="1">
 												<input type="hidden" name="grade" value="${vo.b_grade }">
 												<input type="hidden" name="page" value="${page}">
+												<input type="hidden" name="rpage" value="${curpage }">
 												${sessionScope.m_nick }
 											</div>
 											
@@ -529,7 +527,7 @@
 						</div>
 						<!--대댓글수정 --------------------------------------------------------------------------------------------------------- -->
 					</c:forEach>
-
+<%-- 
 					<div id="reply_page">
 						<center>
 							<a href="#"><</a>&nbsp;&nbsp;&nbsp;
@@ -538,7 +536,7 @@
 			               </c:forEach>
 							&nbsp;&nbsp;&nbsp;<a href="#">></a>
 						</center>
-					</div>
+					</div> --%>
 					<!-- 대댓글 등록---------------------------------------------------------------------------------------------- -->
 					<form action="board_cocoment_insert.do" method="post">
 						<table class="reply_insert">
@@ -557,6 +555,7 @@
 											type="hidden" name="bc_root" value="${bc_vo.bc_no }">
 										<input type="hidden" name="review" value="1">
 										<input type="hidden" name="grade" value="${vo.b_grade }">
+										<input type="hidden" name="rpage" value="${curpage }">
 											<input type="hidden" name="page" value="${page}">
 									</div>
 
@@ -586,11 +585,38 @@
 		</div>
 		<div id="board_page">
 			<center>
-				<a href="#"><</a>&nbsp;&nbsp;&nbsp;
+				<%-- <a href="#"><</a>&nbsp;&nbsp;&nbsp;
 				<c:forEach var="i" begin="1" end="${totalpage }">
 					<a href="#">${i }</a>&nbsp;
                 </c:forEach>
-				&nbsp;&nbsp;&nbsp;<a href="#">></a>
+				&nbsp;&nbsp;&nbsp;<a href="#">></a> --%>
+				<c:choose>
+					<c:when test="${curpage>block }">
+						<a
+							href="board_content.do?no=${vo.b_no }&rpage=${fromPage-1 }&grade=${grade }&page=${page }&review=1"><
+							&nbsp;</a>
+					</c:when>
+					<c:otherwise>
+						<span><&nbsp;</span>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="i" begin="${fromPage }" end="${toPage }">
+					<c:if test="${i==curpage }">
+				         <b style="font-size:18px">${i }</b> &nbsp;
+				        </c:if>
+					<c:if test="${i!=curpage }">
+						<a href="board_content.do?no=${vo.b_no }&rpage=${i }&grade=${grade }&page=${page }&review=1">${i }&nbsp;</a>
+					</c:if>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${toPage<allpage }">
+						<a
+							href="board_content.do?no=${vo.b_no }&rpage=${toPage+1 }&grade=${grade }&page=${page }&review=1">></a>
+					</c:when>
+					<c:otherwise>
+						<span>></span>
+					</c:otherwise>
+				</c:choose>
 			</center>
 		</div>
 	</div>

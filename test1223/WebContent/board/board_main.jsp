@@ -174,6 +174,10 @@ ul.tabs li.active {
 <!-- 게시판 모드 css -->
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+<c:if test="${sessionScope.m_email==null}">
+location.href="index.jsp";
+alert("로그인 후 이용해주세요");
+</c:if>
 	$(function() {
 		 var grade = ${grade};
 		 var id = $(this).attr("id");

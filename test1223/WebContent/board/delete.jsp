@@ -11,8 +11,7 @@
 		<p>삭제하시겠습니까?</p>
 		<a href="board_delete_ok.do?page=${page }&grade=${vo.b_grade}&no=${vo.b_no}"><input
 				class="btn board_btn board_contentBtn" type="button" value="삭제"></a>
-		<input class="btn board_btn board_contentBtn" type="button" value="취소"
-				onclick="javascript:history.back()">
+		<input class="btn board_btn board_contentBtn" data-dismiss="modal" type="button" value="취소">
 	</center>
 </body>
 </html>
