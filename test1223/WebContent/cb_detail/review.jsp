@@ -261,7 +261,6 @@ form {
 		
 		$(".del_btn").click(function() {
 			var d_id = $(this).attr("id");
-			alert("d_id : " + d_id);
 			d_id = d_id.split("_");//인덱스 1에 저장
 				
 			location.href = "cbcDelete_ok.do?cb_no=" + d_id[1] + "&cbc_no=" + d_id[2];
