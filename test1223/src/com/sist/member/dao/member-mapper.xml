@@ -206,10 +206,9 @@
 		WHERE e_no=#{e_no}
 	</select>
 		<update id="eventUpdateOk" parameterType="EventVO">
-		UPDATE event SET e_name=#{e_name},e_regdate=#{e_regdate}
-		,e_enddate=#{e_enddate},e_content=#{e_content}
+		UPDATE event SET e_name=#{e_name},e_regdate=#{e_regdate},e_enddate=#{e_enddate},e_content=#{e_content}
 		WHERE e_no=#{e_no}
-,	</update>
+	</update>
 	<!-- 이벤트 관리 삭제 -->
 	<delete id="eventDelete" parameterType="int">
 		DELETE FROM event

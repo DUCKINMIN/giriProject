@@ -410,6 +410,7 @@ public class MemberModel {
 		}catch(Exception ex) {}
 		String page=req.getParameter("page");
 		String e_no=req.getParameter("e_no");
+		System.out.println(e_no);
 		
 		EventVO vo=new EventVO();
 		vo=MemberDao.eventUpdateData(Integer.parseInt(e_no));
@@ -445,11 +446,11 @@ public class MemberModel {
 			String e_name=mr.getParameter("name");
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			Date e_regdate=sdf.parse(mr.getParameter("startDate"));
-			Date e_enddate=sdf.parse(mr.getParameter("closeDate"));
+			Date e_enddate=sdf.parse(mr.getParameter("endDate"));
 			String e_content=mr.getParameter("content");
 			String e_no=mr.getParameter("e_no");
+			System.out.println(e_no);
 			e_content=e_content.replaceAll("\n", "<br>");
-			
 			String filename=mr.getOriginalFileName("upload");
 			
 			//파일 삭제
@@ -469,7 +470,7 @@ public class MemberModel {
 					System.err.println("이름 변경 에러 : " + file);
 	
 				}
-				System.out.println("3");
+				System.out.println("1"+e_name+"2"+e_regdate+"3"+e_enddate+"4"+e_content+"5"+e_no);
 			EventVO vo=new EventVO();
 			//필수
 			vo.setE_name(e_name);

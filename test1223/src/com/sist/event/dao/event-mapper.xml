@@ -54,7 +54,7 @@
   		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.num 
   		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
   		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_DATE(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC )) e
+  		FROM event WHERE e_enddate<![CDATA[>=]]>TO_DATE(SYSDATE,'YYYY-MM-DD') ORDER BY e_enddate ASC )) e
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventOngoingPage" resultType="int">
@@ -76,7 +76,7 @@
   		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.num 
   		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
   		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
-  		FROM event WHERE e_enddate<![CDATA[<]]>TO_DATE(SYSDATE,'YYYY/MM/DD') ORDER BY e_enddate ASC  )) e
+  		FROM event WHERE e_enddate<![CDATA[<]]>TO_DATE(SYSDATE,'YYYY-MM-DD') ORDER BY e_enddate ASC  )) e
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventEndPage" resultType="int">
