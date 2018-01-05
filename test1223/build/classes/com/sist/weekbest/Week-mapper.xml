@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM clubBar cb1, (SELECT cb.cb_no, AVG(cb.cb_hit) as avghit,
 		ROUND(AVG(cbc.cbc_rating), 1) as roundrating FROM clubbar cb,
 		clubBar_comment cbc
-		WHERE cb.cb_no = cbc.cb_no
+		WHERE cb.cb_no = cbc.cb_no AND cbc_root = 0
 		AND cb.cb_weekhit = (SELECT MAX(cb_weekHit)
 		FROM clubBar
 		WHERE a_addr1 LIKE '%'||#{name}||'%')
