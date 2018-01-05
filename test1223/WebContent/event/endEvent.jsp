@@ -132,7 +132,10 @@
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">주소</th>
-		      					<td width="80%">${vo.cb.a_addr1 } ${vo.cb.a_addr2 }</td>
+		      					<td width="80%">
+		      					<fmt:formatDate value="${vo.e_regdate }" pattern="yyyy-MM-dd"/>~
+		      					<fmt:formatDate value="${vo.e_enddate }" pattern="yyyy-MM-dd"/>
+		      					</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">일시</th>

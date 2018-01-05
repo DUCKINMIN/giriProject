@@ -16,6 +16,7 @@ import com.sist.member.dao.MemberDao;
 import com.sist.member.dao.MemberVo;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 @Controller
 public class MemberModel {
@@ -442,8 +443,9 @@ public class MemberModel {
 			
 			
 			String e_name=mr.getParameter("name");
-			String e_regdate=mr.getParameter("startDate");
-			String e_enddate=mr.getParameter("closeDate");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			Date e_regdate=sdf.parse(mr.getParameter("startDate"));
+			Date e_enddate=sdf.parse(mr.getParameter("closeDate"));
 			String e_content=mr.getParameter("content");
 			String e_no=mr.getParameter("e_no");
 			e_content=e_content.replaceAll("\n", "<br>");
