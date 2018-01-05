@@ -58,7 +58,7 @@
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventOngoingPage" resultType="int">
-  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 종료 검색 -->
   	<resultMap type="EventVO" id="eventEndData">
@@ -80,7 +80,7 @@
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventEndPage" resultType="int">
-  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 점주 체크 -->
   	<select id="ownerCheck" resultType="int" parameterType="String">

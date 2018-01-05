@@ -13,12 +13,12 @@
 </script>
 <style type="text/css">
 .tContainer{
-	width:80%;
-	border:1px solid black;
+	width:100%;
+	
 }
 .container {
 	width:70%;
-	border:1px solid red;
+	
 	
 }
 
@@ -185,12 +185,12 @@
 	  
 	  <div id="board_page" style="float:left; width: 75%; margin-top:10px;">
             <center>
-               <a href="event.do?page=${curpage>1?curpage-1:curpage }"><</a>&nbsp;&nbsp;&nbsp;
-              	<c:forEach var="i" begin="1" end="${totalpage}" >
-                  <a href="event.do?page=${i }">[${i }]</a>&nbsp;
+               <a href="endEvent.do?page=${eCurpage>1?eCurpage-1:eCurpage }"><</a>&nbsp;&nbsp;&nbsp;
+              	<c:forEach var="k" begin="1" end="${eTotalpage}" >
+                  <a href="endEvent.do?page=${k }">[${k }]</a>&nbsp;
                  </c:forEach>
                
-               &nbsp;&nbsp;&nbsp;<a href="event.do?page=${curpage<totalpage?curpage+1:curpage }">></a>
+               &nbsp;&nbsp;&nbsp;<a href="endEvent.do?page=${eCurpage<eTotalpage?eCurpage+1:eCurpage }">></a>
             </center>
          </div>  
 	     

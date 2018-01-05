@@ -62,8 +62,8 @@ public class EventModel {
 		int totalpage=EventDAO.eventOngoingPage();
 		
 		
-		req.setAttribute("curpage", curpage);
-		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("oCurpage", curpage);
+		req.setAttribute("oTotalpage", totalpage);
 		req.setAttribute("list", list);
 		req.setAttribute("main_jsp", "../event/ongoingEvent.jsp");
 		return "main/main.jsp";
@@ -85,8 +85,8 @@ public class EventModel {
 		int totalpage=EventDAO.eventEndPage();
 		
 		
-		req.setAttribute("curpage", curpage);
-		req.setAttribute("totalpage", totalpage);
+		req.setAttribute("eCurpage", curpage);
+		req.setAttribute("eTotalpage", totalpage);
 		req.setAttribute("list", list);
 		req.setAttribute("main_jsp", "../event/endEvent.jsp");
 		return "main/main.jsp";
@@ -122,6 +122,9 @@ public class EventModel {
 			String content=mr.getParameter("content");
 			content=content.replaceAll("\n", "<br>");
 			String filename=mr.getOriginalFileName("upload");
+			
+			//cb_no값 받아오기(여러개일 경우 포함)
+			List<EventVO> list=new ArrayList<EventVO>();
 			//int cb_no=EventDAO.eventCallClubbarNo(email);
 			
 			File file = new File(path + "\\" + filename);
