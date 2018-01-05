@@ -99,7 +99,7 @@ $(function(){
       				<input id="email" type="email" class="form-control login_input" name="email" placeholder="Email" required>
     			</div>
     			<div class="login_div">
-      				<input id="pwd" type="text" class="form-control login_input" name="pwd" placeholder="Password" required>
+      				<input id="pwd" type="password" class="form-control login_input" name="pwd" placeholder="Password" style="font-family: °íµñÃ¼" required>
    				</div>
    				<div id="logincon" class="text-left"></div>
     			<br>

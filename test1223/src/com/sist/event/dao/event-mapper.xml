@@ -24,9 +24,15 @@
   	<select id="eventTotalPage" resultType="int">
   		SELECT CEIL(COUNT(*)/9) FROM event
   	</select>
+  	<!-- 이벤트 등록 -->
+  	<select id="eventCallClubbarNo" parameterType="String" resultType="EventVO">
+  		SELECT cb_no
+  		FROM clubbar
+  		WHERE m_email=#{m_email}
+  	</select>
   	<insert id="eventInsertData" parameterType="EventVO">
-  		INSERT INTO event(e_no, e_name,e_regdate,e_enddate,e_content) 
-  		VALUES(#{e_no},#{e_name},#{e_regdate},#{e_enddate},#{e_content})
+  		INSERT INTO event(cb_no,e_no, e_name,e_regdate,e_enddate,e_content) 
+  		VALUES(#{cb_no},#{e_no},#{e_name},#{e_regdate},#{e_enddate},#{e_content})
   	</insert>
   	
   	<select id="getLastEno" resultType="int">
@@ -52,7 +58,7 @@
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventOngoingPage" resultType="int">
-  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>=]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 종료 검색 -->
   	<resultMap type="EventVO" id="eventEndData">
@@ -74,7 +80,7 @@
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
   	<select id="eventEndPage" resultType="int">
-  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[>]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
+  		SELECT CEIL(COUNT(*)/9) FROM event WHERE e_enddate<![CDATA[<]]>TO_CHAR(SYSDATE,'YYYY/MM/DD')
   	</select>
   	<!-- 점주 체크 -->
   	<select id="ownerCheck" resultType="int" parameterType="String">

@@ -309,4 +309,96 @@ public class BoardDAO {
 				session.close();
 		}
 	}
+	
+	//대댓 목록
+	public static List<BoardCommentVO> coCommentListData(Map map) {
+		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
+		SqlSession session = ssf.openSession();
+		
+		try {
+			list = session.selectList("coCommentListData",map);
+		}catch(Exception e) {
+			System.out.println("coCommentListData : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
+	}
+	//대댓 총 페이지수
+	public static int coCommentTotalPage(Map map) {
+		int ccpage = 0;
+		SqlSession session = ssf.openSession();
+		
+		try {
+			ccpage = session.selectOne("coCommentTotalPage",map);
+		}catch(Exception e) {
+			session.rollback();
+			System.out.println("coCommentTotalPage : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return ccpage;
+	}
+	
+	//부모댓글 검색
+	public static BoardCommentVO commentGetParentInfo(int bc_no) {
+		SqlSession session = ssf.openSession();
+		BoardCommentVO vo = new BoardCommentVO();
+		try {
+			vo = session.selectOne("commentGetParentInfo",bc_no);
+			
+		}catch(Exception e) {
+			System.out.println("commentGetParentInfo : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return vo;
+	}
+	
+	//step증가
+	public static void commentStepIncrement(BoardCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("commentStepIncrement",vo);
+		}catch(Exception e) {
+			System.out.println("commentStepIncrement : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	//대댓 입력
+	public static void coComentInsert(BoardCommentVO vo) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.insert("coComentInsert",vo);
+		}catch(Exception e) {
+			System.out.println("coComentInsert : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	//부모 depth증가
+	//대댓 입력
+	public static void commentDepthIncrement(int cb_no) {
+		SqlSession session = ssf.openSession(true);
+		
+		try {
+			session.update("commentDepthIncrement",cb_no);
+		}catch(Exception e) {
+			System.out.println("commentDepthIncrement : " + e.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
 }

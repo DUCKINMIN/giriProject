@@ -335,7 +335,7 @@ form {
 					<!-- 사용자 정보 & 내용 -->
 					<tr>
 						<td width="10%" class="text-center user_info">
-							<div id="board_pro"  style="background-image: url('cb_detail/image/pro.png')"></div>
+							<div id="board_pro"  style="background-image: url('member/profile/${cbc_vo.m_profile }')"></div>
 							<div class="pro_name">
 								<!-- 사용자 닉네임 -->
 								<!-- 임시로 이메일 -->
@@ -461,7 +461,7 @@ form {
 									<td widht="3%" class="reply_tab"></td>
 									<td rowspan="2" width="100px"
 										class="text-center user_info reply_user">
-										<div id="reply_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
+										<div id="reply_pro" style="background-image: url('member/profile/${cvo.m_profile }')"></div>
 										<div class="reply_name" id="re_name_${i.index }_${j.index }"><!-- 리뷰닉네임 -->${cvo.m_nick }</div>
 									</td>
 									<td width="87%" class="text-left reply_content_td">
@@ -535,16 +535,7 @@ form {
 						</div>
 						<!--대댓글수정 --------------------------------------------------------------------------------------------------------- -->
 					</c:forEach>
-							
-					<div id="reply_page">
-			            <center>
-			               <a href="#"><</a>&nbsp;&nbsp;&nbsp;
-			               <c:forEach var="k" begin="1" end="10">
-			                  <a href="#">${k }</a>&nbsp;
-			               </c:forEach>
-			               &nbsp;&nbsp;&nbsp;<a href="#">></a>
-			            </center>
-         			</div>
+					
 					<!-- 대댓글 등록---------------------------------------------------------------------------------------------- -->
 					<form action="re_reply_insert.do" method="post">
 						<table class="reply_insert">

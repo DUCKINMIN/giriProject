@@ -263,7 +263,7 @@
 		margin-top: 70px;
 		border-left: 3px solid rgb(255, 255, 255);
 		margin-bottom: 4px;
-		width: 100px;
+		width: 110px;
 		height: 110px;
 		padding: 5px 5px;
 	}

@@ -140,7 +140,7 @@ $(function() {
 			</div>
 			<a href="cb_detail.do?cb_no=${vo2.cb_no }">
 				<div class="row"
-					style="background-image: url(hot3/cb_img/cb_img_${vo2.cb_no}.jpg); background-size: 100% 100%;">
+					style="background-image: url(hot3/cb_img/cb_img_${vo2.cb_no}_1.jpg); background-size: 100% 100%;">
 					<div class="black_box"></div>
 					<div class="jumpo_name">
 						<p>${vo2.cb_name }</p>

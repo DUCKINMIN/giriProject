@@ -75,7 +75,7 @@
 					<td width=20% class="timeranking_tdNo">${i.index+1 }</td>
 					<td width=50% class="timeranking_td">${rvo.cvo.cb_name }</td>
 					<td width=30% class="timeranking_td">
-						<c:if test="${rvo.cvo.a_addr1.substring(3,5)=='마포'||rvo.cvo.a_addr1.substring(3,6)=='서대문'}">홍대</c:if>
+						<c:if test="${rvo.cvo.a_addr1.substring(3,5)=='마포'||rvo.cvo.a_addr1.substring(3,5)=='서대문'}">홍대</c:if>
 						<c:if test="${rvo.cvo.a_addr1.substring(3,5)=='용산'||rvo.cvo.a_addr1.substring(3,5)=='중구'}">이태원</c:if>
 						<c:if test="${rvo.cvo.a_addr1.substring(3,5)=='강남'||rvo.cvo.a_addr1.substring(3,5)=='서초'}">강남</c:if>
 					</td>

@@ -114,6 +114,7 @@
 		<result property="bc_content" column="bc_content"/>
 		<result property="dbday" column="dbday"/>
 		<result property="bc_group_tab" column="bc_group_tab"/>
+		<result property="bc_group_id" column="bc_group_id"/>
 		<result property="num" column="num"/>
 		<association property="mvo" javaType="com.sist.member.dao.MemberVo">
 			<result property="m_nick" column="m_nick"/>
@@ -121,16 +122,16 @@
 		</association>
 	</resultMap>
 	<select id="commentListData" resultMap="bcVO" parameterType="java.util.Map">
-		SELECT b_no, bc_no, m_email, m_nick,m_profile, bc_content, TO_CHAR(bc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, bc_group_tab, num
-		FROM (SELECT b_no, bc_no, m_email, m_nick,m_profile, bc_content, bc_regdate, bc_group_tab , rownum as num
-		FROM (SELECT bc.b_no, bc.bc_no, bc.m_email, m.m_nick,m.m_profile, bc.bc_content, bc.bc_regdate, bc.bc_group_tab
-		FROM board_comment bc, member m WHERE bc.b_no=#{b_no} AND bc.m_email = m.m_email
+		SELECT b_no, bc_no, m_email, m_nick,m_profile, bc_content, TO_CHAR(bc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, bc_group_tab,bc_group_id, num
+		FROM (SELECT b_no, bc_no, m_email, m_nick,m_profile, bc_content, bc_regdate, bc_group_tab , bc_group_id, rownum as num
+		FROM (SELECT bc.b_no, bc.bc_no, bc.m_email, m.m_nick,m.m_profile, bc.bc_content, bc.bc_regdate, bc.bc_group_tab, bc_group_id
+		FROM board_comment bc, member m WHERE bc.b_no=#{b_no} AND bc.m_email = m.m_email AND bc_root=0
 		ORDER BY bc_group_id DESC, bc_group_step ASC))
 		WHERE num BETWEEN #{start} AND #{end}
 	</select>
 	<!-- 댓글 총페이지 구하기-->
 	<select id="commentTotalPage" resultType="int" parameterType="int">
-		SELECT CEIL(COUNT(*)/10) FROM board_comment WHERE b_no=#{b_no}
+		SELECT CEIL(COUNT(*)/10) FROM board_comment WHERE b_no=#{b_no} AND bc_root=0
 	</select>
 	<!-- 댓글 추가 -->
 	<insert id="commentNewInsert" parameterType="BoardCommentVO">
@@ -169,4 +170,43 @@
 		depth = depth-1
 		WHERE bc_no=#{bc_no}
 	</update>
+	<!-- 대댓 목록 -->
+	<select id="coCommentListData" resultMap="bcVO" parameterType="java.util.Map">
+		SELECT b_no, bc_no, m_email, m_nick,m_profile, bc_content, TO_CHAR(bc_regdate,'YYYY-MM-DD HH24:MI:SS') as dbday, bc_group_tab,bc_group_id, num
+		FROM (SELECT b_no, bc_no, m_email, m_nick,m_profile, bc_content, bc_regdate, bc_group_tab ,bc_group_id,  rownum as num
+		FROM (SELECT bc.b_no, bc.bc_no, bc.m_email, m.m_nick,m.m_profile, bc.bc_content, bc.bc_regdate, bc.bc_group_tab,bc.bc_group_id
+		FROM board_comment bc, member m WHERE bc.b_no=#{b_no} AND bc.m_email = m.m_email AND bc_root NOT IN(0)
+		ORDER BY bc_group_id DESC, bc_no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 대댓 추가 -->
+	<!-- 부모댓글 조회 -->
+	<select id="commentGetParentInfo" resultType="BoardCommentVO" parameterType="int">
+		SELECT bc_group_id, bc_group_step, bc_group_tab
+		FROM board_comment
+		WHERE bc_no=#{bc_no}
+	</select>
+	<update id="commentStepIncrement" parameterType="BoardCommentVO">
+		UPDATE board_comment SET
+		bc_group_step = bc_group_step + 1
+		WHERE bc_group_id=#{bc_group_id} AND bc_group_step>#{bc_group_step}
+	</update>
+	<insert id="coComentInsert" parameterType="BoardCommentVO">
+		<selectKey keyProperty="bc_no" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(bc_no)+1,1) as bc_no FROM board_comment
+		</selectKey>
+		INSERT INTO board_comment VALUES(
+			#{bc_no}, #{m_email}, SYSDATE, #{bc_content}, #{b_no}, 
+			#{bc_group_id}, #{bc_group_step}, #{bc_group_tab}, #{bc_root}, 0
+		)
+	</insert>
+	<update id="commentDepthIncrement" parameterType="int">
+		UPDATE board_comment SET
+		depth = depth+1
+		WHERE bc_no=#{bc_no}
+	</update>
+	<!-- 댓글 총페이지 구하기-->
+	<select id="coCommentTotalPage" resultType="int" parameterType="java.util.Map">
+		SELECT CEIL(COUNT(*)/10) FROM board_comment WHERE b_no=#{b_no} AND bc_root=#{bc_root}
+	</select>
 </mapper>

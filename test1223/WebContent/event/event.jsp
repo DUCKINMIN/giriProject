@@ -16,7 +16,7 @@
 	width:100%;
 }
 .container {
-	width:90%;
+	width:70%;
 	
 	
 }

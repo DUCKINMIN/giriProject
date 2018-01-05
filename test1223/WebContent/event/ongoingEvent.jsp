@@ -16,7 +16,7 @@
 	width:100%;
 }
 .container {
-	width:90%;
+	width:70%;
 	
 	
 }
@@ -184,12 +184,12 @@
 	  
 	  <div id="board_page" style="float:left; width: 75%; margin-top:10px;">
             <center>
-               <a href="event.do?page=${curpage>1?curpage-1:curpage }"><</a>&nbsp;&nbsp;&nbsp;
-              	<c:forEach var="i" begin="1" end="${totalpage}" >
-                  <a href="event.do?page=${i }">[${i }]</a>&nbsp;
+               <a href="ongoingEvent.do?page=${oCurpage>1?oCurpage-1:oCurpage }"><</a>&nbsp;&nbsp;&nbsp;
+              	<c:forEach var="j" begin="1" end="${oTotalpage}" >
+                  <a href="ongoingEvent.do?page=${j }">[${j }]</a>&nbsp;
                  </c:forEach>
                
-               &nbsp;&nbsp;&nbsp;<a href="event.do?page=${curpage<totalpage?curpage+1:curpage }">></a>
+               &nbsp;&nbsp;&nbsp;<a href="ongoingEvent.do?page=${oCurpage<oTotalpage?oCurpage+1:oCurpage }">></a>
             </center>
          </div>  
 	     

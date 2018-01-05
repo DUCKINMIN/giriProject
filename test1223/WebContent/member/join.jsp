@@ -311,10 +311,10 @@ function readURL(input) {
 				</div>
 				<div id="emailcon" class="text-left"></div>
 				<div class="result_div">
-					<input type="text" id="pwd" name="pwd" placeholder="비밀번호를 입력해주세요(8~20자)" size="50px" class="result_input form-control" maxlength="20"/>
+					<input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력해주세요(8~20자)" size="50px" class="result_input form-control" style="font-family: 고딕체" maxlength="20"/>
 				</div>
 				<div class="result_div">
-					<input type="text" id="pwd_check" name="pwd_check" placeholder="비밀번호를 한번 더 입력해주세요." size="50px" class="result_input form-control" maxlength="20"/>
+					<input type="password" id="pwd_check" name="pwd_check" placeholder="비밀번호를 한번 더 입력해주세요." size="50px" class="result_input form-control" style="font-family: 고딕체" maxlength="20"/>
 				</div>
 				<div id="pwdcon" class="text-left"></div>
 				<div class="result_div">
