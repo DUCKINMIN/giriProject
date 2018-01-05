@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="jumpoCheck2" resultMap="id" parameterType="java.util.Map">
 
-		SELECT e_name, cb_name, a_addr1, TO_CHAR(e_regdate,'YYYY-MM-DD') e_regdate, TO_CHAR(e_enddate,'YYYY-MM-DD') e_enddate, num
+		SELECT e_name, cb_name, a_addr1, e_regdate , e_enddate, num
 		FROM (SELECT e_name, cb_name, a_addr1, e_regdate, e_enddate, rownum as num
 		FROM (SELECT e.e_name, cb.cb_name, cb.a_addr1, e.e_regdate, e.e_enddate
 		FROM event e, clubbar cb WHERE e.cb_no=cb.cb_no AND cb.a_addr1 LIKE

@@ -34,8 +34,10 @@
 									<td width=40% class="text-left"><a href="#">
 											&nbsp;&nbsp;${vo.e_name }</a></td>
 									<td width=20% class="text-center">${vo.cb.cb_name}</td>
-									<td width=20% class="text-center">${vo.e_regdate }</td>
-									<td width=20% class="text-center">${vo.e_enddate }</td>
+									<td width=20% class="text-center"><fmt:formatDate
+											value="${vo.e_regdate }" pattern="yyyy-MM-dd" /></td>
+									<td width=20% class="text-center"><fmt:formatDate
+										value="${vo.e_enddate }" pattern="yyyy-MM-dd" /></td>
 								</tr>
 							</c:forEach>
 						</c:if>
