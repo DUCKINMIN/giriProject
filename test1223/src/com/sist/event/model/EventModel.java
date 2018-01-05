@@ -107,7 +107,7 @@ public class EventModel {
 			String email=(String)session.getAttribute("m_email");	
 			req.setCharacterEncoding("EUC-KR");
 			//저장경로
-			String path = req.getServletContext().getRealPath("/event/eventImage");
+			String path = req.getServletContext().getRealPath("\\event\\eventImage");
 			//저장가능 용량
 			int size=1024*1024*100;
 			int eno = EventDAO.getLastEno()+1;
@@ -121,7 +121,7 @@ public class EventModel {
 			String name=mr.getParameter("name");
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			Date e_regdate=sdf.parse(mr.getParameter("startDate"));
-			Date e_enddate=sdf.parse(mr.getParameter("closeDate"));
+			Date e_enddate=sdf.parse(mr.getParameter("endDate"));
 			String content=mr.getParameter("content");
 			content=content.replaceAll("\n", "<br>");
 			String filename=mr.getOriginalFileName("upload");

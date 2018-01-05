@@ -503,7 +503,7 @@ public class MemberModel {
 		
 		
 		//파일 삭제
-		String path = req.getServletContext().getRealPath("\\event\\eventImage");
+		String path = req.getServletContext().getRealPath("/event/eventImage");
 		File fileDelete = new File(path+"\\"+e_no+".jpg");
         
             if(fileDelete.delete()){
