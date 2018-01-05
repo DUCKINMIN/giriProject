@@ -29,8 +29,15 @@ public class BoardCommentVO {
 	private int depth;
 	private String dbday;//정확한 시간
 	private MemberVo mvo = new MemberVo();
+	private BoardVO boardvo = new BoardVO();
 	private int num;
 	
+	public BoardVO getBoardvo() {
+		return boardvo;
+	}
+	public void setBoardvo(BoardVO boardvo) {
+		this.boardvo = boardvo;
+	}
 	public int getNum() {
 		return num;
 	}

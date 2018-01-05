@@ -129,7 +129,7 @@
 			<tr>
 				<td width="15%" class="text-center">${cvo.bc_no }</td>
 				<td width="55%" class="text-left">${cvo.bc_content }</td>
-				<td width="20%" class="text-center"><a href="board_content.do?no=${cvo.b_no }&grade=${cvo.bvo.b_grade}"><b>원본보기</b></a></td>
+				<td width="20%" class="text-center"><a href="board_content.do?no=${cvo.b_no }&grade=${cvo.boardvo.b_grade}"><b>원본보기</b></a></td>
 				<td width="10%" class="text-center"><fmt:formatDate value="${cvo.bc_regdate }" pattern="yyyy.MM.dd"/></td>
 			</tr>
 			</c:forEach>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -307,9 +308,14 @@
 </script>
 </head>
 <body>
-
-	<div class="main_north">
-
+	<c:choose>
+		<c:when test="${sessionScope.m_email==null }">
+			<div style="margin-top: 150px">
+				<p style="text-align: center; font-size: 20pt">로그인 후 이용하실 수 있습니다</p>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="main_north">
 		<div class="north_name">
 			<p style="color: white; font-size: 25pt;">오늘 솔로들은</p>
 			<p style="color: white; font-size: 35pt;">뭐하고 놀지?</p>
@@ -363,5 +369,8 @@
 
 
 	<footer> </footer>
+		</c:otherwise>
+	</c:choose>	
+	
 </body>
 </html>

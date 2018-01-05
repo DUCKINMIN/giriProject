@@ -48,6 +48,14 @@
 			text-align: center;
 		}
 	}
+	
+	#modal{
+		position: fixed;
+		top:20%;
+		right: 0;
+		bottom: 0;
+		left: 0;
+	}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -374,7 +382,7 @@ function readURL(input) {
 	<!-- 비밀번호 수정 -->
 	<div class="modal fade" id="pwdUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
     data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-sm" id="modal">
         	<div class="modal-content">
             	<div class="modal-header">
                 	<button type="button" class="close closebtn" onclick="javascript:close()">
@@ -408,7 +416,7 @@ function readURL(input) {
 	<!-- 핸드폰번호 수정 -->
 	<div class="modal fade" id="telUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
     data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-sm" id="modal">
         	<div class="modal-content">
             	<div class="modal-header">
                 	<button type="button" class="close closebtn" onclick="javascript:close()">
@@ -443,7 +451,7 @@ function readURL(input) {
 	<!-- 회원탈퇴 -->
 	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
     data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-sm" id="modal">
         	<div class="modal-content">
             	<div class="modal-header">
                 	<button type="button" class="close closebtn" onclick="javascript:close()">

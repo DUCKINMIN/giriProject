@@ -303,6 +303,10 @@ div.motel_info p {
 </style>
 
 <script type="text/javascript">
+<c:if test="${sessionScope.m_email==null}">
+location.href="index.jsp";
+alert("로그인 후 이용해주세요");
+</c:if>
 $(function() {
 	
 	//리뷰등록시 리뷰쪽으로 스크롤 옮기기
