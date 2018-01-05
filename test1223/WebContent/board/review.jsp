@@ -162,7 +162,9 @@
 	padding: 5px 0px;
 	background: rgb(247, 247, 247);
 }
-
+.click_ok {
+	cursor: pointer;
+}
 @media ( max-width : 570px) {
 	.reply_list td:first-child, .reply_insert td:first-child {
 		width: 60px;
