@@ -345,10 +345,10 @@ public class MemberDao {
 		}
 		return vo;
 	}
-	public static void eventUpdateOk(int e_no) {
+	public static void eventUpdateOk(EventVO vo) {
 		SqlSession session = ssf.openSession(true);
 		try {
-			session.update("eventUpdateOk", e_no);
+			session.update("eventUpdateOk", vo);
 		} catch (Exception e) {
 			System.out.println("eventUpdateOk : "+e.getMessage());
 		} finally {
