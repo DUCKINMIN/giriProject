@@ -101,53 +101,57 @@ public class EventModel {
 	@RequestMapping("eventInsert.do")
 	public String eventInsert(HttpServletRequest req,HttpServletResponse res) throws Exception{
 		try {
-		req.setCharacterEncoding("EUC-KR");
-		//저장경로
-		String path = req.getServletContext().getRealPath("\\event\\eventImage");
-		//저장가능 용량
-		int size=1024*1024*100;
-		int eno = EventDAO.getLastEno()+1;
-		System.out.println(eno);
-		//업로드 파일 한글변환 
-		String enctype="EUC-KR";
-		MultipartRequest mr= new MultipartRequest(req, path, size, enctype);
-		
-		//DefaultFileRenamePolicy() : 파일명이 동일할때 파일명을 자동으로 변경
-		//a.jpg => a1.jpg => a2.jpg
-		String name=mr.getParameter("name");
-		String startdate=mr.getParameter("startDate");
-		String enddate=mr.getParameter("endDate");
-		String content=mr.getParameter("content");
-		content=content.replaceAll("\n", "<br>");
-		String filename=mr.getOriginalFileName("upload");
-		
-		
-		File file = new File(path + "\\" + filename);
-		File file2 =  new File(path + "\\" + eno + ".jpg");
-		
-			if (!file.renameTo(file2)) {
-				System.err.println("이름 변경 에러 : " + file);
-
-			}
-		
-		EventVO vo=new EventVO();
-		//필수
-		vo.setE_no(eno);
-		vo.setE_name(name);
-		vo.setE_regdate(startdate);
-		vo.setE_enddate(enddate);
-		vo.setE_content(content);
-
-		//DAO연결
-		EventDAO dao=new EventDAO();
-		dao.eventInsertData(vo);
-		
-	}catch(Exception ex) {
-		System.out.println(ex.getMessage());
-	}
-
-		return "event.do";
-	}
+			HttpSession session=req.getSession();
+			String email=(String)session.getAttribute("m_email");	
+			req.setCharacterEncoding("EUC-KR");
+			//저장경로
+			String path = req.getServletContext().getRealPath("\\event\\eventImage");
+			//저장가능 용량
+			int size=1024*1024*100;
+			int eno = EventDAO.getLastEno()+1;
+			System.out.println(eno);
+			//업로드 파일 한글변환 
+			String enctype="EUC-KR";
+			MultipartRequest mr= new MultipartRequest(req, path, size, enctype);
+			
+			//DefaultFileRenamePolicy() : 파일명이 동일할때 파일명을 자동으로 변경
+			//a.jpg => a1.jpg => a2.jpg
+			String name=mr.getParameter("name");
+			String startdate=mr.getParameter("startDate");
+			String enddate=mr.getParameter("endDate");
+			String content=mr.getParameter("content");
+			content=content.replaceAll("\n", "<br>");
+			String filename=mr.getOriginalFileName("upload");
+			//int cb_no=EventDAO.eventCallClubbarNo(email);
+			
+			File file = new File(path + "\\" + filename);
+			File file2 =  new File(path + "\\" + eno + ".jpg");
+			
+				if (!file.renameTo(file2)) {
+					System.err.println("이름 변경 에러 : " + file);
 	
+				}
+			
+				
+			EventVO vo=new EventVO();
+			//필수
+			//vo.setCb_no(cb_no);
+			vo.setE_no(eno);
+			vo.setE_name(name);
+			vo.setE_regdate(startdate);
+			vo.setE_enddate(enddate);
+			vo.setE_content(content);
+	
+			//DAO연결
+			EventDAO dao=new EventDAO();
+			dao.eventInsertData(vo);
+			
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	
+			return "event.do";
+		}
+		
 
 }

@@ -141,8 +141,23 @@ public class EventDAO {
 			if(session!=null)
 				session.close();
 		}
-		return grade;
-		
+		return grade;	
+	}
+	//cb_no 값 불러오기
+	//mapper resultType =>테이블 행
+	//selectOne(), selectList() =>테이블 열
+	public static List<EventVO> eventCallClubbarNo(String m_email) {
+		List<EventVO> list=new ArrayList<EventVO>();
+		SqlSession session=ssf.openSession();
+		try {
+			list=session.selectList("eventCallClubbarNo",m_email);
+		}catch(Exception ex) {
+			System.out.println("eventCallClubbarNo"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
 	}
 }
 

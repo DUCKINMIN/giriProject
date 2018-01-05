@@ -13,17 +13,18 @@
 </script>
 <style type="text/css">
 .tContainer{
-	width:100%;
+	width:80%;
+	border:1px solid black;
 }
 .container {
-	width:90%;
-	
+	width:70%;
+	border:1px solid red;
 	
 }
 
 #ePic{
 	width:100%;
-	height 100%;
+	height: 100%;
 }
 
 /* .navbar-default:hover {
