@@ -295,9 +295,10 @@
 	
 	function getSelectValue(frm)
 	{
-		$("#con"+selno).css("display", "block");
+		$(".con").css("display", "none");
 		var selno = frm.selectBox.options[frm.selectBox.selectedIndex].text;
 		$("#con"+selno).css("display", "block");
+		$("#cb_no").val(selno);
 	 	/* frm.hot3addr1.value
 	 	frm.hot3addr2.value
 	 	frm.hot3content.value
@@ -418,10 +419,11 @@ uploadFile.on('change', function(){
 			<div style="height: 120px">
 				<h1>점포수정</h1>
 			</div>
-			<form name="fileForm" action="hot3insert_ok.do" method="post"
+			<form name="fileForm" action="hot3update_ok.do" method="post"
 				enctype="multipart/form-data">
 				<input type="hidden" id="img_count" name="img_count" value="0" />
 				<input type="hidden" id="cb_grade" name="cb_grade" value="0"/>
+				<input type="hidden" id="cb_no" name="cb_no" value="0"/>
 				<div class="text-left">
 					<label>email</label>
 				</div>
@@ -448,12 +450,12 @@ uploadFile.on('change', function(){
 				</div>
 
 				<c:forEach var="vo" items="${mycb}">
-				<div id="con${vo.cb_no}" style="display:none">
+				<div id="con${vo.cb_no}" class="con" style="display:none">
 				<div class="text-left">
 					<label>가게명</label>
 				</div>
 				<div class="cbInsert_div">
-					<input type="text" id="hot3name" name="hot3name"
+					<input type="text" id="hot3name${vo.cb_no}" name="hot3name${vo.cb_no}"
 						value="${vo.cb_name}" size="50px"
 						class="cbInsert_input form-control" />
 				</div>
@@ -463,7 +465,7 @@ uploadFile.on('change', function(){
 					<label>전화번호</label>
 				</div>
 				<div class="cbInsert_div">
-					<input type="text" id="hot3phone" name="hot3phone"
+					<input type="text" id="hot3phone${vo.cb_no}" name="hot3phone${vo.cb_no}"
 						value="${vo.cb_tel}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
@@ -490,7 +492,7 @@ uploadFile.on('change', function(){
 					<label>주소1</label>
 				</div>
 				<div class="cbInsert_div">
-					<input type="text" id="hot3addr1" name="hot3addr1"
+					<input type="text" id="hot3addr1${vo.cb_no}" name="hot3addr1${vo.cb_no}"
 						value="${vo.a_addr1}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
@@ -500,7 +502,7 @@ uploadFile.on('change', function(){
 					<label>주소2</label>
 				</div>
 				<div class="cbInsert_div">
-					<input type="text" id="hot3addr2" name="hot3addr2"
+					<input type="text" id="hot3addr2${vo.cb_no}" name="hot3addr2${vo.cb_no}"
 						value="${vo.a_addr2}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
@@ -510,7 +512,7 @@ uploadFile.on('change', function(){
 					<label>내용</label>
 				</div>
 				<div class="cbInsert_div">
-					<textarea id="hot3content" name="hot3content" rows="5" cols="50" 
+					<textarea id="hot3content${vo.cb_no}" name="hot3content${vo.cb_no}" rows="5" cols="50" 
 					class="cbInsert_input form-control">${vo.cb_content }</textarea>
 				</div>
 				<br>
@@ -519,7 +521,7 @@ uploadFile.on('change', function(){
 					<label>영업시간</label>
 				</div>
 				<div class="cbInsert_div">
-					<input type="text" id="hot3open" name="hot3open"
+					<input type="text" id="hot3open${vo.cb_no}" name="hot3open${vo.cb_no}"
 						value="${vo.cb_open}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>

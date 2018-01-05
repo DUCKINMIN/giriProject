@@ -362,9 +362,7 @@ public class ClubBarModel {
 			if(filename != null) {
 				File f = new File(path+"\\"+filename);
 				
-				File f2 = new File(path+"\\cb_img_"+cb_no+
-				((i+1)==1?"":("_"+(i+1)))+
-				".jpg");
+				File f2 = new File(path+"\\cb_img_"+cb_no+"_"+(i+1)+".jpg");
 				if(!f.renameTo(f2)) {
 					System.out.println("rename error : " + f);
 				}
@@ -391,15 +389,26 @@ public class ClubBarModel {
 		return "hot3/hot3insert_ok.jsp";
 	}
 	
-	@RequestMapping("hot3delete_ok.do")
+	@RequestMapping("hot3delete.do")
 	public String hot3delete(HttpServletRequest req, HttpServletResponse res) {
+		String m_email = req.getParameter("email");
+		List<ClubBarVO> mycb = ClubBarDAO.getMyCb(m_email);
+		
+		req.setAttribute("mycb", mycb);
+		req.setAttribute("main_jsp", "../hot3/hot3delete.jsp");
+		
+		return "main/main.jsp";
+	}
+	
+	@RequestMapping("hot3delete_ok.do")
+	public String hot3delete_ok(HttpServletRequest req, HttpServletResponse res) {
 		int cb_no = Integer.parseInt(req.getParameter("cb_no"));
 		int cb_img_cnt = ClubBarDAO.getCbImgCnt(cb_no);
 
 		ClubBarDAO.hot3cbDelete(cb_no);
 		
 		for(int i = 0; i < cb_img_cnt; i++) {
-			String filename = "cb_img_"+cb_no+(i==0?"":"_"+(i+1));
+			String filename = "cb_img_"+cb_no+"_"+(i+1)+".jpg";
 			String path = req.getServletContext().getRealPath("/hot3/cb_img/");
 			path += filename;
 			File f = new File(path);
@@ -433,35 +442,33 @@ public class ClubBarModel {
 		MultipartRequest mr = new MultipartRequest(req, path, size, enctype);
 		
 		int cb_no = Integer.parseInt(mr.getParameter("cb_no"));
-		String cb_name = mr.getParameter("hot3name");
-		String cb_tel = mr.getParameter("hot3phone");
-		String a_addr1 = mr.getParameter("hot3addr1");
-		String a_addr2 = mr.getParameter("hot3addr2");
-		String cb_content = mr.getParameter("hot3content");
-		String cb_open = mr.getParameter("hot3open");
+		String cb_name = mr.getParameter("hot3name"+cb_no);
+		String cb_tel = mr.getParameter("hot3phone"+cb_no);
+		String a_addr1 = mr.getParameter("hot3addr1"+cb_no);
+		String a_addr2 = mr.getParameter("hot3addr2"+cb_no);
+		String cb_content = mr.getParameter("hot3content"+cb_no);
+		String cb_open = mr.getParameter("hot3open"+cb_no);
 		int cb_img_cnt = Integer.parseInt(mr.getParameter("img_count"));
 		
-		for (int i = 0; i < cb_img_cnt; i++) {
-			for (int j = 0; i < 4; i++) {
-				String filename = "cb_img_" + cb_no + (i == 0 ? "" : "_" + (i + 1));
-				path += filename;
-				File f = new File(path);
-				System.out.println("delete path : " + path);
-				if (f.exists())
-					f.delete();
-			}
+		for (int i = 0; i < 4; i++) {
+			path = req.getServletContext().getRealPath("/hot3/cb_img/");
+			String filename = "cb_img_" + cb_no + "_" + (i + 1) + ".jpg";
+			path += filename;
+			File f = new File(path);
+			System.out.println("delete path : " + path);
+			if (f.exists())
+				f.delete();
 		}
 		
 		for(int i = 0; i < cb_img_cnt; i++) {
+			path = req.getServletContext().getRealPath("/hot3/cb_img/");
 			String filename = mr.getParameter("filename"+i);
 			System.out.println("filename"+i+":"+filename);
 			
 			if(filename != null) {
 				File f = new File(path+"\\"+filename);
 				
-				File f2 = new File(path+"\\cb_img_"+cb_no+
-				((i+1)==1?"":("_"+(i+1)))+
-				".jpg");
+				File f2 = new File(path+"\\cb_img_"+cb_no+"_"+(i+1)+".jpg");
 				if(!f.renameTo(f2)) {
 					System.out.println("rename error : " + f);
 				}
