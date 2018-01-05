@@ -147,7 +147,7 @@
 		<result property="bc_content" column="bc_content"/>
 		<result property="bc_regdate" column="bc_regdate"/>
 		<result property="b_no" column="b_no"/>
-		<result property="bvo.b_grade" column="b_grade"/>
+		<result property="boardvo.b_grade" column="b_grade"/>
 	</resultMap>
 	<select id="myCommentList" resultMap="myBoard" parameterType="java.util.Map">		
 		SELECT bc_no, bc_content, bc_regdate, b_no, b_grade, num

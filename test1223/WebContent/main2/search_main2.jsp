@@ -170,6 +170,10 @@
 </style>
 
 <script type="text/javascript">
+<c:if test="${sessionScope.m_email==null}">
+	location.href="index.jsp";
+	alert("로그인 후 이용해주세요");
+</c:if>
 	$(function() {
 		$("#main2btn").click(function() {
 			$("#main2fmt").submit();
