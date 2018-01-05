@@ -329,6 +329,8 @@ a:hover, a:focus {
 		<br>
 		
 		<a href="hot3insert.do" class="btn hot3insert" name="hot3insert">점포등록</a>
+		<a href="hot3update.do?email=${sessionScope.m_email}" class="btn hot3insert" name="hot3insert">점포수정</a>
+		<a href="hot3delete_ok.do?cb_no=47" class="btn hot3insert" name="hot3insert">점포삭제</a>
 		
 		<span class="hot3grade" id="hit" style="font-weight:bold">조회순▼</span>&nbsp;
 		<span class="hot3grade" id="rating">별점순▼</span>&nbsp;

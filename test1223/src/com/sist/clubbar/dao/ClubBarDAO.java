@@ -131,6 +131,103 @@ public class ClubBarDAO {
 		return list;
 	}
 	
+	public static int cbNoMax() {
+		int no = -1;
+		SqlSession session = ssf.openSession();
+		
+		try {
+			no = session.selectOne("cbNoMax");
+		} catch(Exception ex) {
+			System.out.println("cbNoMax : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+		return no;
+	}
+	
+	public static void hot3cbInsert(ClubBarVO vo) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			try {
+				session.insert("addrInsert", vo);
+			} catch(Exception e) {}
+			session.insert("hot3cbInsert", vo);
+		} catch(Exception ex) {
+			System.out.println("hot3cbInsert : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+	}
+	
+	public static int getCbImgCnt(int cb_no) {
+		int count = 0;
+		SqlSession session = ssf.openSession();
+		
+		try {
+			count = session.selectOne("getCbImgCnt", cb_no);
+		} catch(Exception ex) {
+			System.out.println("getCbImgCnt : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+		return count;
+	}
+	
+	public static void hot3cbDelete(int cb_no) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.delete("hot3cbDelete", cb_no);
+		} catch(Exception ex) {
+			System.out.println("hot3cbDelete : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+	}
+	
+	public static List<ClubBarVO> getMyCb(String m_email) {
+		List<ClubBarVO> list = new ArrayList<ClubBarVO>();
+		SqlSession session = ssf.openSession();
+		try {
+			list = session.selectList("getMyCb", m_email);
+		} catch(Exception ex) {
+			System.out.println("getMyCb : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+		return list;
+	}
+	
+	/*public static ClubBarVO getUpdateCol(int cb_no) {
+		ClubBarVO vo = new ClubBarVO();
+		SqlSession session = ssf.openSession();
+		try {
+			vo = session.selectOne("getUpdateCol", cb_no);
+		} catch(Exception ex) {
+			System.out.println("getUpdateCol : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+		return vo;
+	}*/
+	
+	public static void hot3cbUpdate(ClubBarVO vo) {
+		SqlSession session = ssf.openSession(true);
+		try {
+			session.update("hot3cbUpdate", vo);
+		} catch(Exception ex) {
+			System.out.println("hot3cbUpdate : "+ex.getMessage());
+		} finally {
+			if(session != null) 
+				session.close();
+		}
+	}
+	
 	//´Ù¼Ø
 		//Ä«¿îÆ®
 		public static int cbrTimeCount(ClubBarRankVO vo) {

@@ -293,6 +293,17 @@
 		});
 	});
 	
+	function getSelectValue(frm)
+	{
+		$("#con"+selno).css("display", "block");
+		var selno = frm.selectBox.options[frm.selectBox.selectedIndex].text;
+		$("#con"+selno).css("display", "block");
+	 	/* frm.hot3addr1.value
+	 	frm.hot3addr2.value
+	 	frm.hot3content.value
+	 	frm.hot3open.value */
+	}
+	
 	/* <div class="input-file" id="input-file${i}" width=100% colspan="2" height=50px style="display: none">
 	<input type="text" readonly="readonly" class="filename" id="filename${i}" name="filename${i}" />
 	<label for="upload${i}" class="filelabel board_btn">사진 업로드</label>
@@ -405,7 +416,7 @@ uploadFile.on('change', function(){
 		<div class="row cbInsertrow">
 			<div style="height: 50px"></div>
 			<div style="height: 120px">
-				<h1>점포등록</h1>
+				<h1>점포수정</h1>
 			</div>
 			<form name="fileForm" action="hot3insert_ok.do" method="post"
 				enctype="multipart/form-data">
@@ -420,24 +431,31 @@ uploadFile.on('change', function(){
 						class="cbInsert_input form-control" readonly="readonly" />
 				</div>
 				<br>
+				
+				<div class="text-left">
+					<label>가게번호</label>
+				</div>
+				<div class="cbInsert_div">
+					<select name="selectBox" onChange="getSelectValue(this.form);" 
+					class="cbInsert_input form-control" >
+						<option>선택</option>
+					<c:forEach var="vo" items="${mycb}">
+						<option value="${vo.cb_name}">
+						${vo.cb_no}</option>
+					</c:forEach>
+					</select>
+					<br>
+				</div>
 
+				<c:forEach var="vo" items="${mycb}">
+				<div id="con${vo.cb_no}" style="display:none">
 				<div class="text-left">
 					<label>가게명</label>
 				</div>
 				<div class="cbInsert_div">
 					<input type="text" id="hot3name" name="hot3name"
-						placeholder="가게명을 입력하세요." size="50px"
+						value="${vo.cb_name}" size="50px"
 						class="cbInsert_input form-control" />
-				</div>
-				<br>
-
-				<div class="text-left">
-					<label>사업자등록번호</label>
-				</div>
-				<div class="cbInsert_div">
-					<input type="text" id="hot3crn" name="hot3crn"
-						placeholder="ex) 0123456789" class="cbInsert_input form-control"
-						size="50px" />
 				</div>
 				<br>
 
@@ -446,7 +464,7 @@ uploadFile.on('change', function(){
 				</div>
 				<div class="cbInsert_div">
 					<input type="text" id="hot3phone" name="hot3phone"
-						placeholder="ex) 01012345678" class="cbInsert_input form-control"
+						value="${vo.cb_tel}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
 				<br>
@@ -456,12 +474,7 @@ uploadFile.on('change', function(){
 					<input type="button" class="btn" id="hot3inputadd" value="추가"/> 
 					<input type="button" class="btn" id="hot3inputdel" value="삭제"/>
 				</div><br>
-				<!-- <input type='file' class="hot3imgfile" id='hot3imgfile0' name='hot3imgfile0'/> -->
-				<!-- 첨부파일 -->
-<!-- 					private String a_addr1;
-	private String a_addr2;
-	private String cb_content;
-	private String cb_open; -->
+				
 				<div id="hot3upload">
 					<c:forEach var="i" begin="0" end="3">
 						<div class="input-file" id="input-file${i}" width=100% colspan="2" height=50px style="display: none">
@@ -478,7 +491,7 @@ uploadFile.on('change', function(){
 				</div>
 				<div class="cbInsert_div">
 					<input type="text" id="hot3addr1" name="hot3addr1"
-						placeholder="ex) 서울 마포구 서교동" class="cbInsert_input form-control"
+						value="${vo.a_addr1}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
 				<br>
@@ -488,7 +501,7 @@ uploadFile.on('change', function(){
 				</div>
 				<div class="cbInsert_div">
 					<input type="text" id="hot3addr2" name="hot3addr2"
-						placeholder="번지" class="cbInsert_input form-control"
+						value="${vo.a_addr2}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
 				<br>
@@ -498,7 +511,7 @@ uploadFile.on('change', function(){
 				</div>
 				<div class="cbInsert_div">
 					<textarea id="hot3content" name="hot3content" rows="5" cols="50" 
-					placeholder="사장님 한마디" class="cbInsert_input form-control"></textarea>
+					class="cbInsert_input form-control">${vo.cb_content }</textarea>
 				</div>
 				<br>
 				
@@ -507,33 +520,15 @@ uploadFile.on('change', function(){
 				</div>
 				<div class="cbInsert_div">
 					<input type="text" id="hot3open" name="hot3open"
-						placeholder="ex) 22:00 - 09:00" class="cbInsert_input form-control"
+						value="${vo.cb_open}" class="cbInsert_input form-control"
 						size="50px" />
 				</div>
 				<br>
-
-				<div class="text-left">
-					<label>종류</label>
 				</div>
-				
-				<table class="table">
-					<tr>
-						<td class="text-center"><input type="button" value="클럽"
-							class="btn hot3chk" name="0"></td>
-
-						<td class="text-center"><input type="button" value="감성주점"
-							class="btn hot3chk" name="2"></td>
-
-						<td class="text-center"><input type="button" value="헌팅술집"
-							class="btn hot3chk" name="3"></td>
-
-						<td class="text-center"><input type="button" value="나이트"
-							class="btn hot3chk" name="1"></td>
-					</tr>
-				</table>
+				</c:forEach>
 
 				<div class="cbInsert_div text-center cbInsert_check">
-					<input type="submit" value="등록" class="btn cbInsert_btn">&nbsp;
+					<input type="submit" value="수정" class="btn cbInsert_btn">&nbsp;
 					<input type="button" value="취소" class="btn cbInsert_btn"
 						onclick="javascript:history.back()">
 				</div>
