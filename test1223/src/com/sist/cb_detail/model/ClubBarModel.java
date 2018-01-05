@@ -53,16 +53,7 @@ public class ClubBarModel {
 		List<ClubBarCommentVO> cbc_list = ClubBarCommentDAO.cbCommentList(cbc_map);
 		
 		//대댓글 리스트 보내기
-		String rc_Page = req.getParameter("rc_Page");
-		if(rc_Page==null)
-			rc_Page="1";
-		int rc_curpage = Integer.parseInt(rc_Page);
-		int rc_rowSize = 5;
-		int rc_start = (rc_curpage*rc_rowSize) - (rc_rowSize-1);
-		int rc_end = rc_curpage*rc_rowSize;
 		Map rc_cbc_map = new HashMap();
-		rc_cbc_map.put("start", rc_start);
-		rc_cbc_map.put("end", rc_end);
 		rc_cbc_map.put("cb_no", cb_no);
 		
 		List<ClubBarCommentVO> rc_list = ClubBarCommentDAO.cbcReplyList(rc_cbc_map);

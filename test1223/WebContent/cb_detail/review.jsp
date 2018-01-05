@@ -461,7 +461,7 @@ form {
 									<td widht="3%" class="reply_tab"></td>
 									<td rowspan="2" width="100px"
 										class="text-center user_info reply_user">
-										<div id="reply_pro" style="background-image: url('cb_detail/image/pro.png')"></div>
+										<div id="reply_pro" style="background-image: url('member/profile/${cvo.m_profile }')"></div>
 										<div class="reply_name" id="re_name_${i.index }_${j.index }"><!-- ¸®ºä´Ð³×ÀÓ -->${cvo.m_nick }</div>
 									</td>
 									<td width="87%" class="text-left reply_content_td">
@@ -535,16 +535,7 @@ form {
 						</div>
 						<!--´ë´ñ±Û¼öÁ¤ --------------------------------------------------------------------------------------------------------- -->
 					</c:forEach>
-							
-					<div id="reply_page">
-			            <center>
-			               <a href="#"><</a>&nbsp;&nbsp;&nbsp;
-			               <c:forEach var="k" begin="1" end="10">
-			                  <a href="#">${k }</a>&nbsp;
-			               </c:forEach>
-			               &nbsp;&nbsp;&nbsp;<a href="#">></a>
-			            </center>
-         			</div>
+					
 					<!-- ´ë´ñ±Û µî·Ï---------------------------------------------------------------------------------------------- -->
 					<form action="re_reply_insert.do" method="post">
 						<table class="reply_insert">
