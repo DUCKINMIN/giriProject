@@ -470,7 +470,7 @@ public class MemberModel {
 					System.err.println("이름 변경 에러 : " + file);
 	
 				}
-				System.out.println("1"+e_name+"2"+e_regdate+"3"+e_enddate+"4"+e_content+"5"+e_no);
+			//System.out.println("1"+e_name+"2"+e_regdate+"3"+e_enddate+"4"+e_content+"5"+e_no);
 			EventVO vo=new EventVO();
 			//필수
 			vo.setE_name(e_name);

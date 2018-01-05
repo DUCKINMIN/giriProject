@@ -90,7 +90,7 @@ $(function(){
 		
 		
 		  <div value="${vo.e_no }" class="col-sm-6 col-md-4 manageBox"  >
-		 ${vo.e_no }
+		 <%-- ${vo.e_no } --%>
 		    <div class="thumbnail" data-toggle="modal" <%-- data-target="#myModal_${i}" --%> >
 		      <img src="event/eventImage/${vo.e_no }.jpg" alt="ÀÌº¥Æ®" style="width:100%; height:300px; ">
 		      <div class="caption">

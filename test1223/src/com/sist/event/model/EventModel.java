@@ -85,7 +85,7 @@ public class EventModel {
 		map.put("end", end);
 		List<EventVO> list=EventDAO.eventEndData(map);
 		int totalpage=EventDAO.eventEndPage();
-		
+		//System.out.println(list.get(0));
 		
 		req.setAttribute("eCurpage", curpage);
 		req.setAttribute("eTotalpage", totalpage);
@@ -107,7 +107,7 @@ public class EventModel {
 			String email=(String)session.getAttribute("m_email");	
 			req.setCharacterEncoding("EUC-KR");
 			//저장경로
-			String path = req.getServletContext().getRealPath("\\event\\eventImage");
+			String path = req.getServletContext().getRealPath("/event/eventImage");
 			//저장가능 용량
 			int size=1024*1024*100;
 			int eno = EventDAO.getLastEno()+1;
