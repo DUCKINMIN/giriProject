@@ -9,7 +9,11 @@
 
 <title>Insert title here</title>
 <script type="text/javascript">
-                                 
+$(function(){
+	$('#invalueableEventBtn').click(function(){
+		alert("점포 등록이 필요합니다.");
+	});
+});                             
 </script>
 <style type="text/css">
 .tContainer{
@@ -86,6 +90,11 @@
 		<div style="height:30px;"></div>
 			
 		<div class="row">
+		<c:if test="${listSize==0 }">
+			<h2 style="text-align: center;">등록된 이벤트가 없습니다.</h2>
+			<div style="height:50px"></div>
+		</c:if>
+		<c:if test="${listSize!=0 }">
 		<c:set var="i" value="0"/>
 		<c:forEach var="vo" items="${list }">
 		  <div class="col-sm-6 col-md-4" >
@@ -179,7 +188,7 @@
 		   <c:set var="i" value="${i+1}"/>
 		   
 		  </c:forEach> 
-		   
+		  </c:if>
 	     </div>
 	   
 	   <%--페이지 번호 --%>
@@ -196,15 +205,29 @@
          </div>  
 	     
 	  	<%--이벤트 등록 버튼 --%>
-		<div class="text-center" style="float:left; width: 20%; 
-				 margin-bottom:40px;"> 
-		   	<button type="button" class="btn btn-lg btn-info" 
-		   			style="background-color:rgb(162,0,0); border:1px solid rgb(162,0,0);">
-		   		<a href="eventRegist.do" style="text-decoration:none;
-		   				 color:white;">이벤트 등록</a>
-		   				 
-			</button>
-		</div> 
+		<c:if test="${grade==1 || grade==2 }">
+	  		<c:if test="${cb_no==0 }">
+				<div id="invalueableEventBtn" class="text-center" style="float:left; width: 20%; 
+						 margin-top:20px;"> 
+		   			<button type="button" class="btn btn-lg btn-info" 
+		   					style="background-color:#828282;">
+		   				이벤트 등록		 
+					</button>
+				</div>
+			</c:if>
+			<c:if test="${cb_no!=0 }">
+				<div class="text-center" style="float:left; width: 20%; 
+						 margin-top:20px;"> 
+		   			<button type="button" class="btn btn-lg btn-info" 
+		   					style="background-color:rgb(162,0,0); border:1px solid rgb(162,0,0);">
+		   				<a href="eventRegist.do" style="text-decoration:none;
+		   						 color:white;">이벤트 등록</a>		 
+					</button>
+				</div>
+			</c:if>
+			
+			
+		</c:if> 
 	  </div>
 	    
 	  </div>

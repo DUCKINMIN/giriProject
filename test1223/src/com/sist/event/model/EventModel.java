@@ -39,7 +39,14 @@ public class EventModel {
 		//System.out.println(list.get(1).getCb().getCb_name());
 		//점주 체크
 		int grade=EventDAO.ownerCheck(email);
+		//점포등록 체크
+		int cb_no=EventDAO.eventCallClubbarNo(email);
+		if(cb_no==0) {
+			System.out.println("점포등록이 필요합니다");
+		}
 		
+		req.setAttribute("listSize", list.size());
+		req.setAttribute("cb_no", cb_no);
 		req.setAttribute("grade", grade);
 		req.setAttribute("curpage", curpage);
 		req.setAttribute("totalpage", totalpage);
@@ -49,6 +56,8 @@ public class EventModel {
 	}
 	@RequestMapping("ongoingEvent.do")
 	public String event_process_detail(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session=req.getSession();
+		String email=(String)session.getAttribute("m_email");
 		String page=req.getParameter("page");
 		if(page==null)
 			page="1";
@@ -63,7 +72,17 @@ public class EventModel {
 		List<EventVO> list=EventDAO.eventOngoingData(map);
 		int totalpage=EventDAO.eventOngoingPage();
 		
+		//점주 체크
+		int grade=EventDAO.ownerCheck(email);
+		//점포등록 체크
+		int cb_no=EventDAO.eventCallClubbarNo(email);
+		if(cb_no==0) {
+			System.out.println("점포등록이 필요합니다");
+		}
 		
+		req.setAttribute("listSize", list.size());
+		req.setAttribute("cb_no", cb_no);
+		req.setAttribute("grade", grade);
 		req.setAttribute("oCurpage", curpage);
 		req.setAttribute("oTotalpage", totalpage);
 		req.setAttribute("list", list);
@@ -72,6 +91,8 @@ public class EventModel {
 	}
 	@RequestMapping("endEvent.do")
 	public String event_end_detail(HttpServletRequest req, HttpServletResponse res) {
+		HttpSession session=req.getSession();
+		String email=(String)session.getAttribute("m_email");
 		String page=req.getParameter("page");
 		if(page==null)
 			page="1";
@@ -86,7 +107,16 @@ public class EventModel {
 		List<EventVO> list=EventDAO.eventEndData(map);
 		int totalpage=EventDAO.eventEndPage();
 		//System.out.println(list.get(0));
+		int grade=EventDAO.ownerCheck(email);
+		//점포등록 체크
+		int cb_no=EventDAO.eventCallClubbarNo(email);
+		if(cb_no==0) {
+			System.out.println("점포등록이 필요합니다");
+		}
 		
+		req.setAttribute("listSize", list.size());
+		req.setAttribute("cb_no", cb_no);
+		req.setAttribute("grade", grade);
 		req.setAttribute("eCurpage", curpage);
 		req.setAttribute("eTotalpage", totalpage);
 		req.setAttribute("list", list);
