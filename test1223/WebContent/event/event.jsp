@@ -9,11 +9,18 @@
 
 <title>Insert title here</title>
 <script type="text/javascript">
+<<<<<<< HEAD
 $(function(){
 	$('#invalueableEventBtn').click(function(){
 		alert("점포 등록이 필요합니다.");
 	});
 });               
+=======
+<c:if test="${sessionScope.m_email==null}">
+location.href="index.jsp";
+alert("로그인 후 이용해주세요");
+</c:if>                                
+>>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
 </script>
 <style type="text/css">
 .tContainer{
@@ -92,7 +99,11 @@ $(function(){
 		<div class="row">
 		<c:if test="${listSize==0 }">
 			<h2 style="text-align: center;">등록된 이벤트가 없습니다.</h2>
+<<<<<<< HEAD
 			<div style="height:50px"></div>
+=======
+			<div style="height:30px"></div>
+>>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
 		</c:if>
 		<c:if test="${listSize!=0 }">
 		<c:set var="i" value="0"/>
@@ -188,9 +199,11 @@ $(function(){
 		   <c:set var="i" value="${i+1}"/>
 		   
 		  </c:forEach> 
-		   </c:if>
+
+
+		  </c:if>
 	     </div>
-	   
+	    
 	   <%--페이지 번호 --%>
 	  
 	  <div id="board_page" style="float:left; width: 75%; margin:30px 0px 30px 0px">

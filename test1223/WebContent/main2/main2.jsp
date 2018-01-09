@@ -29,17 +29,6 @@
 				$('#rank').html(res);
 			}
 		});
-		//실시간 다솜
-		playAlert = setInterval(function() {
-			$.ajax({
-				type : "post",
-				url : "rank.do",
-				success : function(res) {
-					//alert(res);
-					$('#rank').html(res);
-				}
-			});
-		}, 3000);//3초 반복
 
 	});
 </script>
@@ -66,8 +55,8 @@
 }
 
 .sidenav {
-	margin-top: 95px;
-	height: 450px;
+	margin-top: 125px;
+	height: 150px;
 	width: 17%;
 	border-radius: 8px;
 }
@@ -220,7 +209,7 @@
 	}
 	.sidenav {
 		margin: 0px auto;
-		height: 400px;
+		height: 250px;
 		width: 95%;
 		margin-top: 45px;
 		border-radius: 8px;

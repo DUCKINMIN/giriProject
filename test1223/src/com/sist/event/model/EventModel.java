@@ -117,6 +117,7 @@ public class EventModel {
 		req.setAttribute("listSize", list.size());
 		req.setAttribute("cb_no", cb_no);
 		req.setAttribute("grade", grade);
+
 		req.setAttribute("eCurpage", curpage);
 		req.setAttribute("eTotalpage", totalpage);
 		req.setAttribute("list", list);
