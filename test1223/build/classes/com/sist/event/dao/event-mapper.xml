@@ -14,11 +14,13 @@
   	<result property="cb.a_addr1" column="a_addr1"/>
   	<result property="cb.a_addr2" column="a_addr2"/>
   	<result property="e_interest" column="e_interest"/>
+  	<result property="e_manpre" column="e_manpre"/>
+  	<result property="e_girlpre" column="e_girlpre"/>
   </resultMap>
   	<select id="eventListData" resultMap="eventData" parameterType="java.util.Map">
-  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.e_interest,e.num 
-  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,e_interest,rownum as num 
-  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,e_interest 
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.e_interest,e.e_manpre,e.e_girlpre,e.num 
+  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,e_interest,e_manpre,e_girlpre,rownum as num 
+  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,e_interest,e_manpre,e_girlpre 
   		FROM event ORDER BY e_enddate ASC )) e
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>
@@ -90,7 +92,7 @@
   	</select>
   	<!--참여 카운트  -->
   	<select id="eventGetGender" parameterType="String" resultType="String" >
-  		SELECT m_sex FROM event WHERE m_email=#{m_email}
+  		SELECT m_sex FROM member WHERE m_email=#{m_email}
   	</select>
   	<update id="eventJoinMenAdd" parameterType="int">
   		UPDATE event SET e_manpre=e_manpre+1

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sist.event.dao.*;
+import com.sist.member.dao.MemberVo;
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 
@@ -44,10 +45,11 @@ public class EventModel {
 		if(cb_no==0) {
 			System.out.println("점포등록이 필요합니다");
 		}
-		for(EventVO vo:list) {
-			System.out.println(vo.getE_interest());
-		}
 		
+		String m_sex=EventDAO.eventGetGender(email);
+		System.out.println(m_sex);
+		
+		req.setAttribute("m_sex", m_sex);
 		req.setAttribute("listSize", list.size());
 		req.setAttribute("cb_no", cb_no);
 		req.setAttribute("grade", grade);
@@ -201,7 +203,8 @@ public class EventModel {
 		String m_email=(String)session.getAttribute("m_email");	
 		String e_no=req.getParameter("e_no");
 		String m_sex=EventDAO.eventGetGender(m_email);
-		if(m_sex=="1") {
+		System.out.println(m_sex+"성별");
+		if(m_sex.equals("1")) {
 			EventDAO.eventJoinMenAdd(Integer.parseInt(e_no));
 		}else {
 			EventDAO.eventJoinGirlAdd(Integer.parseInt(e_no));

@@ -202,9 +202,9 @@ public class EventDAO {
 	public static void eventJoinGirlAdd(int e_no) {
 		SqlSession session=ssf.openSession(true);
 		try {
-			session.update("eventJoinMenAdd",e_no);
+			session.update("eventJoinGirlAdd",e_no);
 		}catch(Exception ex) {
-			System.out.println("eventJoinMenAdd"+ex.getMessage());
+			System.out.println("eventJoinGirlAdd"+ex.getMessage());
 		}finally {
 			if(session!=null)
 				session.close();

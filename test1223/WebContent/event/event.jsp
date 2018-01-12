@@ -32,11 +32,21 @@ $(function(){
 		});
 	});
 	
-	$('.eventJoin').click(function(){
-		var e_no=$(this).attr("data-no");
+	$('.eventJoinAdd').click(function(){
+		var e_no=$(this).attr("data-jno");
+		var m_sex='${m_sex}';
+		var e_manpre=$(this).attr("data-man");
+		var e_girlpre=$(this).attr("data-girl");
+		
+		if(m_sex=="1"){
+			$('.manpreText').text("현재 : "+(parseInt(e_manpre)+1)+"명");	
+		}else{
+			$('.girlpreText').text("현재 : "+(parseInt(e_girlpre)+1)+"명");	
+		} 
+		
 		$.ajax({
 			type:"POST",
-			url:"eventJoin.do",
+			url:"eventJoinAdd.do",
 			data:{"e_no":e_no},
 			success:function(response)
 			{
@@ -108,6 +118,7 @@ alert("로그인 후 이용해주세요");
 	<div class="tContainer" >
 	<div class="container" >
 		<div class="row" >
+		
 		<div style="height:50px ;"></div>
 			<h1>이벤트</h1>
 			<%--내비 --%>
@@ -202,11 +213,11 @@ alert("로그인 후 이용해주세요");
 		      						<div class="col-sm-6" style="font-size:13px;">
 		      						<img alt="남자참여자" src="event/image/men.png" 
 		      							style="width:50px; height:50px;">
-		      							&nbsp;&nbsp;현재:10명
+		      							&nbsp;&nbsp;<p class="manpreText">현재 : ${vo.e_manpre }명</p>
 		      							</div>
 		      						<div class="col-sm-6" style="font-size:13px;">
 		      						<img alt="여자참여자" src="event/image/women.png">
-		      							&nbsp;현재:10명
+		      							&nbsp;<p class="girlpreText">현재 : ${vo.e_girlpre }명</p>
 		      						</div>
 		      					</td>
 		      					
@@ -220,7 +231,7 @@ alert("로그인 후 이용해주세요");
 		   		<!-- </div> -->
 		   		<div class="modal-footer" >
 		   			<div class="text-center" > 
-		   				<button type="button" class="btn btn-lg eventJoin" data-no="${vo.e_no }" 
+		   				<button type="button" class="btn btn-lg eventJoinAdd" data-man="${vo.e_manpre }" data-girl="${vo.e_girlpre }" data-jno="${vo.e_no }" 
 		   				 style="background-color:#AF4848">참여</button>
 		   			</div> 
 		   		 </div>
