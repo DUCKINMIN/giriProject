@@ -13,6 +13,8 @@ $(function(){
 	$('#invalueableEventBtn').click(function(){
 		alert("점포 등록이 필요합니다.");
 	});
+	
+	
 });                                    
 </script>
 <style type="text/css">
@@ -142,14 +144,14 @@ $(function(){
 		      				<tr>
 		      					<th class="text-center" width="20%">주소</th>
 		      					<td width="80%">
-		      					<fmt:formatDate value="${vo.e_regdate }" pattern="yyyy-MM-dd"/>~
-		      					<fmt:formatDate value="${vo.e_enddate }" pattern="yyyy-MM-dd"/>
-		      					</td>
+		      					${vo.cb.a_addr1 } ${vo.cb.a_addr2 }</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">일시</th>
 		      					<td width="80%">
-		      					${vo.e_regdate }~${vo.e_enddate }	</td>
+		      					<fmt:formatDate value="${vo.e_regdate }" pattern="yyyy-MM-dd"/>~
+		      					<fmt:formatDate value="${vo.e_enddate }" pattern="yyyy-MM-dd"/>
+		      					</td>
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" id="modal_content" width="20%">내용</th>

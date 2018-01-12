@@ -159,6 +159,96 @@ public class EventDAO {
 		}
 		return cb_no;
 	}
+	
+	//이벤트 참여,관심 
+	public static String eventGetGender(String m_email) {
+		String m_sex="";
+		SqlSession session=ssf.openSession();
+		try {
+			m_sex=session.selectOne("eventGetGender",m_email);
+		}catch(Exception ex) {
+			System.out.println("eventGetGender"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return m_sex;
+	}
+	
+	public static void eventJoinMenAdd(int e_no) {
+		SqlSession session=ssf.openSession(true);
+		try {
+			session.update("eventJoinMenAdd",e_no);
+		}catch(Exception ex) {
+			System.out.println("eventJoinMenAdd"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+		
+	public static void eventJoinMenMinus(int e_no) {
+		SqlSession session=ssf.openSession(true);
+		try {
+			session.update("eventJoinMenMinus",e_no);
+		}catch(Exception ex) {
+			System.out.println("eventJoinMenMinus"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	public static void eventJoinGirlAdd(int e_no) {
+		SqlSession session=ssf.openSession(true);
+		try {
+			session.update("eventJoinMenAdd",e_no);
+		}catch(Exception ex) {
+			System.out.println("eventJoinMenAdd"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+		
+	public static void eventJoinGirlMinus(int e_no) {
+		SqlSession session=ssf.openSession(true);
+		try {
+			session.update("eventJoinMenMinus",e_no);
+		}catch(Exception ex) {
+			System.out.println("eventJoinMenMinus"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+	}
+	
+	public static void eventInterestAdd(int e_no) {
+			SqlSession session=ssf.openSession(true);
+			try {
+				session.update("eventInterestAdd",e_no);
+			}catch(Exception ex) {
+				System.out.println("eventJoinAdd"+ex.getMessage());
+			}finally {
+				if(session!=null)
+					session.close();
+			}
+	}
+		
+	public static void eventInterestMinus(int e_no) {
+		SqlSession session=ssf.openSession(true);
+		try {
+			session.update("eventInterestMinus",e_no);
+		}catch(Exception ex) {
+			System.out.println("eventInterestMinus"+ex.getMessage());
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+			
+	}
+	
+	
 }
 
 

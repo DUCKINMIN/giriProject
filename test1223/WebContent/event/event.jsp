@@ -9,18 +9,41 @@
 
 <title>Insert title here</title>
 <script type="text/javascript">
-<<<<<<< HEAD
 $(function(){
 	$('#invalueableEventBtn').click(function(){
 		alert("점포 등록이 필요합니다.");
 	});
+	
+	$('.eventInterest').click(function(){
+		var e_no=$(this).attr("data-no");
+		$.ajax({
+			type:"POST",
+			url:"eventInterest.do",
+			data:{"e_no":e_no},
+			success:function(response)
+			{
+			}
+		});
+	$('.eventJoin').click(function(){
+		var e_no=$(this).attr("data-no");
+		$.ajax({
+			type:"POST",
+			url:"eventJoin.do",
+			data:{"e_no":e_no},
+			success:function(response)
+			{
+			}
+		});
+	
+	});
 });               
-=======
+
 <c:if test="${sessionScope.m_email==null}">
 location.href="index.jsp";
 alert("로그인 후 이용해주세요");
 </c:if>                                
->>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
+
+
 </script>
 <style type="text/css">
 .tContainer{
@@ -99,11 +122,11 @@ alert("로그인 후 이용해주세요");
 		<div class="row">
 		<c:if test="${listSize==0 }">
 			<h2 style="text-align: center;">등록된 이벤트가 없습니다.</h2>
-<<<<<<< HEAD
+
 			<div style="height:50px"></div>
-=======
+
 			<div style="height:30px"></div>
->>>>>>> branch 'master' of https://github.com/DUCKINMIN/giriProject
+
 		</c:if>
 		<c:if test="${listSize!=0 }">
 		<c:set var="i" value="0"/>
@@ -143,7 +166,8 @@ alert("로그인 후 이용해주세요");
 							<h4>${vo.e_name }</h4>
 							</div>
 							<div class="text-right" style="float:left; width: 30%; padding:10px;">
-								<img id="interest" alt="관심" src="event/image/interest.png" style="width:35px; height:auto;">
+								<img id="interest" class="eventInterest" data-no="${vo.e_no }" alt="관심" 
+								src="event/image/interest.png" style="width:35px; height:auto;">
 							</div>
 		      				<tr>
 		      					<th class="text-center" width="20%">가게이름</th>
@@ -181,14 +205,15 @@ alert("로그인 후 이용해주세요");
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">관심</th>
-		      					<td width="80%">현재 : 200명</td>
+		      					<td width="80%">현재 : ${vo.e_interest }명</td>
 		      				</tr>
 		      			</table>	
 				</div>
 		   		<!-- </div> -->
 		   		<div class="modal-footer" >
 		   			<div class="text-center" > 
-		   				<button type="button" class="btn btn-lg" style="background-color:#AF4848">참여</button>
+		   				<button type="button" class="btn btn-lg eventJoin" data-no="${vo.e_no }" 
+		   				 style="background-color:#AF4848">참여</button>
 		   			</div> 
 		   		 </div>
 		  	   

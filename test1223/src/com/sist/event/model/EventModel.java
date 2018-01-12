@@ -191,6 +191,40 @@ public class EventModel {
 	
 			return "event.do";
 		}
+	//참여 
+	@RequestMapping("eventJoinAdd.do")
+	public String event_joinAdd(HttpServletRequest req,HttpServletResponse res) {
+		HttpSession session=req.getSession();
+		String m_email=(String)session.getAttribute("m_email");	
+		String e_no=req.getParameter("e_no");
+		String m_sex=EventDAO.eventGetGender(m_email);
+		if(m_sex=="1") {
+			EventDAO.eventJoinMenAdd(Integer.parseInt(e_no));
+		}else {
+			EventDAO.eventJoinGirlAdd(Integer.parseInt(e_no));
+		}
 		
-
+		return "event/event.jsp";
+	}
+	@RequestMapping("eventJoinMinus.do")
+	public String event_joinMinus(HttpServletRequest req,HttpServletResponse res) {
+		HttpSession session=req.getSession();
+		String m_email=(String)session.getAttribute("m_email");	
+		String e_no=req.getParameter("e_no");
+		String m_sex=EventDAO.eventGetGender(m_email);
+		if(m_sex=="1") {
+			EventDAO.eventJoinMenMinus(Integer.parseInt(e_no));
+		}else {
+			EventDAO.eventJoinGirlMinus(Integer.parseInt(e_no));
+		}
+		
+		return "event/event.jsp";
+	}
+	//관심
+	@RequestMapping("eventInterest.do")
+	public String event_Interest(HttpServletRequest req,HttpServletResponse res) {
+		String e_no=req.getParameter("e_no");
+		EventDAO.eventInterestAdd(Integer.parseInt(e_no));
+		return "event/event.jsp";
+	}
 }
