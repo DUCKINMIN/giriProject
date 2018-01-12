@@ -16,14 +16,22 @@ $(function(){
 	
 	$('.eventInterest').click(function(){
 		var e_no=$(this).attr("data-no");
+		var e_interest=$(this).attr("data-interest");
+		
+		
+		$('.interestText').text("현재 : "+(parseInt(e_interest)+1)+"명");
+		
 		$.ajax({
 			type:"POST",
 			url:"eventInterest.do",
 			data:{"e_no":e_no},
 			success:function(response)
 			{
+
 			}
 		});
+	});
+	
 	$('.eventJoin').click(function(){
 		var e_no=$(this).attr("data-no");
 		$.ajax({
@@ -166,7 +174,7 @@ alert("로그인 후 이용해주세요");
 							<h4>${vo.e_name }</h4>
 							</div>
 							<div class="text-right" style="float:left; width: 30%; padding:10px;">
-								<img id="interest" class="eventInterest" data-no="${vo.e_no }" alt="관심" 
+								<img id="interest" class="eventInterest" data-interest="${vo.e_interest }" data-no="${vo.e_no }" alt="관심" 
 								src="event/image/interest.png" style="width:35px; height:auto;">
 							</div>
 		      				<tr>
@@ -205,7 +213,7 @@ alert("로그인 후 이용해주세요");
 		      				</tr>
 		      				<tr>
 		      					<th class="text-center" width="20%">관심</th>
-		      					<td width="80%">현재 : ${vo.e_interest }명</td>
+		      					<td width="80%" data-no="${vo.e_interest}"><p class="interestText">현재 : ${vo.e_interest }명</p></td>
 		      				</tr>
 		      			</table>	
 				</div>

@@ -44,6 +44,9 @@ public class EventModel {
 		if(cb_no==0) {
 			System.out.println("점포등록이 필요합니다");
 		}
+		for(EventVO vo:list) {
+			System.out.println(vo.getE_interest());
+		}
 		
 		req.setAttribute("listSize", list.size());
 		req.setAttribute("cb_no", cb_no);
@@ -225,6 +228,7 @@ public class EventModel {
 	public String event_Interest(HttpServletRequest req,HttpServletResponse res) {
 		String e_no=req.getParameter("e_no");
 		EventDAO.eventInterestAdd(Integer.parseInt(e_no));
+		System.out.println(e_no);
 		return "event/event.jsp";
 	}
 }

@@ -13,11 +13,12 @@
   	<result property="cb.cb_name" column="cb_name"/>
   	<result property="cb.a_addr1" column="a_addr1"/>
   	<result property="cb.a_addr2" column="a_addr2"/>
+  	<result property="e_interest" column="e_interest"/>
   </resultMap>
   	<select id="eventListData" resultMap="eventData" parameterType="java.util.Map">
-  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.num 
-  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,rownum as num 
-  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content 
+  		SELECT c.cb_name,c.a_addr1,c.a_addr2,e.cb_no,e.e_no,e.e_name,e.e_regdate,e.e_enddate,e.e_content,e.e_interest,e.num 
+  		FROM clubbar c, (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,e_interest,rownum as num 
+  		FROM (SELECT cb_no,e_no,e_name,e_regdate,e_enddate,e_content,e_interest 
   		FROM event ORDER BY e_enddate ASC )) e
   		WHERE c.cb_no=e.cb_no AND num BETWEEN #{start} AND #{end}
   	</select>

@@ -228,7 +228,7 @@ public class EventDAO {
 			try {
 				session.update("eventInterestAdd",e_no);
 			}catch(Exception ex) {
-				System.out.println("eventJoinAdd"+ex.getMessage());
+				System.out.println("eventInterestAdd"+ex.getMessage());
 			}finally {
 				if(session!=null)
 					session.close();
