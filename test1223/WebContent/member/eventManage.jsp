@@ -125,7 +125,7 @@ $(function(){
 	     		<div style="height:30px;"></div>
 	     		<a href="member_event.do?page=${curpage>1?curpage-1:curpage }">이전</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	     		<a href="member_event.do?page=${curpage<totalpage?curpage+1:curpage }">다음</a>&nbsp;&nbsp;&nbsp;&nbsp;
-	     		[${curpage }]  page&nbsp;&nbsp;  /&nbsp;&nbsp;   [${totalpage }]  pages
+	     		[${curpage }]  page&nbsp;&nbsp;  /&nbsp;&nbsp;   [${totalpage==0?1:totalpage }]  pages
 	     		</td>
 	     		
 	     	</tr>

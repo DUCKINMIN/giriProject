@@ -47,7 +47,7 @@ public class EventModel {
 		}
 		
 		String m_sex=EventDAO.eventGetGender(email);
-		System.out.println(m_sex);
+		//System.out.println(m_sex);
 		
 		req.setAttribute("m_sex", m_sex);
 		req.setAttribute("listSize", list.size());
@@ -132,6 +132,8 @@ public class EventModel {
 	//이벤트 등록 경로
 	@RequestMapping("eventRegist.do")
 	public String event_regist(HttpServletRequest req, HttpServletResponse res) {
+		
+		
 		req.setAttribute("main_jsp", "../event/eventRegist.jsp");
 		return "main/main.jsp";
 	}
@@ -142,8 +144,14 @@ public class EventModel {
 			HttpSession session=req.getSession();
 			String email=(String)session.getAttribute("m_email");	
 			req.setCharacterEncoding("EUC-KR");
+			
+			//다운로드 폴더가 존재하지 않을때 폴더를 만들어라
+			File ff=new File("c:\\eventImage");
+			if(ff.exists())
+				ff.mkdirs();
 			//저장경로
 			String path = req.getServletContext().getRealPath("\\event\\eventImage");
+			System.out.println(path);
 			//저장가능 용량
 			int size=1024*1024*100;
 			int eno = EventDAO.getLastEno()+1;

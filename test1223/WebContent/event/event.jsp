@@ -17,7 +17,7 @@ $(function(){
 	$('.eventInterest').click(function(){
 		var e_no=$(this).attr("data-no");
 		var e_interest=$(this).attr("data-interest");
-		
+		alert(e_no);
 		
 		$('.interestText').text("ÇöÀç : "+(parseInt(e_interest)+1)+"¸í");
 		
